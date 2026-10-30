@@ -1,16 +1,91 @@
 # provenum
 
-Keep the numbers in a manuscript tied to the data that produced them.
+Every number in your manuscript should know where it came from.
 
-When results are rerun, or text is rewritten by hand or by an AI assistant, numbers in the prose
-can drift from the analysis output. provenum works from the result tables your analysis writes
-(CSV), not from the typeset paper, so a wrong table is caught as well as a wrong sentence.
+When an analysis is rerun, or a paragraph is rewritten by hand or by an AI assistant, numbers in
+the prose drift away from the analysis output. provenum ties them back together. It works from
+the result tables your analysis writes (CSV), not from the typeset paper, so it catches a wrong
+table as well as a wrong sentence.
 
-- **`provenum values`**: generate `\val{...}` entries from the tables, so the manuscript writes
-  `\val{comparisons/vina/top1/box_padding_2/delta_pts}` instead of a hard-coded "+6.8".
-- **`provenum lint`**: list numbers still written by hand.
-- **`provenum migrate`**: replace numbers that an anchoring step has linked to a table value,
-  only where the generated value reproduces the written text.
-- **`provenum audit`**: trace numbers to tables by their surrounding words, without macros.
+> **Status: early prototype.** The interfaces may change. It has been tested on one manuscript so
+> far (see [Evaluation](#evaluation)).
 
-Status: prototype. Evaluated on the DockPrepBench manuscript (see `examples/`).
+## What it does
+
+| Command | What it is for |
+|---|---|
+| `provenum values` | Generate LaTeX values from your tables, so the text writes `\val{comparisons/vina/top1/box_padding_2/delta_pts}` instead of a hard-coded `+6.8`. Rerun the analysis and the text follows. |
+| `provenum lint` | List numbers still typed by hand. With `--strict`, fail CI if any remain. |
+| `provenum migrate` | Replace hand-typed numbers with `\val{}`, but only where the value from the data reproduces exactly what is written. |
+| `provenum audit` | Check numbers against the tables by their surrounding words, without changing the manuscript. |
+
+An undefined `\val{}` path prints a bold **??** in the PDF and a LaTeX warning, so a broken
+reference cannot slip through.
+
+## Quick start
+
+```bash
+pip install git+https://github.com/David-Alobo/provenum
+
+# 1. Describe which tables to expose and how to format them (see examples/dockprepbench_values.toml)
+# 2. Generate the values and load them in the preamble with \input{tables/numbers}
+provenum values numbers.toml --tables paper/tables --out paper/tables/numbers.tex
+# 3. Write numbers as \val{<table>/<key>/.../<column>} and keep the build honest
+provenum lint paper/sections/*.tex --strict
+```
+
+A spec names each table, the columns that identify a row, and a format per column:
+
+```toml
+[[table]]
+file = "comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "pct1"                      # proportions shown as percentages, one decimal
+formats = { delta_pts = "+f1", p_holm = "p", gained = "int" }
+```
+
+Formats: `pct0` to `pct2`, `f0` to `f4`, `sig2`, `sig3`, `int`, `p` (two significant figures,
+scientific below 0.001), and a `+` prefix to always show the sign.
+
+## How the AI step is kept honest
+
+Migrating an existing paper needs to know which table value each number reports. A language
+model is good at that reading, but it should not be trusted to say a number is right. In
+provenum the model only **proposes** an address (`summary/vina/box_padding_2/top1`); the code
+looks up the value and **verifies** that it rounds to the written number. A wrong guess costs
+coverage, never correctness.
+
+## Evaluation
+
+On the Results section of the DockPrepBench manuscript (307 decimal numbers), each number was
+corrupted by three units in its last digit to measure how many errors each approach catches:
+
+| Approach | Corrupted numbers caught | Correct numbers flagged |
+|---|---|---|
+| Match by value alone | 1% | 0 |
+| Match by surrounding words | 20% (88% where anchored) | 44 |
+| Model proposes, code verifies | 134 of 134 anchored | 0 |
+
+Migration replaced 124 numbers with `\val{}`, and the compiled PDF text was identical before and
+after. The audit also found 28 numbers that no generated table produces.
+
+## Related tools
+
+- [statcheck](https://statcheck.io/) recomputes p-values from reported test statistics (APA format).
+- [sciwrite-lint](https://arxiv.org/abs/2604.08501) checks citations and, with a language model,
+  whether numbers in the text agree with the paper's own tables.
+- Prose linters such as [Vale](https://github.com/jdkato/vale) check wording, not numbers.
+
+provenum differs in checking against the analysis output rather than the typeset paper, in
+preventing drift by generating the numbers, and in never letting a model certify a value.
+
+## Development
+
+```bash
+uv run pytest
+uv run ruff check src tests
+```
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).
