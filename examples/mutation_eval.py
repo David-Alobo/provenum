@@ -1,9 +1,9 @@
-"""Mutation test for numcheck: false alarms on the real text, catch rate on corrupted numbers."""
+"""Mutation test for provenum: false alarms on the real text, catch rate on corrupted numbers."""
 import sys, time
 from collections import Counter
 from dataclasses import replace
-from numcheck.context import Config, InContext, Matcher, extract
-from numcheck.tables import load
+from provenum.context import Config, InContext, Matcher, extract
+from provenum.tables import load
 
 tex, tables, cfg_path = sys.argv[1], sys.argv[2], sys.argv[3]
 cfg = Config.load(cfg_path)

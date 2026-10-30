@@ -12,8 +12,8 @@ import shutil
 from collections import defaultdict
 from pathlib import Path
 
-from numcheck.anchor import items as find_items
-from numcheck.anchor import judge
+from provenum.anchor import items as find_items
+from provenum.anchor import judge
 
 
 def _plain(text: str) -> str:

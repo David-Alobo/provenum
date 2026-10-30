@@ -1,6 +1,6 @@
 """AI-assisted anchoring: a language model says which table value each stated number reports.
 
-The model only chooses a `\\val{}` path (or none); numcheck then checks the value itself, so the
+The model only chooses a `\\val{}` path (or none); provenum then checks the value itself, so the
 model can propose but never certify. The same paths drive prevention mode, so a confirmed
 anchor doubles as an automatic conversion of a hard-coded number into `\\val{...}`.
 """
@@ -11,8 +11,8 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from numcheck.latex import SCI, _clean
-from numcheck.macros import TableSpec, fmt
+from provenum.latex import SCI, _clean
+from provenum.macros import TableSpec, fmt
 
 
 def catalogue(specs: list[TableSpec], root: str | Path) -> str:

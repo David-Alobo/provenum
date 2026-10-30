@@ -1,11 +1,11 @@
-"""numcheck: keep the numbers in a manuscript tied to the data that produced them.
+"""provenum: keep the numbers in a manuscript tied to the data that produced them.
 
 Commands:
-    numcheck values SPEC --tables DIR --out numbers.tex   generate \\val{} entries from tables
-    numcheck lint MANUSCRIPT...                            list hard-coded decimals in prose
-    numcheck migrate MANUSCRIPT --answers A.json SPEC --tables DIR
+    provenum values SPEC --tables DIR --out numbers.tex   generate \\val{} entries from tables
+    provenum lint MANUSCRIPT...                            list hard-coded decimals in prose
+    provenum migrate MANUSCRIPT --answers A.json SPEC --tables DIR
                                                            replace anchored numbers with \\val{}
-    numcheck audit MANUSCRIPT... --tables DIR [--config C] trace numbers to tables by context
+    provenum audit MANUSCRIPT... --tables DIR [--config C] trace numbers to tables by context
 """
 
 import argparse
@@ -26,7 +26,7 @@ def _values(args: argparse.Namespace) -> int:
     Returns:
         int: Exit code.
     """
-    from numcheck.macros import generate, load_specs
+    from provenum.macros import generate, load_specs
 
     text, n = generate(load_specs(args.spec), args.tables)
     args.out.write_text(text, encoding="utf-8", newline="\n")
@@ -44,7 +44,7 @@ def _lint(args: argparse.Namespace) -> int:
     Returns:
         int: Exit code.
     """
-    from numcheck.macros import lint
+    from provenum.macros import lint
 
     total = 0
     for f in args.manuscript:
@@ -66,9 +66,9 @@ def _migrate(args: argparse.Namespace) -> int:
     Returns:
         int: Exit code.
     """
-    from numcheck.anchor import values
-    from numcheck.macros import load_specs
-    from numcheck.migrate import migrate
+    from provenum.anchor import values
+    from provenum.macros import load_specs
+    from provenum.migrate import migrate
 
     table = values(load_specs(args.spec), args.tables)
     answers = json.loads(args.answers.read_text(encoding="utf-8"))
@@ -91,8 +91,8 @@ def _audit(args: argparse.Namespace) -> int:
     Returns:
         int: 1 if any mismatch or unsourced number, else 0.
     """
-    from numcheck.context import Config, Matcher, extract
-    from numcheck.tables import load
+    from provenum.context import Config, Matcher, extract
+    from provenum.tables import load
 
     cfg = Config.load(args.config)
     matcher = Matcher(load(args.tables, derived=False, exclude=cfg.exclude), cfg)
@@ -114,7 +114,7 @@ def _audit(args: argparse.Namespace) -> int:
 
 def main(argv: Sequence[str] | None = None) -> int:
     """
-    Dispatch a numcheck command.
+    Dispatch a provenum command.
 
     Args:
         argv (Sequence[str] | None): Command-line arguments; sys.argv if None.
@@ -122,7 +122,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     Returns:
         int: Exit code.
     """
-    parser = argparse.ArgumentParser(prog="numcheck", description=__doc__.splitlines()[0])
+    parser = argparse.ArgumentParser(prog="provenum", description=__doc__.splitlines()[0])
     sub = parser.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("values", help="generate \\val{} entries from tables")

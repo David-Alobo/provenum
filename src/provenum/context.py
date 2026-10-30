@@ -15,8 +15,8 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from numcheck.latex import NUMBER, SCI, Stated, _clean, is_close
-from numcheck.tables import Source
+from provenum.latex import NUMBER, SCI, Stated, _clean, is_close
+from provenum.tables import Source
 
 WORD = re.compile(r"[a-z][a-z0-9_]*|\d+")
 BEFORE, AFTER = 12, 4  # context window, in tokens

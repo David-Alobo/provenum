@@ -1,4 +1,4 @@
-# numcheck config for the DockPrepBench manuscript: how its prose names table labels.
+# provenum config for the DockPrepBench manuscript: how its prose names table labels.
 
 exclude = ["agreement_per_complex.csv", "*ligand_properties.csv", "robust_cofactor_list.csv"]
 

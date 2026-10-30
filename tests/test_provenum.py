@@ -1,8 +1,8 @@
 import pytest
 
-from numcheck.anchor import judge, values
-from numcheck.macros import TableSpec, fmt, generate, lint
-from numcheck.migrate import migrate
+from provenum.anchor import judge, values
+from provenum.macros import TableSpec, fmt, generate, lint
+from provenum.migrate import migrate
 
 
 @pytest.mark.parametrize(
@@ -35,7 +35,7 @@ def test_generate_defines_every_cell(project):
     root, spec, _ = project
     text, n = generate(spec, root)
     assert n == 2
-    assert r"\numcheckset{summary/vina/box2/top1}{53.0}" in text
+    assert r"\provenumset{summary/vina/box2/top1}{53.0}" in text
 
 
 def test_judge_traces_and_flags(project):

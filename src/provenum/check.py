@@ -3,8 +3,8 @@
 import bisect
 from dataclasses import dataclass
 
-from numcheck.latex import Stated, is_close
-from numcheck.tables import Source
+from provenum.latex import Stated, is_close
+from provenum.tables import Source
 
 TIERS = ("cell", "cell x 100", "difference", "difference x 100")
 

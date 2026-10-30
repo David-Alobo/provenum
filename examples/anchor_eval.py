@@ -7,8 +7,8 @@ import json
 import sys
 from collections import Counter
 
-from numcheck.anchor import judge, values
-from numcheck.macros import load_specs
+from provenum.anchor import judge, values
+from provenum.macros import load_specs
 
 
 def corrupt(number: str, k: int = 3) -> str:

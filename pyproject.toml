@@ -1,5 +1,5 @@
 [project]
-name = "numcheck"
+name = "provenum"
 version = "0.1.0"
 description = "Keep the numbers in a manuscript tied to the data that produced them."
 readme = "README.md"
@@ -8,7 +8,7 @@ license = "MIT"
 dependencies = []
 
 [project.scripts]
-numcheck = "numcheck.cli:main"
+provenum = "provenum.cli:main"
 
 [dependency-groups]
 dev = ["pytest>=8", "ruff>=0.6"]
