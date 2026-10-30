@@ -64,7 +64,7 @@ def examples(items: list[dict], table: dict, cat: str, notes: str, paper: str) -
     return out
 
 
-def from_papers(papers: Path, out: Path, val_frac: float, seed: int) -> dict:
+def from_papers(papers: Path, out: Path, val_frac: float, drop_frac: float, seed: int) -> dict:
     """
     Write train/val/test JSONL from generated papers.
 
@@ -72,6 +72,7 @@ def from_papers(papers: Path, out: Path, val_frac: float, seed: int) -> dict:
         papers (Path): Directory of papers from make_papers.py.
         out (Path): Output directory.
         val_frac (float): Fraction of training papers held out for validation.
+        drop_frac (float): Fraction of papers that lose one table from their spec.
         seed (int): Seed for the train/val split.
 
     Returns:
@@ -87,6 +88,17 @@ def from_papers(papers: Path, out: Path, val_frac: float, seed: int) -> dict:
         if not items:
             continue
         specs = load_specs(d / "spec.toml")
+        # Real papers quote many analyses that are not in the catalogue. Removing one table
+        # from some papers' specs turns its numbers into "no cell" items and makes the model
+        # check which tables the catalogue actually has.
+        rng = random.Random(f"{seed}/{d.name}")
+        if len(specs) > 1 and rng.random() < drop_frac:
+            gone = rng.choice(specs[1:])
+            specs = [s for s in specs if s is not gone]
+            prefix = gone.file.removesuffix(".csv") + "/"
+            for it in items:
+                if it["gold"] and it["gold"].startswith(prefix):
+                    it["gold"], it["hidden"] = None, True
         table = values(specs, d / "tables")
         cat = catalogue(specs, d / "tables")
         notes = (d / "notes.txt").read_text(encoding="utf-8")
@@ -165,6 +177,7 @@ def main() -> None:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--papers", type=Path)
     parser.add_argument("--val-frac", type=float, default=0.05)
+    parser.add_argument("--drop-frac", type=float, default=0.35)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--dockprepbench", type=Path, help="migrated manuscript (test set only)")
     parser.add_argument("--spec", type=Path)
@@ -176,7 +189,7 @@ def main() -> None:
     stats_path = args.out / "stats.json"
     stats = json.loads(stats_path.read_text()) if stats_path.exists() else {}
     if args.papers:
-        stats.update(from_papers(args.papers, args.out, args.val_frac, args.seed))
+        stats.update(from_papers(args.papers, args.out, args.val_frac, args.drop_frac, args.seed))
     if args.dockprepbench:
         stats.update(from_manuscript(args))
     args.out.mkdir(parents=True, exist_ok=True)
