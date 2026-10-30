@@ -21,6 +21,8 @@ import time
 from collections import Counter, defaultdict
 from pathlib import Path
 
+PREFIX = '{"path": '  # every reply starts here, as under provenum's JSON schema
+
 
 def parse(reply: str, meta: dict) -> str | None:
     """
@@ -34,10 +36,11 @@ def parse(reply: str, meta: dict) -> str | None:
         str | None: The path, or None (null, "none", unparsable or not offered).
     """
     reply = re.sub(r"<think>.*?</think>", "", reply, flags=re.DOTALL).strip()
-    m = re.search(r"\{.*\}", reply, flags=re.DOTALL)
-    try:
-        path = json.loads(m.group()).get("path") if m else None
-    except (json.JSONDecodeError, AttributeError):
+    start = reply.find("{")
+    try:  # the first JSON object; anything the model writes after it is ignored
+        obj, _ = json.JSONDecoder().raw_decode(reply[start:]) if start >= 0 else (None, 0)
+        path = obj.get("path") if isinstance(obj, dict) else None
+    except json.JSONDecodeError:
         return None
     if not isinstance(path, str) or not path.strip() or path == "none":
         return None
@@ -107,15 +110,20 @@ def main() -> None:
     examples.sort(key=lambda e: len(e["messages"][1]["content"]))  # similar lengths per batch
     for i in range(0, len(examples), args.batch):
         batch = examples[i : i + args.batch]
+        # provenum asks Ollama for JSON matching a schema, which forces the reply to start as
+        # {"path": ...}. Starting the reply that way here does the same for every model;
+        # without it an untuned model answers in prose and never gives a path.
         prompts = [tokenizer.apply_chat_template(e["messages"][:2], tokenize=False,
                                                  add_generation_prompt=True,
-                                                 enable_thinking=False) for e in batch]  # fmt: skip
+                                                 enable_thinking=False) + PREFIX
+                   for e in batch]  # fmt: skip
         enc = tokenizer(prompts, return_tensors="pt", padding=True).to("cuda")
         gen = model.generate(**enc, max_new_tokens=96, do_sample=False,
                              pad_token_id=tokenizer.pad_token_id)  # fmt: skip
         replies = tokenizer.batch_decode(gen[:, enc["input_ids"].shape[1] :],
                                          skip_special_tokens=True)  # fmt: skip
         for e, reply in zip(batch, replies, strict=True):
+            reply = PREFIX + reply
             rows.append({"meta": e["meta"], "reply": reply, "answer": parse(reply, e["meta"])})
         print(f"{len(rows)}/{len(examples)} ({time.time() - t0:.0f} s)", flush=True)
 
