@@ -95,7 +95,7 @@ def extract(path: str | Path, min_integer: int = 10) -> list[Stated]:
             if decimals == 0 and (abs(value) < min_integer or 1900 <= value <= 2100):
                 continue
             after = line[m.end() : m.end() + 3]
-            percent = after.startswith("\\%") or after.startswith("%")
+            percent = after.startswith(("\\%", "%"))
             found.append(
                 Stated(str(path), n, m.group(0), value, decimals, 0, percent, raw.strip()[:160])
             )
