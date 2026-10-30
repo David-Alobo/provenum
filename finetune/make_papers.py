@@ -101,6 +101,15 @@ DELTA = [("delta_pts", "delta_low", "delta_high"), ("diff", "diff_low", "diff_hi
 CI = [("_low", "_high"), ("_lo", "_hi"), ("_lower", "_upper")]
 PVALS = [("p", "p_holm"), ("p_raw", "p_adj"), ("p", "q")]
 
+STYLES = [
+    "dense and compact, packing numbers into parentheses and brackets, e.g. 'rose from {{1}}% to "
+    "{{2}}% ({{3}} points [{{4}}, {{5}}]; p = {{6}})'.",
+    "dense and compact, with intervals in brackets after each value and abbreviations defined "
+    "once.",
+    "measured narrative prose, one or two numbers per sentence.",
+    "a mix: a narrative opening sentence, then compact parenthetical reporting.",
+    "terse, as in a short communication; pronouns and 'respectively' are welcome.",
+]
 SNAKE = re.compile(r"^[a-z][a-z0-9_]{0,30}$")
 
 VOCAB_SCHEMA = {
@@ -142,16 +151,18 @@ VOCAB_PROMPT = """Invent a realistic quantitative study in {field}. Return JSON 
 - measure: one continuous measurement: id, phrase and unit.
 - predictors: 2-4 terms in a regression model (id, phrase).
 - subgroups: 2-3 subgroups for a secondary analysis (id, phrase).
-- settings: 2-3 short phrases stating a fixed protocol setting that contains one decimal number,
-  e.g. "incubated at 37.5 °C", "a learning rate of 0.001", "at pH 7.4".
+- settings: 2-3 short natural-language phrases (with spaces, not snake_case) stating a fixed
+  protocol setting with one decimal number, e.g. "incubated at 37.5 °C", "at pH 7.4".
 Ids must be lower-case snake_case and differ from the phrases (abbreviate). Be specific to the field."""
 
 WRITE_PROMPT = """You are writing part of the results section of a paper.
 Study: {study}
 
-Write one results paragraph (2-5 sentences) that reports the facts below. Write each placeholder
+Write one results paragraph (2-5 sentences) that reports the facts below. Style: {style}
+The fact descriptions are for you; do not copy their wording. Write each placeholder
 such as {{{{1}}}} exactly once, exactly as written, where its number goes. You do not know the
-numbers: never write a number for a fact, only its placeholder. Add units after a placeholder where needed (%, points, {unit}). Refer to groups and arms
+numbers: never write a number for a fact, only its placeholder. A placeholder for a change already
+carries its sign, so write no "+" before it. Add units after a placeholder where needed (%, points, {unit}). Refer to groups and arms
 by natural names, abbreviations or pronouns, not by the ids; order and group the facts as a
 careful scientist would, for example a rate followed by its interval in brackets. Since you do
 not know the values, do not rank or compare magnitudes (no "highest", "lower than") except where a
@@ -239,7 +250,8 @@ def _clean_vocab(vocab: dict) -> dict:
         seen = set()
         vocab[key] = [fix(t, seen) for t in vocab[key][:4]]
     vocab["measure"]["id"] = fix(vocab["measure"], set())["id"]
-    vocab["settings"] = [s for s in vocab["settings"] if re.search(r"\d\.\d", s)][:3]
+    settings = [" ".join(s.replace("_", " ").split()) for s in vocab["settings"]]
+    vocab["settings"] = [s for s in settings if re.search(r"\d\.\d", s)][:3]
     return vocab
 
 
@@ -602,7 +614,7 @@ def stories(vocab: dict, built: dict, rng: random.Random) -> list[list[tuple[dic
 
 
 def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], setting: str | None,
-                    model: str, host: str, rng: random.Random
+                    style: str, model: str, host: str, rng: random.Random
                     ) -> tuple[str | None, list[dict]]:  # fmt: skip
     """
     Ask the model for a paragraph with placeholders and check it.
@@ -612,6 +624,7 @@ def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], settin
         unit (str): Unit of the continuous measure.
         facts (list[tuple[dict, str]]): Facts and descriptions.
         setting (str | None): A setting phrase to include verbatim, or None.
+        style (str): Writing style instruction.
         model (str): Ollama model.
         host (str): Ollama URL.
         rng (random.Random): Random source (temperature).
@@ -623,7 +636,7 @@ def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], settin
     listing = "\n".join(f"{{{{{k}}}}}: {d} (shown as {f['shown']})"
                         for k, (f, d) in enumerate(facts, 1))  # fmt: skip
     extra = f'Also state this protocol setting word for word: "{setting}".' if setting else ""
-    prompt = WRITE_PROMPT.format(study=study, unit=unit, extra=extra, facts=listing)
+    prompt = WRITE_PROMPT.format(study=study, unit=unit, extra=extra, facts=listing, style=style)
     schema = {"type": "object", "properties": {"paragraph": {"type": "string"}},
               "required": ["paragraph"]}  # fmt: skip
     failures = []
@@ -800,13 +813,14 @@ def make_paper(pid: str, field: str, out: Path, model: str, host: str, seed: int
     vocab = _clean_vocab(_chat(VOCAB_PROMPT.format(field=field), VOCAB_SCHEMA, model, host,
                                rng.uniform(0.7, 1.0)))  # fmt: skip
     built = build_tables(vocab, rng)
+    style = rng.choice(STYLES)
     written, dropped, rejected = [], 0, []
     for facts in stories(vocab, built, rng):
         setting = (
             rng.choice(vocab["settings"]) if vocab["settings"] and rng.random() < 0.25 else None
         )
         text, failures = write_paragraph(vocab["study"], vocab["measure"]["unit"], facts,
-                                         setting, model, host, rng)  # fmt: skip
+                                         setting, style, model, host, rng)  # fmt: skip
         rejected += failures
         if text is None:
             dropped += 1
@@ -831,7 +845,7 @@ def make_paper(pid: str, field: str, out: Path, model: str, host: str, seed: int
     (d / "notes.txt").write_text(notes_for(vocab, built, rng), encoding="utf-8")
     (d / "results.tex").write_text(tex, encoding="utf-8")
     (d / "items.json").write_text(json.dumps(items, indent=1, ensure_ascii=False), encoding="utf-8")
-    meta = {"id": pid, "field": field, "seed": seed, "model": model, "vocab": vocab,
+    meta = {"id": pid, "field": field, "seed": seed, "model": model, "style": style, "vocab": vocab,
             "names": built["names"], "paragraphs": len(written), "dropped": dropped,
             "items": len(items), "rejected": rejected}  # fmt: skip
     (d / "meta.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False), encoding="utf-8")
