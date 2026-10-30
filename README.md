@@ -48,9 +48,34 @@ proposal only if the value at that address matches what is written.
 | `provenum lint` | List numbers still typed by hand. With `--strict`, fail CI if any remain. |
 | `provenum migrate` | Replace hand-typed numbers with `\val{}`, but only where the value from the data reproduces exactly what is written. |
 | `provenum audit` | Check numbers against the tables by their surrounding words, without changing the manuscript. |
+| `provenum diff` | After a rerun, list the sentences whose numbers changed and flag the changes that can break a claim. |
 
 An undefined `\val{}` path prints a bold **??** in the PDF and a LaTeX warning, so a broken
 reference cannot slip through.
+
+### After a rerun
+
+The numbers update themselves; the words around them do not. `provenum diff` compares the
+regenerated values with the committed ones and shows each affected sentence once, with every
+changed number as `[old -> new]`. It flags a difference that changes sign, a p-value that crosses
+the significance level (`--alpha`, default 0.05), an interval that starts or stops including
+zero, and a cited value that no longer exists.
+
+```text
+$ provenum values numbers.toml --tables paper/tables --out paper/tables/numbers.tex
+$ provenum diff paper/tables/numbers.tex --manuscript paper/sections/*.tex
+provenum diff: 7 cited value(s) changed in 3 sentence(s); 3 need a look
+
+results.tex:2  NEEDS A LOOK
+    Vina's top-1 success rose from 46.3% to [53.0 -> 47.9]% with the 2 Å box ([+6.8 -> +1.6]
+    points [[3.5 -> -1.2], [10.0 -> 4.4]]; Holm p = [4.1e-04 -> 0.31]).
+    ! cmp/vina/box2/delta_low: 3.5 -> -1.2: sign changed; interval now includes 0
+    ! cmp/vina/box2/p_holm: 4.1e-04 -> 0.31: now not below 0.05
+```
+
+The old values come from git (`--rev`, default `HEAD`) or a file (`--old`). `--format markdown`
+writes a report for a pull-request comment, and `--strict` exits with an error when a cited claim
+needs a look.
 
 ## Quick start
 
