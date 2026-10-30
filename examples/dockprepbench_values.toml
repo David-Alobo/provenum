@@ -1,0 +1,32 @@
+# Which DockPrepBench tables become \val{} entries, and how each column is formatted.
+# Paths are relative to paper/tables/.
+
+[[table]]
+file = "summary.csv"
+keys = ["engine", "run"]
+default = "pct1"
+formats = { n = "int", failed = "int" }
+
+[[table]]
+file = "comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "pct1"
+formats = { n = "int", delta_pts = "+f1", delta_low = "f1", delta_high = "f1", gained = "int", lost = "int", p = "p", p_holm = "p", family_size = "int" }
+
+[[table]]
+file = "agreement_signals.csv"
+keys = ["engine", "signal"]
+default = "f3"
+formats = { n = "int" }
+
+[[table]]
+file = "agreement_validation.csv"
+keys = ["engine", "model"]
+default = "f3"
+formats = { n = "int", lr_stat = "f0", lr_p = "p" }
+
+[[table]]
+file = "agreement_levels.csv"
+keys = ["engine", "prep_agree"]
+default = "pct1"
+formats = { n = "int" }
