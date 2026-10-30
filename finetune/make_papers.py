@@ -495,9 +495,10 @@ def stories(vocab: dict, built: dict, rng: random.Random) -> list[list[tuple[dic
             facts += [(_cell(T, nm["compare"], key, col[s]), f"{b} bound of that change's interval")
                       for s, b in (("dlo", "lower"), ("dhi", "upper"))]  # fmt: skip
         if rng.random() < 0.4:
-            facts += [(_cell(T, nm["compare"], key, c), f"number of {e['phrase']} cases that "
-                       f"{c_} with {c['phrase']} relative to {ref['phrase']} (a count)")
-                      for c, c_ in (("gained", "succeeded only"), ("lost", "failed only"))]  # fmt: skip
+            facts += [(_cell(T, nm["compare"], key, column),
+                       (f"number of {e['phrase']} cases that {verb} with {c['phrase']} relative "
+                        f"to {ref['phrase']} (a count)"))
+                      for column, verb in (("gained", "succeeded only"), ("lost", "failed only"))]  # fmt: skip
         pcol = rng.choice(["p", "padj"])
         facts.append((_cell(T, nm["compare"], key, col[pcol]),
                       "p-value of that change" + (" (multiplicity-adjusted)" if pcol == "padj"
