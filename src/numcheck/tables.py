@@ -1,6 +1,7 @@
 """Load the numbers a project's result tables hold, and the simple values derived from them."""
 
 import csv
+import fnmatch
 import itertools
 from dataclasses import dataclass
 from pathlib import Path
@@ -34,7 +35,7 @@ def _float(cell: str) -> float | None:
         return None
 
 
-def load(paths: list[str | Path], derived: bool = True) -> list[Source]:
+def load(paths: list[str | Path], derived: bool = True, exclude: list[str] = ()) -> list[Source]:
     """
     Read every numeric cell of the given CSV files (directories are searched recursively).
 
@@ -45,6 +46,7 @@ def load(paths: list[str | Path], derived: bool = True) -> list[Source]:
     Args:
         paths (list[str | Path]): CSV files or directories holding them.
         derived (bool): Also generate within-row differences.
+        exclude (list[str]): Glob patterns (matched against path endings) of files to skip.
 
     Returns:
         list[Source]: Candidate values with their provenance.
@@ -52,6 +54,7 @@ def load(paths: list[str | Path], derived: bool = True) -> list[Source]:
     files = []
     for p in map(Path, paths):
         files += sorted(p.rglob("*.csv")) if p.is_dir() else [p]
+    files = [f for f in files if not any(fnmatch.fnmatch(f.as_posix(), '*' + pat) for pat in exclude)]
     out = []
     for f in files:
         with open(f, newline="", encoding="utf-8") as handle:
