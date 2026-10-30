@@ -1,0 +1,25 @@
+summary/<engine>/<run>/<column>
+  engine: gnina, rdock, smina, vina
+  run: baseline, baseline_seed1, baseline_seed2, baseline_seed3, box_padding_2, box_padding_6, box_padding_8, ligand_dimorphite, ligand_rdkit_conformer
+  columns: n, failed, top1, top1_low, top1_high, pb_valid, pb_valid_low, pb_valid_high
+
+comparisons/<engine>/<metric>/<arm>/<column>
+  engine: gnina, rdock, smina, vina
+  metric: pb_valid, top1
+  arm: box_padding_2, box_padding_6, box_padding_8, ligand_dimorphite, ligand_rdkit_conformer
+  columns: n, baseline, arm_rate, delta_pts, delta_low, delta_high, gained, lost, p, p_holm, family_size
+
+agreement_signals/<engine>/<signal>/<column>
+  engine: gnina, rdock, smina, vina
+  signal: cnn, engine_agree, prep_agree, prep_plus_engine, score, seed_agree
+  columns: auroc, low, high, diff, diff_low, diff_high, diff_vs_prep, diff_low_vs_prep, diff_high_vs_prep, n
+
+agreement_validation/<engine>/<model>/<column>
+  engine: gnina, rdock, smina, vina
+  model: best_pair, prep_agree, score, score+prep_agree
+  columns: n, auroc, auroc_lo, auroc_hi, brier, brier_lo, brier_hi, lr_stat, lr_p
+
+agreement_levels/<engine>/<prep_agree>/<column>
+  engine: gnina, rdock, smina, vina
+  prep_agree: 0, 1, 2, 3, 4, 5
+  columns: n, rate, low, high
