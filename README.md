@@ -109,6 +109,45 @@ after. The audit also found 28 numbers that no generated table produces.
 provenum differs in checking against the analysis output rather than the typeset paper, in
 preventing drift by generating the numbers, and in never letting a model certify a value.
 
+## Roadmap
+
+**Done**
+
+- [x] Values from result tables (`values`), hand-typed number check (`lint`), safe replacement
+  (`migrate`) and context audit (`audit`)
+- [x] Model proposes, code verifies: anchoring with a language model whose answers are checked
+  against the table value
+- [x] Local models through Ollama, so a manuscript never has to leave your machine
+- [x] Benchmark of eight local models (Qwen2.5, Qwen3, Llama) against a gold standard of 311
+  numbers
+- [x] First real migration: 312 of 369 decimal numbers in the DockPrepBench results now come from
+  data, with identical PDF text
+
+**In progress**
+
+- [ ] Fine-tuned anchoring model: Qwen3-32B trained on synthetic papers from 48 fields, tested on
+  held-out fields and on DockPrepBench
+- [ ] GitHub Action that fails a build when the values file is out of date with the tables
+- [ ] Release on PyPI (`pip install provenum`)
+- [ ] Methods paper (arXiv preprint)
+
+**Next**
+
+- [ ] Publish the fine-tuned adapter and its training data on Hugging Face, and make it the
+  default model for `provenum anchor`
+- [ ] Two-model agreement for migrations: accept a cell only when two models choose it
+- [ ] Validation on manuscripts by other authors, in other fields
+- [ ] A smaller fine-tuned model that runs on a laptop GPU
+- [ ] OpenAI-compatible backend, for hosted models and local servers other than Ollama
+
+**Later**
+
+- [ ] Editor support: VS Code extension and an Overleaf workflow
+- [ ] Short demo (GIF) of migrating a paper
+
+Suggestions and issues are welcome on the
+[issue tracker](https://github.com/David-Alobo/provenum/issues).
+
 ## Development
 
 ```bash
