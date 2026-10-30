@@ -153,7 +153,10 @@ Write one results paragraph (2-5 sentences) that reports the facts below. Write 
 such as {{{{1}}}} exactly once, exactly as written, where its number goes. You do not know the
 numbers: never write a number for a fact, only its placeholder. Add units after a placeholder where needed (%, points, {unit}). Refer to groups and arms
 by natural names, abbreviations or pronouns, not by the ids; order and group the facts as a
-careful scientist would, for example a rate followed by its interval in brackets. {extra}
+careful scientist would, for example a rate followed by its interval in brackets. Since you do
+not know the values, do not rank or compare magnitudes (no "highest", "lower than") except where a
+fact's note gives a direction. Mention no statistic that is not in the facts (no "CI not shown"),
+and add no commentary or filler sentences. {extra}
 Facts:
 {facts}
 
@@ -491,6 +494,10 @@ def stories(vocab: dict, built: dict, rng: random.Random) -> list[list[tuple[dic
         if rng.random() < 0.5:
             facts += [(_cell(T, nm["compare"], key, col[s]), f"{b} bound of that change's interval")
                       for s, b in (("dlo", "lower"), ("dhi", "upper"))]  # fmt: skip
+        if rng.random() < 0.4:
+            facts += [(_cell(T, nm["compare"], key, c), f"number of {e['phrase']} cases that "
+                       f"{c_} with {c['phrase']} relative to {ref['phrase']} (a count)")
+                      for c, c_ in (("gained", "succeeded only"), ("lost", "failed only"))]  # fmt: skip
         pcol = rng.choice(["p", "padj"])
         facts.append((_cell(T, nm["compare"], key, col[pcol]),
                       "p-value of that change" + (" (multiplicity-adjusted)" if pcol == "padj"
