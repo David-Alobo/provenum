@@ -118,9 +118,12 @@ def from_papers(papers: Path, out: Path, val_frac: float, drop_frac: float, seed
         splits[split] += rows
     stats = {}
     for name, rows in splits.items():
-        random.Random(seed).shuffle(rows)
-        _write(out / f"{name}.jsonl", rows)
-        stats[name] = _stats(rows)
+        # A shortlist of hundreds of same-value cells makes a prompt longer than the training
+        # context; truncating it would cut the answer, so such examples are left out.
+        kept = [r for r in rows if len(r["messages"][1]["content"]) <= MAX_PROMPT_CHARS]
+        random.Random(seed).shuffle(kept)
+        _write(out / f"{name}.jsonl", kept)
+        stats[name] = {**_stats(kept), "too_long_dropped": len(rows) - len(kept)}
     stats["papers"] = {"train": len(train_ids) - len(val_ids), "val": len(val_ids),
                        "test": sum(d.name.startswith("test") for d in dirs)}  # fmt: skip
     return stats
@@ -128,6 +131,7 @@ def from_papers(papers: Path, out: Path, val_frac: float, drop_frac: float, seed
 
 PREFIXES = ["secondary", "sensitivity", "subset", "replicate", "pilot", "external", "followup",
             "robust", "supplementary", "exploratory"]  # fmt: skip
+MAX_PROMPT_CHARS = 24000  # about 7,500 tokens, inside train.py's 8,192-token context
 N_DISTRACTORS = [0, 2, 6, 12, 20, 30, 40]  # catalogue sizes up to and beyond DockPrepBench (28)
 
 
