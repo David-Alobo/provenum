@@ -92,13 +92,13 @@ def main() -> None:
 
     trainer = SFTTrainer(
         model=model,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,  # TRL >= 0.12 name for the tokenizer
         train_dataset=data["train"],
         eval_dataset=data["val"],
         args=SFTConfig(
             output_dir=str(args.out / "checkpoints"),
             dataset_text_field="text",
-            max_seq_length=args.max_len,
+            max_length=args.max_len,  # TRL >= 0.20 name for max_seq_length
             per_device_train_batch_size=args.batch,
             per_device_eval_batch_size=args.batch,
             gradient_accumulation_steps=args.accum,
