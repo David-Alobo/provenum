@@ -84,7 +84,8 @@ def main() -> None:
     parser.add_argument("--name", required=True)
     parser.add_argument("--base", default="unsloth/Qwen3-32B-unsloth-bnb-4bit")
     parser.add_argument("--adapter", type=Path)
-    parser.add_argument("--batch", type=int, default=16)
+    parser.add_argument("--batch", type=int, default=4)
+    parser.add_argument("--max-len", type=int, default=12288, help="longest prompt in tokens")
     parser.add_argument("--limit", type=int, help="first N examples per file (a quick check)")
     args = parser.parse_args()
 
@@ -95,7 +96,9 @@ def main() -> None:
         lines = f.read_text(encoding="utf-8").splitlines()[: args.limit]
         examples += [json.loads(line) for line in lines]
     model, tokenizer = FastLanguageModel.from_pretrained(
-        str(args.adapter) if args.adapter else args.base, max_seq_length=4096, load_in_4bit=True
+        str(args.adapter) if args.adapter else args.base,
+        max_seq_length=args.max_len,
+        load_in_4bit=True,
     )
     FastLanguageModel.for_inference(model)
     tokenizer.padding_side = "left"
