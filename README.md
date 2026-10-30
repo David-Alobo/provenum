@@ -10,6 +10,36 @@ table as well as a wrong sentence.
 > **Status: early prototype.** The interfaces may change. It has been tested on one manuscript so
 > far (see [Evaluation](#evaluation)).
 
+## How it works
+
+```mermaid
+flowchart LR
+    A["Analysis scripts"] --> T[("Result tables<br/>CSV")]
+    T --> V["provenum values"]
+    S["numbers.toml<br/>which tables, how to format"] --> V
+    V --> N["numbers.tex<br/>one value per cell"]
+    M["Manuscript<br/>writes \val{table/key/column}"] --> L["LaTeX"]
+    N --> L
+    L --> P["PDF"]
+    M --> C{"provenum lint"}
+    C -- "hand-typed number" --> F["flag in CI"]
+
+    subgraph migrate ["Migrating an existing paper"]
+        direction LR
+        X["Hand-typed number<br/>+ its sentence"] --> AI["Language model<br/>proposes a table path"]
+        AI --> CHK{"Code checks the value<br/>at that path"}
+        CHK -- "rounds to the text" --> R["replace with \val{...}"]
+        CHK -- "does not" --> W["flag mismatch"]
+    end
+    T --> CHK
+    R --> M
+```
+
+The analysis writes tables; provenum turns every table cell into a value the manuscript can
+reference, so rerunning the analysis updates the text. For a paper that already has numbers typed
+by hand, a language model proposes which value each number reports, and the code accepts the
+proposal only if the value at that address matches what is written.
+
 ## What it does
 
 | Command | What it is for |
