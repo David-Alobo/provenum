@@ -150,8 +150,8 @@ WRITE_PROMPT = """You are writing part of the results section of a paper.
 Study: {study}
 
 Write one results paragraph (2-5 sentences) that reports the facts below. Write each placeholder
-such as {{{{1}}}} exactly once, exactly as written, where its number goes; never write the numbers
-yourself. Add units after a placeholder where needed (%, points, {unit}). Refer to groups and arms
+such as {{{{1}}}} exactly once, exactly as written, where its number goes. You do not know the
+numbers: never write a number for a fact, only its placeholder. Add units after a placeholder where needed (%, points, {unit}). Refer to groups and arms
 by natural names, abbreviations or pronouns, not by the ids; order and group the facts as a
 careful scientist would, for example a rate followed by its interval in brackets. {extra}
 Facts:
@@ -433,8 +433,16 @@ def _cell(tables: dict, table: str, key: dict, column: str) -> dict:
     path = "/".join([table] + [row[k] for k in t["keys"]] + [column])
     how = t["formats"].get(column, t["default"])
     shown = _shown(row[column], how)
+    # What the wording needs to get right, without the number itself (a model shown the value
+    # writes it out instead of the placeholder).
+    if how == "p":
+        hint = "below 0.05" if row[column] < 0.05 else "not below 0.05"
+    elif how.startswith("+") or column.startswith(("estimate", "delta", "diff", "change")):
+        hint = "positive" if row[column] > 0 else "negative"
+    else:
+        hint = ""
     return {"path": path, "shown": shown, "gold": None if t["hidden"] else path,
-            "hidden": t["hidden"]}  # fmt: skip
+            "hidden": t["hidden"], "hint": hint}  # fmt: skip
 
 
 def stories(vocab: dict, built: dict, rng: random.Random) -> list[list[tuple[dict, str]]]:
