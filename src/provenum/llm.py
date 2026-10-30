@@ -47,20 +47,7 @@ def ask(
         + f"Paragraph: {item['paragraph']}\n\nSentence: {item['sentence']}\n\n"
         + f"Which path does [[{item.get('written', item['number'])}]] report?"
     )
-    body = {
-        "model": model,
-        "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
-        "format": SCHEMA,
-        "stream": False,
-        "options": {"temperature": 0},
-    }
-    request = urllib.request.Request(
-        f"{host.rstrip('/')}/api/chat",
-        data=json.dumps(body).encode(),
-        headers={"Content-Type": "application/json"},
-    )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        content = json.loads(response.read())["message"]["content"]
+    content = _chat(SYSTEM, user, SCHEMA, model, host, timeout)
     try:
         path = json.loads(content).get("path")
     except (json.JSONDecodeError, AttributeError):
@@ -132,6 +119,10 @@ def _chat(system: str, user: str, schema: dict, model: str, host: str, timeout: 
         "stream": False,
         "options": {"temperature": 0},
     }
+    if model.startswith("qwen3"):
+        # Qwen3 reasons at length before answering by default; this task needs a direct choice,
+        # and other models answer directly, so turn it off for a like-for-like comparison.
+        body["think"] = False
     request = urllib.request.Request(
         f"{host.rstrip('/')}/api/chat",
         data=json.dumps(body).encode(),
