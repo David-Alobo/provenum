@@ -9,6 +9,7 @@ Commands:
     provenum diff numbers.tex [--rev HEAD | --old OLD.tex] --manuscript FILE...
                                                            what a rerun changed in the text
     provenum check MANUSCRIPT... --values numbers.tex      guards and wording against the values
+    provenum init TABLES_DIR [--out numbers.toml]          guess a starting spec from the tables
 """
 
 import argparse
@@ -175,6 +176,32 @@ def _check(args: argparse.Namespace) -> int:
     return 1 if errors or (args.strict and findings) else 0
 
 
+def _init(args: argparse.Namespace) -> int:
+    """
+    Write a starting spec guessed from the tables (never overwriting one without --force).
+
+    Args:
+        args (argparse.Namespace): Parsed arguments.
+
+    Returns:
+        int: Exit code.
+    """
+    from provenum.scaffold import scaffold
+
+    if args.out.exists() and not args.force:
+        print(f"{args.out} exists; use --force to overwrite it", file=sys.stderr)
+        return 1
+    text, n = scaffold(args.tables)
+    if not n:
+        print(f"no CSV tables under {args.tables}", file=sys.stderr)
+        return 1
+    args.out.write_text(text, encoding="utf-8", newline="\n")
+    checks = text.count("# CHECK")
+    print(f"{n} table(s) described in {args.out}"
+          + (f"; {checks} need a key checked (search for CHECK)" if checks else ""))  # fmt: skip
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """
     Dispatch a provenum command.
@@ -231,6 +258,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     p.add_argument("--alpha", type=float, default=0.05, help="significance level (default 0.05)")
     p.add_argument("--strict", action="store_true", help="exit 1 on wording warnings too")
     p.set_defaults(run=_check)
+
+    p = sub.add_parser("init", help="guess a starting spec from a folder of tables")
+    p.add_argument("tables", type=Path, help="directory of result tables (CSV)")
+    p.add_argument("--out", type=Path, default=Path("numbers.toml"))
+    p.add_argument("--force", action="store_true", help="overwrite an existing spec")
+    p.set_defaults(run=_init)
 
     args = parser.parse_args(argv)
     return args.run(args)

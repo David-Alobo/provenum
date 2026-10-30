@@ -11,6 +11,7 @@ import csv
 import math
 import re
 import tomllib
+from collections.abc import Iterator
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -34,6 +35,10 @@ class TableSpec:
     keys: list[str]  # columns whose values name the row, in path order
     formats: dict[str, str] = field(default_factory=dict)  # column -> format
     default: str = "auto"
+    # One value per row (e.g. recorded.csv): the path is the keys alone, the value is this column
+    # and, if format_column is set, each row names its own format.
+    value_column: str | None = None
+    format_column: str | None = None
 
 
 def fmt(value: float, how: str, column: str = "") -> str:
@@ -90,7 +95,8 @@ def fmt(value: float, how: str, column: str = "") -> str:
 
 def load_specs(path: str | Path) -> list[TableSpec]:
     """
-    Read table specs from TOML: [[table]] file, keys, default, [table.formats].
+    Read table specs from TOML: [[table]] file, keys, default, formats, and optionally value and
+    format (for one-value-per-row tables such as recorded.csv).
 
     Args:
         path (str | Path): Spec file.
@@ -99,8 +105,38 @@ def load_specs(path: str | Path) -> list[TableSpec]:
         list[TableSpec]: One per table.
     """
     data = tomllib.loads(Path(path).read_text(encoding="utf-8"))
-    return [TableSpec(t["file"], t["keys"], t.get("formats", {}), t.get("default", "auto"))
+    return [TableSpec(t["file"], t["keys"], t.get("formats", {}), t.get("default", "auto"),
+                      t.get("value"), t.get("format"))
             for t in data.get("table", [])]  # fmt: skip
+
+
+def cells(spec: TableSpec, root: str | Path) -> Iterator[tuple[str, float, str]]:
+    """
+    Every numeric cell a spec exposes, with its path and format.
+
+    Args:
+        spec (TableSpec): One table.
+        root (str | Path): Directory the spec's file path is relative to.
+
+    Yields:
+        tuple[str, float, str]: (path, value, format name).
+    """
+    prefix = re.sub(r"\.csv$", "", spec.file)
+    with open(Path(root) / spec.file, newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            key = "/".join([prefix] + [row[k] for k in spec.keys])
+            if spec.value_column:
+                own = row.get(spec.format_column) if spec.format_column else None
+                pairs = [(key, row[spec.value_column], own)]
+            else:
+                pairs = [(f"{key}/{c}", v, None) for c, v in row.items() if c not in spec.keys]
+            for path, cell, how in pairs:
+                try:
+                    value = float(cell)
+                except (TypeError, ValueError):
+                    continue
+                column = spec.value_column or path.rpartition("/")[2]
+                yield path, value, how or spec.formats.get(column, spec.default)
 
 
 def generate(specs: list[TableSpec], root: str | Path) -> tuple[str, int]:
@@ -116,21 +152,10 @@ def generate(specs: list[TableSpec], root: str | Path) -> tuple[str, int]:
     """
     lines, count = [PREAMBLE], 0
     for spec in specs:
-        path = Path(root) / spec.file
-        prefix = re.sub(r"\.csv$", "", spec.file)
-        with open(path, newline="", encoding="utf-8") as handle:
-            for row in csv.DictReader(handle):
-                key = "/".join([prefix] + [row[k] for k in spec.keys])
-                for column, cell in row.items():
-                    if column in spec.keys:
-                        continue
-                    try:
-                        value = float(cell)
-                    except (TypeError, ValueError):
-                        continue
-                    text = fmt(value, spec.formats.get(column, spec.default), column)
-                    lines.append(rf"\provenumset{{{key}/{column}}}{{{text}}}")
-                    count += 1
+        for path, value, how in cells(spec, root):
+            text = fmt(value, how, spec.value_column or path.rpartition("/")[2])
+            lines.append(rf"\provenumset{{{path}}}{{{text}}}")
+            count += 1
     return "\n".join(lines) + "\n", count
 
 
