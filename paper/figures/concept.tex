@@ -1,0 +1,68 @@
+% Concept figure: generating values from tables (top) and migrating hand-typed numbers (bottom).
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+    font=\small,
+    box/.style={draw, rounded corners=2pt, align=center, text width=2.05cm, minimum height=1.05cm,
+      inner sep=3pt, fill=white},
+    data/.style={box, fill=NavyBlue!10},
+    model/.style={box, fill=Orange!18},
+    code/.style={box, fill=ForestGreen!14},
+    flag/.style={box, fill=BrickRed!12},
+    arr/.style={-{Stealth[length=2mm]}, thick},
+    lab/.style={font=\footnotesize, align=center, inner sep=1.5pt},
+  ]
+  % Writing with values.
+  \node[box]  (A) at (0, 0)    {Analysis\\scripts};
+  \node[data] (T) at (2.6, 0)  {Result tables\\(CSV)};
+  \node[code] (V) at (5.2, 0)  {\texttt{provenum}\\\texttt{values}};
+  \node[box]  (S) at (5.2, 1.6) {Spec (TOML):\\tables, keys,\\formats};
+  \node[data] (N) at (7.8, 0)  {\texttt{numbers.tex}\\one value\\per cell};
+  \node[box]  (L) at (10.4, 0) {LaTeX\\build};
+  \node[box]  (P) at (13.0, 0) {PDF};
+  \node[box]  (M) at (10.4, -1.75) {Manuscript\\cites cells with\\\texttt{\textbackslash val\{\}}};
+  \node[code] (C) at (13.0, -1.75) {\texttt{lint}: hand-\\typed numbers\\fail CI};
+
+  \draw[arr] (A) -- (T);
+  \draw[arr] (T) -- (V);
+  \draw[arr] (S) -- (V);
+  \draw[arr] (V) -- (N);
+  \draw[arr] (N) -- (L);
+  \draw[arr] (L) -- (P);
+  \draw[arr] (M) -- (L);
+  \draw[arr] (M) -- (C);
+
+  % Migrating an existing paper.
+  \node[box]   (X) at (0, -4.0)    {Hand-typed\\number and\\its sentence};
+  \node[model] (AI) at (2.6, -4.0) {Language model\\proposes a\\cell address};
+  \node[code]  (K) at (5.2, -4.0)  {Code formats\\the value at\\that address};
+  \node[code]  (R) at (10.4, -4.0) {Replace with\\\texttt{\textbackslash val\{\}}};
+  \node[flag]  (W) at (7.8, -5.55) {Mismatch:\\reported to\\the author};
+
+  \draw[arr] (X) -- (AI);
+  \draw[arr] (AI) -- (K);
+  \draw[arr] (K) -- node[lab, above] {reproduces\\the text} (R);
+  \draw[arr] (K) |- node[lab, pos=0.75, above] {differs} (W);
+  \draw[arr] (R) -- (M);
+  \draw[arr, dashed] ($(T.south)+(-0.35,0)$) -- node[lab, left, pos=0.35] {addresses,\\no values}
+    ($(AI.north)+(-0.35,0)$);
+  \draw[arr] ($(T.south)+(0.45,0)$) -- ++(0,-1.05) -| node[lab, right, pos=0.75] {values} (K.north);
+
+  % Panels.
+  \begin{scope}[on background layer]
+    \node[draw=gray!60, fill=gray!4, rounded corners=4pt, inner sep=6pt,
+      fit=(A)(S)(P)(C), label={[font=\footnotesize\itshape, anchor=north west]north west:Writing
+      with values}] {};
+    \node[draw=gray!60, fill=Orange!4, rounded corners=4pt, inner sep=6pt,
+      fit=(X)(R)(W), label={[font=\footnotesize\itshape, anchor=south west]south west:Migrating
+      an existing paper}] {};
+  \end{scope}
+\end{tikzpicture}
+\caption{How \pv{} works. Top: the analysis writes tables, \texttt{provenum values} turns every
+cell into a LaTeX value, and the manuscript cites cells by address, so a rerun updates the text;
+\texttt{lint} keeps hand-typed numbers out. Bottom: to migrate a number already in the text, a
+language model, shown only the table addresses, proposes the cell it reports. Code looks up the
+value and replaces the number only if the value, formatted as written, reproduces it. The model
+never judges whether a number is correct.}
+\label{fig:concept}
+\end{figure}
