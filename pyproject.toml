@@ -1,0 +1,21 @@
+[project]
+name = "numcheck"
+version = "0.1.0"
+description = "Keep the numbers in a manuscript tied to the data that produced them."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = []
+
+[project.scripts]
+numcheck = "numcheck.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100

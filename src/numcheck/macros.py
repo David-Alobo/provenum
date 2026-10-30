@@ -73,12 +73,14 @@ def fmt(value: float, how: str, column: str = "") -> str:
     elif how == "p":
         if value < 0.001:
             mant, exp = f"{value:.1e}".split("e")
-            return rf"${mant} \times 10^{{{int(exp)}}}$"
-        text = f"{value:.2g}"
+            return rf"\ensuremath{{{mant} \times 10^{{{int(exp)}}}}}"
+        text = f"{value:#.2g}".rstrip(
+            "."
+        )  # two significant figures, keeping a trailing zero (0.20)
     else:
         raise ValueError(f"Unknown format {how!r}")
     if text.startswith("-"):
-        return f"$-${text[1:]}"
+        return rf"\ensuremath{{-}}{text[1:]}"  # works in text and inside $...$
     return f"+{text}" if signed and value > 0 else text
 
 
@@ -129,7 +131,10 @@ def generate(specs: list[TableSpec], root: str | Path) -> tuple[str, int]:
 
 
 # Numbers that are settings rather than results, e.g. "95% interval", "2,000 resamples".
-SETTINGS = re.compile(r"^\s*(?:\\?%\s*(?:wilson|confidence|ci\b|bootstrap|interval|paired)|\s*(?:resamples|repetitions|folds|seeds?)\b)", re.I)
+SETTINGS = re.compile(
+    r"^\s*(?:\\?%\s*(?:wilson|confidence|ci\b|bootstrap|interval|paired)|\s*(?:resamples|repetitions|folds|seeds?)\b)",
+    re.IGNORECASE,
+)
 
 
 def lint(path: str | Path) -> list[tuple[int, str, str]]:
@@ -155,7 +160,7 @@ def lint(path: str | Path) -> list[tuple[int, str, str]]:
             line = re.sub(r"\\val\{[^{}]*\}", " ", raw)
             line = _clean(line)
             for m in re.finditer(r"(?<![\w.\\])[-−]?\d+\.\d+(?![\w])", line):
-                if SETTINGS.match(line[m.end():m.end() + 30]):
+                if SETTINGS.match(line[m.end() : m.end() + 30]):
                     continue
                 out.append((n, m.group(), raw.strip()[:140]))
         if "\\end{tabular" in raw:

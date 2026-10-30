@@ -34,7 +34,9 @@ def catalogue(specs: list[TableSpec], root: str | Path) -> str:
         values = {k: sorted({r[k] for r in rows}) for k in spec.keys}
         columns = [c for c in rows[0] if c not in spec.keys] if rows else []
         parts.append(
-            f"{prefix}/" + "/".join(f"<{k}>" for k in spec.keys) + "/<column>\n"
+            f"{prefix}/"
+            + "/".join(f"<{k}>" for k in spec.keys)
+            + "/<column>\n"
             + "".join(f"  {k}: {', '.join(v)}\n" for k, v in values.items())
             + f"  columns: {', '.join(columns)}\n"
         )
@@ -65,7 +67,10 @@ def values(specs: list[TableSpec], root: str | Path) -> dict[str, tuple[float, s
                         v = float(cell)
                     except (TypeError, ValueError):
                         continue
-                    out[f"{key}/{column}"] = (v, fmt(v, spec.formats.get(column, spec.default), column))
+                    out[f"{key}/{column}"] = (
+                        v,
+                        fmt(v, spec.formats.get(column, spec.default), column),
+                    )
     return out
 
 
@@ -107,10 +112,11 @@ def items(path: str | Path) -> list[dict]:
         for start, end, number, written in sorted(found):
             s0 = max(text.rfind(". ", 0, start) + 2, 0)
             s1 = text.find(". ", end)
-            sentence = text[s0: s1 + 1 if s1 > 0 else len(text)]
+            sentence = text[s0 : s1 + 1 if s1 > 0 else len(text)]
             line = max(i for p, i in starts if p <= start) + 1
             marked = sentence.replace(written, f"[[{written}]]", 1)
-            out.append({"id": len(out), "line": line, "number": number, "sentence": " ".join(marked.split()),
+            out.append({"id": len(out), "line": line, "number": number, "written": written,
+                        "sentence": " ".join(marked.split()),
                         "paragraph": " ".join(text.split())[:1200]})  # fmt: skip
     return out
 

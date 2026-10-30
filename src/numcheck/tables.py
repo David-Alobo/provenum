@@ -54,7 +54,9 @@ def load(paths: list[str | Path], derived: bool = True, exclude: list[str] = ())
     files = []
     for p in map(Path, paths):
         files += sorted(p.rglob("*.csv")) if p.is_dir() else [p]
-    files = [f for f in files if not any(fnmatch.fnmatch(f.as_posix(), '*' + pat) for pat in exclude)]
+    files = [
+        f for f in files if not any(fnmatch.fnmatch(f.as_posix(), "*" + pat) for pat in exclude)
+    ]
     out = []
     for f in files:
         with open(f, newline="", encoding="utf-8") as handle:
@@ -73,6 +75,10 @@ def load(paths: list[str | Path], derived: bool = True, exclude: list[str] = ())
             if derived:
                 for (c1, a), (c2, b) in itertools.permutations(numeric, 2):
                     if abs(a) <= 1 and abs(b) <= 1:
-                        out.append(Source(100 * (a - b), str(f), i, f"{c1} - {c2}", label, "difference x 100"))
+                        out.append(
+                            Source(
+                                100 * (a - b), str(f), i, f"{c1} - {c2}", label, "difference x 100"
+                            )
+                        )
                     out.append(Source(a - b, str(f), i, f"{c1} - {c2}", label, "difference"))
     return out

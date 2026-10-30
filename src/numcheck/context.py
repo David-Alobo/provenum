@@ -22,7 +22,9 @@ WORD = re.compile(r"[a-z][a-z0-9_]*|\d+")
 BEFORE, AFTER = 12, 4  # context window, in tokens
 CARRY = 0.25  # weight of earlier tokens in the same paragraph (who or what it is about)
 # Confidence levels and similar fixed phrases are settings, not results ("95% Wilson interval").
-SETTING = re.compile(r"\s*\\?%\s*(?:wilson|confidence|ci\b|bootstrap|interval|paired|credible)", re.I)
+SETTING = re.compile(
+    r"\s*\\?%\s*(?:wilson|confidence|ci\b|bootstrap|interval|paired|credible)", re.IGNORECASE
+)
 
 
 @dataclass
@@ -48,8 +50,10 @@ class Config:
         if path is None:
             return cls()
         data = tomllib.loads(Path(path).read_text(encoding="utf-8"))
-        aliases = [(re.compile(p, re.I), r) for p, r in data.get("aliases", {}).items()]
-        return cls(aliases, data.get("exclude", []), data.get("min_anchor", 4.0), data.get("ratio", 0.85))
+        aliases = [(re.compile(p, re.IGNORECASE), r) for p, r in data.get("aliases", {}).items()]
+        return cls(
+            aliases, data.get("exclude", []), data.get("min_anchor", 4.0), data.get("ratio", 0.85)
+        )
 
 
 BUILTIN = [
@@ -153,11 +157,17 @@ def extract(path: str | Path, config: Config, min_integer: int = 10) -> list[InC
                         if not keep(value, dec, exp):
                             continue
                         ctx = defaultdict(float)
-                        for t in tokens(cells[0], config) + (tokens(header[j], config) if j < len(header) else []):
+                        for t in tokens(cells[0], config) + (
+                            tokens(header[j], config) if j < len(header) else []
+                        ):
                             ctx[t] = 1.0
-                        if "pct" in tokens(cell + " " + (header[j] if j < len(header) else ""), config):
+                        if "pct" in tokens(
+                            cell + " " + (header[j] if j < len(header) else ""), config
+                        ):
                             ctx["pct"] = 1.0
-                        st = Stated(str(path), i + 1, text, value, dec, exp, "pct" in ctx, raws[i].strip()[:160])
+                        st = Stated(
+                            str(path), i + 1, text, value, dec, exp, "pct" in ctx, raw.strip()[:160]
+                        )
                         out.append(InContext(st, dict(ctx)))
         if "\\end{tabular" in raw:
             in_tab = False
@@ -182,9 +192,9 @@ def extract(path: str | Path, config: Config, min_integer: int = 10) -> list[InC
             idx = next((n for n, (pos, _) in enumerate(toks) if pos >= start), len(toks))
             ctx: dict[str, float] = defaultdict(float)
             sentence_start = joined.rfind(". ", 0, start) + 1
-            if SETTING.match(joined[end:end + 30]):
+            if SETTING.match(joined[end : end + 30]):
                 continue
-            for n in range(0, idx):
+            for n in range(idx):
                 for t in tokens(toks[n][1], config):
                     ctx[t] = max(ctx[t], CARRY)
             for n in range(max(0, idx - BEFORE), min(len(toks), idx + AFTER + 1)):
@@ -194,10 +204,12 @@ def extract(path: str | Path, config: Config, min_integer: int = 10) -> list[InC
                 weight = 1.0 / (1 + abs(n - idx) / 4)
                 for t in tokens(word, config):
                     ctx[t] = max(ctx[t], weight)
-            percent = joined[end:end + 3].startswith(("\\%", "%"))
+            percent = joined[end : end + 3].startswith(("\\%", "%"))
             if percent:
                 ctx["pct"] = 1.0
-            st = Stated(str(path), line + 1, text, value, dec, exp, percent, raws[line].strip()[:160])
+            st = Stated(
+                str(path), line + 1, text, value, dec, exp, percent, raws[line].strip()[:160]
+            )
             out.append(InContext(st, dict(ctx)))
         para = []
     return sorted(out, key=lambda c: c.stated.line)
@@ -256,7 +268,7 @@ class Matcher:
             for i in self.index.get(t, ()):
                 scores[i] += w * self.idf[t]
         st = item.stated
-        value_ok = lambda s: is_close(st, s.value) or is_close(st, -s.value)  # noqa: E731
+        value_ok = lambda s: is_close(st, s.value) or is_close(st, -s.value)
         if not scores:
             return Judgement(item, "unanchored-untraced", None, 0.0)
         best_i = max(scores, key=scores.get)
@@ -267,14 +279,18 @@ class Matcher:
         if not candidates:  # no table holds this value at all: it was computed elsewhere
             return Judgement(item, "unsourced", self.sources[best_i], best)
         if "pts" not in item.context:  # a plain number never traces to a derived difference
-            scores = {i: v for i, v in scores.items() if not self.sources[i].how.startswith("difference")}
+            scores = {
+                i: v for i, v in scores.items() if not self.sources[i].how.startswith("difference")
+            }
             if not scores:
                 return Judgement(item, "unanchored-untraced", None, 0.0)
             best_i = max(scores, key=scores.get)
             best = scores[best_i]
         matching = [i for i in scores if value_ok(self.sources[i])]
         if st.is_integer:
-            matching = [i for i in matching if self.sources[i].value == round(self.sources[i].value)]
+            matching = [
+                i for i in matching if self.sources[i].value == round(self.sources[i].value)
+            ]
         if best < self.config.min_anchor:
             any_match = matching or any(value_ok(s) for s in self.sources)
             return Judgement(item, "unanchored-traced" if any_match else "unanchored-untraced",

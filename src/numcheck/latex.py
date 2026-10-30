@@ -53,7 +53,9 @@ def _clean(line: str) -> str:
     line = re.sub(r"(?<!\\)%.*", "", line)
     line = DROP_COMMANDS.sub(" ", line)
     line = re.sub(r"\\(?:SI|num|qty)\{([^{}]*)\}(?:\{[^{}]*\})?", r" \1 ", line)  # keep the value
-    line = re.sub(r"\\SIlist\{([^{}]*)\}\{[^{}]*\}", lambda m: " " + m.group(1).replace(";", " ") + " ", line)
+    line = re.sub(
+        r"\\SIlist\{([^{}]*)\}\{[^{}]*\}", lambda m: " " + m.group(1).replace(";", " ") + " ", line
+    )
     line = line.replace("--", " – ")  # ranges: 0.83--0.90 is two numbers, not a subtraction
     return line
 
@@ -92,9 +94,11 @@ def extract(path: str | Path, min_integer: int = 10) -> list[Stated]:
             decimals = len(frac) - 1 if frac else 0
             if decimals == 0 and (abs(value) < min_integer or 1900 <= value <= 2100):
                 continue
-            after = line[m.end():m.end() + 3]
+            after = line[m.end() : m.end() + 3]
             percent = after.startswith("\\%") or after.startswith("%")
-            found.append(Stated(str(path), n, m.group(0), value, decimals, 0, percent, raw.strip()[:160]))
+            found.append(
+                Stated(str(path), n, m.group(0), value, decimals, 0, percent, raw.strip()[:160])
+            )
     return found
 
 
