@@ -128,7 +128,7 @@ def from_papers(papers: Path, out: Path, val_frac: float, drop_frac: float, seed
 
 PREFIXES = ["secondary", "sensitivity", "subset", "replicate", "pilot", "external", "followup",
             "robust", "supplementary", "exploratory"]  # fmt: skip
-N_DISTRACTORS = [0, 0, 2, 4, 8, 12, 16, 24]
+N_DISTRACTORS = [0, 2, 6, 12, 20, 30, 40]  # catalogue sizes up to and beyond DockPrepBench (28)
 
 
 def _split(name: str, val_ids: set[str]) -> str:
