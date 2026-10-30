@@ -75,5 +75,55 @@ add them to a table, not to the text.
 
 \subsection{Model benchmark}
 
-\result{Table of right / wrong / caught wrong / abstain / false anchor for the eight local models in
-both modes, from \texttt{bench\_results.csv}, and two or three sentences on the ranking.}
+Table~\ref{tab:bench} gives the results on the 311 gold numbers. These are not the numbers of
+the first experiment: they are the migrated numbers written back out, scored against a known
+cell rather than against Claude, so the Qwen2.5 figures differ from those above. In blind mode no local model
+traced half of them. The best, Qwen3-32B, gave the right cell for 152 (48.9\%), and most of its
+wrong cells were rejected by the value check; 11 passed because the wrong cell held the same
+rounded value. The 7 and 8~billion parameter models were right for at most 28 numbers. Only
+Qwen2.5-32B abstained often (73 numbers), and it was the only model that declined all four
+mentions of settings that come from no table; Qwen3-14B proposed a cell for two of them and every
+other model for three or four.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Local models on the gold-standard benchmark: 311 numbers whose correct cell is known
+from the migrated manuscript, and four mentions of two settings that come from no table. In blind
+mode a wrong cell is caught unless its value rounds to the text (``passed''); in shortlist mode
+every offered cell holds the matching value, so no wrong choice is caught. All models Q4\_K\_M
+quantised, run in Ollama on one 48~GB GPU.}
+\label{tab:bench}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+& \multicolumn{4}{c}{Blind} & \multicolumn{3}{c}{Shortlist} & \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-8}
+Model & Right & Wrong & Passed & Abstain & Right & Wrong & Abstain & s/number$^a$ \\
+\midrule
+Qwen2.5-7B   & 18  & 293 & 0  & 0  & 246 & 61 & 4  & 0.5 \\
+Qwen2.5-14B  & 71  & 240 & 2  & 0  & 252 & 48 & 11 & 0.7 \\
+Qwen2.5-32B  & 117 & 121 & 5  & 73 & 242 & 15 & 54 & 1.0 \\
+Qwen3-8B     & 28  & 283 & 0  & 0  & 243 & 68 & 0  & 0.5 \\
+Qwen3-14B    & 85  & 223 & 6  & 3  & 255 & 56 & 0  & 0.6 \\
+Qwen3-32B    & 152 & 159 & 11 & 0  & 274 & 29 & 8  & 1.0 \\
+Llama3.1-8B  & 19  & 292 & 0  & 0  & 214 & 97 & 0  & 0.5 \\
+Llama3.3-70B & 94  & 217 & 4  & 0  & 251 & 52 & 8  & 1.9 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\footnotesize $^a$ Blind mode; shortlist mode was within 0.2~s.}
+\end{table}
+
+In shortlist mode every model was right for most numbers, from 214 (Llama3.1-8B) to 274
+(Qwen3-32B, 88.1\%). The cost of a wrong choice is different here. A wrong shortlist choice
+holds the same value as the right cell, so it migrates, renders correctly, and points the text at
+the wrong cell for the next rerun. Of the cells each model chose, the share that were right
+ranged from 68.8\% (Llama3.1-8B) to 94.2\% (Qwen2.5-32B, 242 of 257); Qwen3-32B chose more cells
+and was right for 90.4\% of them (274 of 303). No local model reached the point where its
+shortlist choices could be accepted without review. The four settings with no cell were
+anchored in shortlist mode only by Qwen3-8B and Llama3.1-8B (three each).
+
+Model size mattered more than model family: within each family the 32 billion parameter models
+were best in both modes, and Llama3.3-70B, at twice that size, was below both 32B models. Time per
+number ranged from 0.5 to 2.0~s, so one pass over the 311 numbers took at most about 10 minutes.

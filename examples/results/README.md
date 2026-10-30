@@ -38,7 +38,17 @@ table paths whose value matches (`items_with_candidates.json`), and Claude Sonne
 them (`answers_claude_sonnet_shortlist.json`: 211 paths, 34 none). `provenum migrate` replaced
 188 of them; the compiled PDF text was identical before and after.
 
-## Model benchmark
+## 2026-10-30-benchmark
 
-Results of `examples/bench_models.py` (Qwen2.5, Qwen3 and Llama on 311 gold sentences) will be
-added here when the run finishes.
+`examples/bench_models.py` on the migrated DockPrepBench Results section: 311 numbers whose correct
+cell is known from their `al{}`, plus four mentions of two settings that come from no table
+(`--none "pH 7.4" "2.857 times"`). Eight models, all Q4_K_M, in Ollama 0.12.6 on one RTX 6000 Ada
+(48 GB), temperature 0, both modes.
+
+| File | What it is |
+|---|---|
+| `bench_results.csv` | One row per model and mode: right, wrong, caught_wrong, abstain, false_anchor, seconds per number. |
+| `bench.log` | The run log (code versions, model pulls, per-run summaries). |
+
+Only totals were recorded, not per-number answers, so agreement between models cannot be
+re-scored from these files.

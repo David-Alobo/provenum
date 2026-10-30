@@ -1,0 +1,30 @@
+2026-10-30T18:01:10+00:00 started
+2026-10-30T18:01:12+00:00 code ready: provenum b18e7ee, DockPrepBench ea32d72
+2026-10-30T18:02:06+00:00 pulled qwen2.5:7b-instruct
+2026-10-30T18:02:07+00:00 pulled qwen2.5:14b-instruct
+2026-10-30T18:02:08+00:00 pulled qwen2.5:32b-instruct
+2026-10-30T18:07:24+00:00 pulled qwen3:8b
+2026-10-30T18:16:05+00:00 pulled qwen3:14b
+2026-10-30T18:30:21+00:00 pulled qwen3:32b
+2026-10-30T18:34:14+00:00 pulled llama3.1:8b-instruct-q4_K_M
+2026-10-30T18:47:17+00:00 pulled llama3.3:70b-instruct-q4_K_M
+/dev/nvme1n1    7.3T  6.8T  111G  99% /mnt/STORAGE3
+315 items (4 settings)
+{'model': 'qwen2.5:7b-instruct', 'mode': 'blind', 'values': 311, 'right': 18, 'wrong': 293, 'caught_wrong': 293, 'settings': 4, 'false_anchor': 4, 'seconds_per_item': 0.4749032293047224}
+{'model': 'qwen2.5:7b-instruct', 'mode': 'shortlist', 'values': 311, 'right': 246, 'wrong': 61, 'caught_wrong': 0, 'abstain': 4, 'settings': 4, 'false_anchor': 0, 'seconds_per_item': 0.5292582746536013}
+{'model': 'qwen2.5:14b-instruct', 'mode': 'blind', 'values': 311, 'right': 71, 'wrong': 240, 'caught_wrong': 238, 'settings': 4, 'false_anchor': 4, 'seconds_per_item': 0.7340630728100973}
+{'model': 'qwen2.5:14b-instruct', 'mode': 'shortlist', 'values': 311, 'right': 252, 'abstain': 11, 'wrong': 48, 'caught_wrong': 0, 'settings': 4, 'false_anchor': 0, 'seconds_per_item': 0.7025234979296487}
+{'model': 'qwen2.5:32b-instruct', 'mode': 'blind', 'values': 311, 'right': 117, 'wrong': 121, 'caught_wrong': 116, 'abstain': 73, 'settings': 4, 'false_anchor': 0, 'seconds_per_item': 0.9655521574474516}
+{'model': 'qwen2.5:32b-instruct', 'mode': 'shortlist', 'values': 311, 'right': 242, 'abstain': 54, 'wrong': 15, 'caught_wrong': 0, 'settings': 4, 'false_anchor': 0, 'seconds_per_item': 1.161935958408174}
+{'model': 'qwen3:8b', 'mode': 'blind', 'values': 311, 'right': 28, 'wrong': 283, 'caught_wrong': 283, 'settings': 4, 'false_anchor': 4, 'seconds_per_item': 0.5203599975222633}
+{'model': 'qwen3:8b', 'mode': 'shortlist', 'values': 311, 'right': 243, 'wrong': 68, 'caught_wrong': 0, 'settings': 4, 'false_anchor': 3, 'seconds_per_item': 0.5749515699961829}
+{'model': 'qwen3:14b', 'mode': 'blind', 'values': 311, 'right': 85, 'wrong': 223, 'caught_wrong': 217, 'settings': 4, 'false_anchor': 2, 'abstain': 3, 'seconds_per_item': 0.6406914612603566}
+{'model': 'qwen3:14b', 'mode': 'shortlist', 'values': 311, 'right': 255, 'wrong': 56, 'caught_wrong': 0, 'settings': 4, 'false_anchor': 0, 'seconds_per_item': 0.675648416034759}
+{'model': 'qwen3:32b', 'mode': 'blind', 'values': 311, 'right': 152, 'wrong': 159, 'caught_wrong': 148, 'settings': 4, 'false_anchor': 3, 'seconds_per_item': 1.0448124264913892}
+{'model': 'qwen3:32b', 'mode': 'shortlist', 'values': 311, 'right': 274, 'abstain': 8, 'wrong': 29, 'caught_wrong': 0, 'settings': 4, 'false_anchor': 0, 'seconds_per_item': 1.0974784888918439}
+{'model': 'llama3.1:8b-instruct-q4_K_M', 'mode': 'blind', 'values': 311, 'right': 19, 'wrong': 292, 'caught_wrong': 292, 'settings': 4, 'false_anchor': 4, 'seconds_per_item': 0.4556342253609309}
+{'model': 'llama3.1:8b-instruct-q4_K_M', 'mode': 'shortlist', 'values': 311, 'right': 214, 'wrong': 97, 'caught_wrong': 0, 'settings': 4, 'false_anchor': 3, 'seconds_per_item': 0.46481737787761385}
+{'model': 'llama3.3:70b-instruct-q4_K_M', 'mode': 'blind', 'values': 311, 'right': 94, 'wrong': 217, 'caught_wrong': 213, 'settings': 4, 'false_anchor': 4, 'seconds_per_item': 1.8676845020718045}
+{'model': 'llama3.3:70b-instruct-q4_K_M', 'mode': 'shortlist', 'values': 311, 'right': 251, 'wrong': 52, 'caught_wrong': 0, 'abstain': 8, 'settings': 4, 'false_anchor': 0, 'seconds_per_item': 1.996453717398265}
+Wrote /mnt/STORAGE3/alobo/provenum-bench/bench_results.csv
+2026-10-30T20:00:18+00:00 finished

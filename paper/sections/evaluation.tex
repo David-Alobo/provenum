@@ -31,13 +31,13 @@ Once the section had been migrated, every \texttt{\textbackslash val\{\}} in it 
 human-written sentence with a known correct address, checked twice: by the value check and by the
 compiled text being unchanged. The benchmark script turns each \texttt{\textbackslash val\{\}}
 back into the number a reader sees, asks a model for its address in both modes, and compares the
-answer with the address it replaced. Two settings quoted in the text that come from no table (the
-protonation pH and the box-scaling factor from earlier work) test whether a model abstains rather
-than guesses.
+answer with the address it replaced. This gave 311 numbers. Two settings quoted in the text that
+come from no table (the protonation pH and the box-scaling factor from earlier work), mentioned
+four times in all, test whether a model abstains rather than guesses.
 
 Each answer is scored as \emph{right} (the gold address), \emph{wrong} (another address),
 \emph{caught wrong} (a wrong address rejected by the value check), \emph{abstain}, or, for the
 settings with no address, \emph{false anchor}. We ran Qwen2.5 at 7, 14 and 32 billion parameters,
 Qwen3 at 8, 14 and 32 billion, and Llama~3.1-8B and Llama~3.3-70B~\cite{grattafiori2024llama3},
-the 70B model quantised to 4 bits. \todo{state GPU, Ollama version and quantisation of the other
-models from the run log}
+all with Ollama's Q4\_K\_M 4-bit quantisation, in Ollama 0.12.6 on one NVIDIA RTX 6000 Ada
+(48~GB). Requests used temperature 0, so each model was run once.

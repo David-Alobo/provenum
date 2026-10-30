@@ -12,7 +12,10 @@ right one, the value check passes. The paper renders correctly, but after a reru
 follow the wrong cell. The DockPrepBench tables contain many such coincidences, because rates
 round to one decimal and the same rate recurs across engines and arms. Two safeguards are
 available: review migrations before accepting them, or accept only addresses on which two models
-agree, which on this manuscript left one disagreement with Claude in 110 numbers.
+agree, which on this manuscript left one disagreement with Claude in 110 numbers. The benchmark
+shows why one of them is needed: the most precise local model in shortlist mode still chose a
+wrong cell with the right value for 15 numbers. The benchmark recorded only totals per model, so
+whether agreement between two local models removes those errors is not yet measured.
 
 The evaluation has clear limits. It uses one manuscript, written by the author of the tool, in one
 field, with tables designed for it. The corruptions are synthetic and of one kind, a change in the
