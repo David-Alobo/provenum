@@ -102,10 +102,14 @@ CI = [("_low", "_high"), ("_lo", "_hi"), ("_lower", "_upper")]
 PVALS = [("p", "p_holm"), ("p_raw", "p_adj"), ("p", "q")]
 
 STYLES = [
-    "dense and compact, packing numbers into parentheses and brackets, e.g. 'rose from {{1}}% to "
-    "{{2}}% ({{3}} points [{{4}}, {{5}}]; p = {{6}})'.",
-    "dense and compact, with intervals in brackets after each value and abbreviations defined "
-    "once.",
+    (
+        "dense and compact, packing numbers into parentheses and brackets, e.g. 'rose from {{1}}% to "
+        "{{2}}% ({{3}} points [{{4}}, {{5}}]; p = {{6}})'."
+    ),
+    (
+        "dense and compact, with intervals in brackets after each value and abbreviations defined "
+        "once."
+    ),
     "measured narrative prose, one or two numbers per sentence.",
     "a mix: a narrative opening sentence, then compact parenthetical reporting.",
     "terse, as in a short communication; pronouns and 'respectively' are welcome.",
@@ -648,6 +652,8 @@ def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], settin
             reason = f"placeholder counts {counts}"
         elif stray:
             reason = f"number written out: {stray.group()}"
+        elif re.search(r"\[\s*\]|\(\s*\)", text):
+            reason = "empty brackets"
         elif setting and setting not in text:
             reason = "setting not verbatim"
         else:
