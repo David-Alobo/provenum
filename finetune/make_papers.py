@@ -648,8 +648,9 @@ def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], settin
         text = _chat(prompt, schema, model, host, rng.uniform(0.6, 1.0))["paragraph"]
         counts = {k: text.count(f"{{{{{k}}}}}") for k in range(1, len(facts) + 1)}
         stray = re.search(r"\d\.\d", re.sub(r"\{\{\d+\}\}", "", text.replace(setting or "\0", "")))
-        if any(c != 1 for c in counts.values()):
-            reason = f"placeholder counts {counts}"
+        extra = {int(k) for k in re.findall(r"\{\{(\d+)\}\}", text)} - set(counts)
+        if any(c != 1 for c in counts.values()) or extra:
+            reason = f"placeholder counts {counts}, unknown {sorted(extra)}"
         elif stray:
             reason = f"number written out: {stray.group()}"
         elif re.search(r"\[\s*\]|\(\s*\)", text):
@@ -882,7 +883,7 @@ def main() -> None:
             try:
                 print(done, future.result(), flush=True)
             except Exception:  # noqa: BLE001 - one bad paper must not stop the run
-                print(done, futures[future], "FAILED", traceback.format_exc(limit=2), flush=True)
+                print(done, futures[future], "FAILED", traceback.format_exc(), flush=True)
 
 
 if __name__ == "__main__":
