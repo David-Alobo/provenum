@@ -8,6 +8,7 @@ Commands:
     provenum audit MANUSCRIPT... --tables DIR [--config C] trace numbers to tables by context
     provenum diff numbers.tex [--rev HEAD | --old OLD.tex] --manuscript FILE...
                                                            what a rerun changed in the text
+    provenum check MANUSCRIPT... --values numbers.tex      guards and wording against the values
 """
 
 import argparse
@@ -149,6 +150,31 @@ def _diff(args: argparse.Namespace) -> int:
     return 1 if args.strict and flagged else 0
 
 
+def _check(args: argparse.Namespace) -> int:
+    """
+    Check guards (errors) and wording (warnings) against the current values.
+
+    Args:
+        args (argparse.Namespace): Parsed arguments.
+
+    Returns:
+        int: 1 if a guard fails, or with --strict if any wording warning; else 0.
+    """
+    from provenum.diff import read_values
+    from provenum.guards import check
+
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    values = read_values(args.values.read_text(encoding="utf-8"))
+    findings = check(args.manuscript, values, args.alpha)
+    for x in findings:
+        label = "error" if x.kind == "guard" else "warning"
+        print(f"{x.file}:{x.line}: {label}: {x.message}\n    {' '.join(x.sentence.split())[:240]}")
+    errors = sum(x.kind == "guard" for x in findings)
+    print(f"{errors} failed guard(s), {len(findings) - errors} wording warning(s)")
+    return 1 if errors or (args.strict and findings) else 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """
     Dispatch a provenum command.
@@ -198,6 +224,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     p.add_argument("--all", action="store_true", help="also list changes not cited in the text")
     p.add_argument("--strict", action="store_true", help="exit 1 if a cited claim needs a look")
     p.set_defaults(run=_diff)
+
+    p = sub.add_parser("check", help="check guards and wording against the current values")
+    p.add_argument("manuscript", nargs="+", type=Path)
+    p.add_argument("--values", type=Path, required=True, help="values file (numbers.tex)")
+    p.add_argument("--alpha", type=float, default=0.05, help="significance level (default 0.05)")
+    p.add_argument("--strict", action="store_true", help="exit 1 on wording warnings too")
+    p.set_defaults(run=_check)
 
     args = parser.parse_args(argv)
     return args.run(args)

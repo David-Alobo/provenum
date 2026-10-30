@@ -12,9 +12,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from provenum.latex import _clean
+from provenum.macros import VAL
 
 SET = r"\provenumset{"
-VAL = re.compile(r"\\val\{([^{}]*)\}")
 LOW = re.compile(r"^(.*?)_?(low|lo|lower)$")
 HIGH = re.compile(r"^(.*?)_?(high|hi|upper)$")
 
@@ -200,6 +200,26 @@ def uses(files: list[Path]) -> dict[str, list[Use]]:
         dict[str, list[Use]]: Citations per path.
     """
     out: dict[str, list[Use]] = {}
+    for f, line, sentence in sentences(files):
+        for m in VAL.finditer(sentence):
+            out.setdefault(m.group(2), []).append(Use(str(f), line, sentence))
+    return out
+
+
+def sentences(files: list[Path]) -> list[tuple[Path, int, str]]:
+    """
+    Every sentence that cites a value, with the line of its first citation.
+
+    Paragraphs are joined across line breaks (LaTeX comments removed) before splitting into
+    sentences, so a sentence wrapped over several lines is one sentence.
+
+    Args:
+        files (list[Path]): Manuscript files.
+
+    Returns:
+        list[tuple[Path, int, str]]: (file, line, sentence) in reading order.
+    """
+    out = []
     for f in files:
         lines = f.read_text(encoding="utf-8").splitlines()
         para: list[int] = []
@@ -213,12 +233,16 @@ def uses(files: list[Path]) -> dict[str, list[Use]]:
             for n in para:
                 starts.append((len(text), n))
                 text += re.sub(r"(?<!\\)%.*", "", lines[n]).strip() + " "
+            seen = set()
             for m in VAL.finditer(text):
-                line = max(n for pos, n in starts if pos <= m.start()) + 1
                 s0 = text.rfind(". ", 0, m.start())
+                s0 = s0 + 2 if s0 >= 0 else 0
+                if s0 in seen:
+                    continue
+                seen.add(s0)
                 s1 = text.find(". ", m.end())
-                sentence = text[s0 + 2 if s0 >= 0 else 0 : s1 + 1 if s1 >= 0 else len(text)]
-                out.setdefault(m.group(1), []).append(Use(str(f), line, sentence.strip()))
+                line = max(n for pos, n in starts if pos <= m.start()) + 1
+                out.append((f, line, text[s0 : s1 + 1 if s1 >= 0 else len(text)].strip()))
             para = []
     return out
 
@@ -264,10 +288,10 @@ def _show(sentence: str, changed: dict[str, Change], new: dict[str, str]) -> str
         Returns:
             str: The value, or [old -> new] for a changed path.
         """
-        c = changed.get(m.group(1))
+        c = changed.get(m.group(2))
         if c:
             return f"[{_plain(c.old)} -> {_plain(c.new)}]"
-        return _plain(new.get(m.group(1)))
+        return _plain(new.get(m.group(2)))
 
     text = _clean(VAL.sub(one, sentence))
     for latex, shown in ((r"\%", "%"), (r"\AA{}", "Å"), (r"\AA", "Å"), ("~", " "), ("$", "")):
