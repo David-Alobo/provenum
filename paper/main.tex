@@ -1,0 +1,28 @@
+% provenum manuscript. Build: cd paper && latexmk main.tex (outputs in build/).
+\documentclass[11pt]{article}
+
+\input{preamble}
+
+\title{Keeping the numbers in a manuscript tied to the data that produced them}
+\author{David Obeh Alobo\\
+  \small University of Glasgow\\
+  \small \texttt{2941522A@student.gla.ac.uk}\\
+  \small \todo{co-authors and affiliations}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\input{sections/abstract}
+
+\input{sections/introduction}
+\input{sections/design}
+\input{sections/evaluation}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/availability}
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

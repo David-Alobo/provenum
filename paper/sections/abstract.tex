@@ -1,0 +1,18 @@
+\begin{abstract}
+Numbers in the text of a scientific paper are usually typed by hand from analysis output, and
+they drift from it when the analysis is rerun or the text is edited. We describe \pv{}, a tool
+that generates every reported value from the result tables an analysis writes, so the manuscript
+cites a table cell (\texttt{\textbackslash val\{table/key/column\}}) instead of a typed number.
+For papers that already contain typed numbers, a language model proposes which table cell each
+number reports and the program accepts the proposal only if the value in that cell rounds to the
+written text; the model is never asked whether a number is correct. We tested the approach on
+the Results section of one manuscript, a docking benchmark with 307 decimal numbers, by
+corrupting each number in its last digit. Matching numbers to tables by value alone caught 1\% of
+the corruptions and matching by surrounding words caught 20\%. With Claude Sonnet proposing
+cells, all 134 anchored corruptions were caught and no correct number was flagged. Open models
+run locally were not reliable when choosing from the whole table catalogue (Qwen2.5-32B proposed
+139 wrong cells for 68 right ones) but agreed with Claude on 98\% of numbers when choosing only
+among cells whose value already matched. Across two migrations, 312 of the 369 decimal numbers in
+that Results section now come from data, and the compiled text of the paper did not change.
+\result{one sentence on the local-model benchmark}. \pv{} is open source under the MIT licence.
+\end{abstract}

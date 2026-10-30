@@ -1,0 +1,29 @@
+% Packages and macros for the provenum manuscript.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{lineno}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{figures/}}
+\onehalfspacing
+\linenumbers
+\lstset{basicstyle=\ttfamily\small, columns=fullflexible, breaklines=true, frame=single,
+  framerule=0.3pt, xleftmargin=0.5em, xrightmargin=0.5em}
+
+% Placeholders that stay visible until filled. Search for \result and \todo before submitting.
+\newcommand{\result}[1]{\textcolor{orange}{[#1]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+% Notation.
+\newcommand{\pv}{\texttt{provenum}}
+\newcommand{\val}{\texttt{\textbackslash val\{\}}}

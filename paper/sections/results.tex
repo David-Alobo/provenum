@@ -1,0 +1,79 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Corruption test}
+
+Table~\ref{tab:corruption} gives the main result. Matching by value alone caught 1\% of the
+corrupted numbers. The 25 tables hold thousands of values, so a corrupted number almost always
+rounds to some unrelated cell and passes. Matching by surrounding words caught 20\% overall. Where the audit did choose a cell it
+was usually the right one, and 88\% of corruptions among those numbers were caught, but it
+flagged 44 correct numbers whose words pointed at the wrong cell.
+
+\begin{table}[t]
+\centering
+\caption{Corrupted numbers caught on the DockPrepBench Results section (307 decimals, each changed
+by three units in its last digit).}
+\label{tab:corruption}
+\begin{tabular}{lll}
+\toprule
+Method & Corruptions caught & Correct numbers flagged \\
+\midrule
+Value only & 1\% & 0 \\
+Context (audit) & 20\% (88\% where anchored) & 44 \\
+Model proposes, code verifies & 134 of 134 anchored & 0 \\
+\quad (Claude Sonnet, blind mode) & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+With Claude Sonnet proposing addresses in blind mode, 134 numbers were anchored and every one of
+their corruptions was caught, with no correct number flagged. The remaining numbers were not
+anchored, either because the model abstained or because its address did not reproduce the
+original value, so the test says nothing about them. Coverage, not accuracy, is the limit of this
+configuration.
+
+\subsection{Local models}
+
+Blind mode was not reliable with the local models. Qwen2.5-14B gave the right address for 43
+numbers and a wrong one for 205; Qwen2.5-32B for 68 and 139. A wrong address cannot migrate a
+number unless its value happens to round to the text, but in an audit each one is reported as a
+possible error that the author has to look at.
+
+Shortlist mode removes most of the difficulty. Table~\ref{tab:shortlist} compares the cells chosen
+by the Qwen models with Claude's. Qwen2.5-32B linked fewer numbers than 14B but agreed with Claude
+more often, and where the two Qwen models chose the same cell they agreed with Claude on 109 of
+110 numbers.
+
+\begin{table}[t]
+\centering
+\caption{Shortlist (migration) mode with local models, compared with Claude Sonnet's blind-mode
+addresses.}
+\label{tab:shortlist}
+\begin{tabular}{lll}
+\toprule
+Model & Numbers linked & Same cell as Claude \\
+\midrule
+Qwen2.5-14B & 177 & 123 of 132 (93\%) \\
+Qwen2.5-32B & 129 & 114 of 116 (98\%) \\
+14B and 32B agree & 120 & 109 of 110 (99\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Migrating the manuscript}
+
+The section was migrated in two passes. The first, with Claude's blind-mode addresses, replaced
+124 numbers. The second offered the 245 numbers still typed by hand to Claude in shortlist mode;
+it chose a cell for 211 and ``none'' for 34, and \texttt{migrate} replaced 188 where the formatted
+value reproduced the text. After both passes 312 of the 369 decimal numbers in the section come
+from data. The text extracted from the compiled PDF was identical before and after each pass,
+which confirms that every replacement reproduces what was written.
+
+The audit also found 28 numbers that no generated table produces. These are values computed by
+hand or in one-off scripts, and they are the numbers most at risk after a rerun; the fix is to
+add them to a table, not to the text.
+
+\subsection{Model benchmark}
+
+\result{Table of right / wrong / caught wrong / abstain / false anchor for the eight local models in
+both modes, from \texttt{bench\_results.csv}, and two or three sentences on the ranking.}

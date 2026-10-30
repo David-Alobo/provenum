@@ -1,0 +1,87 @@
+\section{Design}
+\label{sec:design}
+
+\subsection{Values from tables}
+
+A specification file lists the CSV tables to expose, the columns that identify a row and a format
+for each column (Listing~\ref{lst:spec}). \texttt{provenum values} reads the tables and writes one
+LaTeX file that defines a value for every cell. The manuscript loads that file and, where it
+would have written \texttt{+6.8}, writes
+\begin{center}
+\texttt{\textbackslash val\{comparisons/vina/top1/box\_padding\_2/delta\_pts\}}.
+\end{center}
+The address is the table name, the key values in order, and the
+column.
+
+\begin{lstlisting}[caption={Part of a specification. Proportions default to percentages with one
+decimal; other columns are formatted by name.},label={lst:spec},float=t]
+[[table]]
+file = "comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "pct1"
+formats = { delta_pts = "+f1", p_holm = "p", gained = "int" }
+\end{lstlisting}
+
+Formatting is part of the specification rather than the text because the same cell can be
+reported in more than one way. The formats cover the forms we met in practice: percentages
+(\texttt{pct0}--\texttt{pct2}), fixed decimals (\texttt{f0}--\texttt{f4}), significant figures,
+integers, p-values (two significant figures, scientific notation below 0.001), a \texttt{+} prefix
+that always shows the sign, and a \texttt{\textasciitilde} prefix for ratios and other magnitudes
+quoted approximately. Values are wrapped in \texttt{\textbackslash ensuremath} so they work in
+text and in mathematics. An address that does not exist prints a bold ``??'' in the PDF and a
+LaTeX warning, so a broken reference is visible at the next build.
+
+\subsection{Lint}
+
+\texttt{provenum lint} lists every number in the manuscript that is not produced by
+\texttt{\textbackslash val\{\}}. Integers below 10 and plausible years are skipped as too
+ambiguous to trace. With \texttt{--strict} it exits with an error if any hand-typed number
+remains, which lets a continuous-integration job keep a migrated paper migrated. A GitHub Action
+regenerates the values file from the tables and fails if it differs from the committed one, so
+a table changed without rebuilding the values is caught as well.
+
+\subsection{Migration: model proposes, code verifies}
+\label{sec:anchor}
+
+Migration needs, for every hand-typed number, the cell it reports. \texttt{provenum anchor}
+extracts each number with its sentence and paragraph, marks the number in the sentence, and asks
+a language model for a cell address. The model sees a catalogue of the addressable values: for
+each table, the address pattern, the allowed key values and the columns, but not the cell values
+themselves. It answers in a fixed JSON schema with an address or \texttt{null}.
+
+The answer is checked by code. \texttt{judge} looks up the proposed cell, formats its value the
+way the text writes the number (same number of decimals, sign and notation), and compares. There
+are four outcomes: the value reproduces the text (\emph{traced}); the address exists but the
+value differs (\emph{mismatch}); the address does not exist (\emph{bad path}); or the model
+declined (\emph{abstained}). \texttt{provenum migrate} replaces only traced numbers. A mismatch is
+reported for the author to read: either the model chose the wrong cell or the text is wrong, and
+the program cannot tell which.
+
+We call this blind mode, because the model chooses without seeing values. A second mode,
+shortlist mode, is for migration only. The program first finds every cell whose formatted value
+equals the written number, and the model chooses among those cells or answers ``none''. This is a
+much easier task, but it cannot find errors: a wrong number has no matching cell, so it is never
+offered. Shortlist mode is therefore used to convert numbers that are already right, and blind
+mode to look for numbers that are wrong.
+
+The model is never asked whether a number is correct. Its only output is an address, and an
+address is either confirmed by the value or not. This bounds the damage a model can do. In blind
+mode a wrong address cannot pass the value check unless the wrong cell happens to hold the same
+rounded value. That case does occur (Section~\ref{sec:results}), and it is not harmless: the text
+renders correctly today but would follow the wrong cell after a rerun. We return to it in
+Section~\ref{sec:discussion}.
+
+\subsection{Audit without a model}
+
+\texttt{provenum audit} checks numbers against the tables without changing the text and without a
+model. It scores each cell that could match a number by the overlap between the sentence's words
+and the cell's key values and column name, after a project vocabulary maps phrases such as
+``2~\AA{} box'' to key values such as \texttt{box\_padding\_2}. We include it as a baseline for
+anchoring.
+
+\subsection{Local models}
+
+The model interface uses the Ollama HTTP API through the Python standard library, so \pv{} has no
+runtime dependencies and the manuscript need not leave the author's machine. Requests use
+temperature 0 and a JSON schema for the reply. For Qwen3 models the reasoning phase is turned off,
+since the other models answer directly and the task is a single choice.

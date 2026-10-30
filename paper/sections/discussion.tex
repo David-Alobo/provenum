@@ -1,0 +1,30 @@
+\section{Discussion}
+\label{sec:discussion}
+
+The design separates two questions that are easy to run together: which quantity does a sentence
+report, and is the number right. The first needs reading; the second needs arithmetic. In \pv{} a
+language model answers only the first and code answers the second. On this manuscript that
+division gave no false alarms with a strong model, and with weaker models it turned wrong answers
+into lost coverage rather than wrong conclusions.
+
+The division does not remove every risk. When a wrong cell holds the same rounded value as the
+right one, the value check passes. The paper renders correctly, but after a rerun the text would
+follow the wrong cell. The DockPrepBench tables contain many such coincidences, because rates
+round to one decimal and the same rate recurs across engines and arms. Two safeguards are
+available: review migrations before accepting them, or accept only addresses on which two models
+agree, which on this manuscript left one disagreement with Claude in 110 numbers.
+
+The evaluation has clear limits. It uses one manuscript, written by the author of the tool, in one
+field, with tables designed for it. The corruptions are synthetic and of one kind, a change in the
+last digit; a number attached to the wrong arm, or a sign error, could behave differently. Integers
+were left out. The shortlist comparison uses Claude's answers as the reference before an
+independent gold set existed, and the gold set that now exists comes from the same migration.
+Whether these results hold on other papers is untested. A corpus of manuscripts by other authors,
+with their analysis output, is the obvious next step, and is needed before the approach can be
+recommended for general use.
+
+\pv{} also asks something of the author: the analysis has to write its results as tables with
+stable keys. Many projects already do this, but a number computed in a notebook cell and pasted
+into the text cannot be traced until it is written to a table. In our experience this is a useful
+constraint, since the 28 untraceable numbers found by the audit were exactly the values most
+likely to go stale.

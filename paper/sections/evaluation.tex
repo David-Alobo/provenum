@@ -1,0 +1,43 @@
+\section{Evaluation}
+\label{sec:evaluation}
+
+All experiments use the Results section of the DockPrepBench manuscript and the 25 tables its
+analysis scripts write. The section and the tables are fixed at their state on 30 October 2026;
+the inputs, model answers and scoring script are in the repository
+(\texttt{examples/results/}).
+
+\subsection{Corruption test}
+
+What matters for a checking tool is whether it catches wrong numbers, and a manuscript in good
+shape contains few of those to count. We therefore made them. The extractor found 307 decimal
+numbers in the original Results section (integers were left out because counts such as ``428
+complexes'' match too many cells). For each number we made a copy changed by three units in its
+last digit, so 46.3 became 46.6, and asked whether each method would flag it. We also counted
+correct numbers flagged, the false alarms an author would have to read.
+
+Three methods were compared. \emph{Value only}: a number passes if any cell, or any difference
+between two cells in the same row, rounds to it. \emph{Context}: the audit of
+Section~\ref{sec:design}. \emph{Model
+proposes, code verifies}: blind-mode anchoring, with a corruption caught when the model's address
+was traced for the original number and the corrupted number fails the value check against the
+same address. The proposing models were Claude Sonnet, Qwen2.5-14B-Instruct and
+Qwen2.5-32B-Instruct~\cite{qwen2024qwen25}; the Qwen models ran in Ollama on one GPU. Shortlist
+mode was run with the two Qwen models and scored by agreement with Claude's blind-mode addresses,
+since there was no independent gold standard at that stage.
+
+\subsection{Gold-standard benchmark}
+
+Once the section had been migrated, every \texttt{\textbackslash val\{\}} in it was a
+human-written sentence with a known correct address, checked twice: by the value check and by the
+compiled text being unchanged. The benchmark script turns each \texttt{\textbackslash val\{\}}
+back into the number a reader sees, asks a model for its address in both modes, and compares the
+answer with the address it replaced. Two settings quoted in the text that come from no table (the
+protonation pH and the box-scaling factor from earlier work) test whether a model abstains rather
+than guesses.
+
+Each answer is scored as \emph{right} (the gold address), \emph{wrong} (another address),
+\emph{caught wrong} (a wrong address rejected by the value check), \emph{abstain}, or, for the
+settings with no address, \emph{false anchor}. We ran Qwen2.5 at 7, 14 and 32 billion parameters,
+Qwen3 at 8, 14 and 32 billion, and Llama~3.1-8B and Llama~3.3-70B~\cite{grattafiori2024llama3},
+the 70B model quantised to 4 bits. \todo{state GPU, Ollama version and quantisation of the other
+models from the run log}
