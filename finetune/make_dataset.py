@@ -19,13 +19,16 @@ Usage:
 import argparse
 import json
 import random
+import shutil
 import sys
+import tempfile
 from collections import Counter
+from dataclasses import replace
 from pathlib import Path
 
 from provenum.anchor import catalogue, judge, values
 from provenum.llm import ask_prompt, choose_prompt
-from provenum.macros import load_specs
+from provenum.macros import TableSpec, load_specs
 
 
 def examples(items: list[dict], table: dict, cat: str, notes: str, paper: str) -> list[dict]:
@@ -99,11 +102,20 @@ def from_papers(papers: Path, out: Path, val_frac: float, drop_frac: float, seed
             for it in items:
                 if it["gold"] and it["gold"].startswith(prefix):
                     it["gold"], it["hidden"] = None, True
-        table = values(specs, d / "tables")
-        cat = catalogue(specs, d / "tables")
         notes = (d / "notes.txt").read_text(encoding="utf-8")
         split = "test" if d.name.startswith("test") else "val" if d.name in val_ids else "train"
-        splits[split] += examples(items, table, cat, notes, d.name)
+        pool = [o for o in dirs if o != d and _split(o.name, val_ids) == split]
+        with tempfile.TemporaryDirectory() as tmp:
+            # Real papers expose many more tables than the 3-4 a synthetic paper has
+            # (DockPrepBench: 28). Tables from other papers of the same split make catalogues
+            # of realistic size, and add the same-value coincidences of a large catalogue.
+            specs, n_extra = _with_distractors(specs, d, pool, Path(tmp), rng)
+            table = values(specs, tmp)
+            cat = catalogue(specs, tmp)
+            rows = examples(items, table, cat, notes, d.name)
+        for r in rows:
+            r["meta"]["distractors"] = n_extra
+        splits[split] += rows
     stats = {}
     for name, rows in splits.items():
         random.Random(seed).shuffle(rows)
@@ -112,6 +124,59 @@ def from_papers(papers: Path, out: Path, val_frac: float, drop_frac: float, seed
     stats["papers"] = {"train": len(train_ids) - len(val_ids), "val": len(val_ids),
                        "test": sum(d.name.startswith("test") for d in dirs)}  # fmt: skip
     return stats
+
+
+PREFIXES = ["secondary", "sensitivity", "subset", "replicate", "pilot", "external", "followup",
+            "robust", "supplementary", "exploratory"]  # fmt: skip
+N_DISTRACTORS = [0, 0, 2, 4, 8, 12, 16, 24]
+
+
+def _split(name: str, val_ids: set[str]) -> str:
+    """
+    The split a paper belongs to.
+
+    Args:
+        name (str): Paper id.
+        val_ids (set[str]): Ids of validation papers.
+
+    Returns:
+        str: "test", "val" or "train".
+    """
+    return "test" if name.startswith("test") else "val" if name in val_ids else "train"
+
+
+def _with_distractors(specs: list[TableSpec], paper: Path, pool: list[Path], tmp: Path,
+                      rng: random.Random) -> tuple[list[TableSpec], int]:  # fmt: skip
+    """
+    Copy a paper's tables, plus tables from other papers, into one directory with one spec.
+
+    Args:
+        specs (list[TableSpec]): The paper's own specs (after any dropped table).
+        paper (Path): The paper's directory.
+        pool (list[Path]): Other papers of the same split to borrow tables from.
+        tmp (Path): Empty directory to write the tables to.
+        rng (random.Random): Random source.
+
+    Returns:
+        tuple[list[TableSpec], int]: Specs in catalogue order (own and borrowed tables shuffled
+            together), and the number of borrowed tables.
+    """
+    out = []
+    for s in specs:
+        shutil.copy(paper / "tables" / s.file, tmp / s.file)
+        out.append(s)
+    taken = {s.file for s in out}
+    want = rng.choice(N_DISTRACTORS)
+    for other in rng.sample(pool, k=min(len(pool), want)):
+        s = rng.choice(load_specs(other / "spec.toml"))
+        name = f"{rng.choice(PREFIXES)}_{s.file}"
+        while name in taken:
+            name = f"{rng.choice(PREFIXES)}_{name}"
+        taken.add(name)
+        shutil.copy(other / "tables" / s.file, tmp / name)
+        out.append(replace(s, file=name))
+    rng.shuffle(out)
+    return out, len(out) - len(specs)
 
 
 def from_manuscript(args: argparse.Namespace) -> dict:
