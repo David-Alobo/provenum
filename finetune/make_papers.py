@@ -109,12 +109,15 @@ VOCAB_SCHEMA = {
         "study": {"type": "string"},
         "entity": {"$ref": "#/$defs/factor"},
         "condition": {"$ref": "#/$defs/factor"},
-        "metrics": {"type": "array", "items": {"$ref": "#/$defs/term"}},
+        "metrics": {"type": "array", "items": {"$ref": "#/$defs/term"}, "minItems": 1,
+                    "maxItems": 3},
         "measure": {"type": "object", "properties": {"id": {"type": "string"},
                     "phrase": {"type": "string"}, "unit": {"type": "string"}},
                     "required": ["id", "phrase", "unit"]},
-        "predictors": {"type": "array", "items": {"$ref": "#/$defs/term"}},
-        "subgroups": {"type": "array", "items": {"$ref": "#/$defs/term"}},
+        "predictors": {"type": "array", "items": {"$ref": "#/$defs/term"}, "minItems": 2,
+                       "maxItems": 4},
+        "subgroups": {"type": "array", "items": {"$ref": "#/$defs/term"}, "minItems": 2,
+                      "maxItems": 3},
         "settings": {"type": "array", "items": {"type": "string"}},
     },
     "required": ["study", "entity", "condition", "metrics", "measure", "predictors",
@@ -123,7 +126,8 @@ VOCAB_SCHEMA = {
         "term": {"type": "object", "properties": {"id": {"type": "string"},
                  "phrase": {"type": "string"}}, "required": ["id", "phrase"]},
         "factor": {"type": "object", "properties": {"name": {"type": "string"},
-                   "values": {"type": "array", "items": {"$ref": "#/$defs/term"}}},
+                   "values": {"type": "array", "items": {"$ref": "#/$defs/term"},
+                              "minItems": 3, "maxItems": 6}},
                    "required": ["name", "values"]},
     },
 }  # fmt: skip
@@ -582,7 +586,8 @@ def stories(vocab: dict, built: dict, rng: random.Random) -> list[list[tuple[dic
 
 
 def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], setting: str | None,
-                    model: str, host: str, rng: random.Random) -> str | None:  # fmt: skip
+                    model: str, host: str, rng: random.Random
+                    ) -> tuple[str | None, list[dict]]:  # fmt: skip
     """
     Ask the model for a paragraph with placeholders and check it.
 
@@ -596,7 +601,8 @@ def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], settin
         rng (random.Random): Random source (temperature).
 
     Returns:
-        str | None: Paragraph with {{k}} placeholders, or None after three failed attempts.
+        tuple[str | None, list[dict]]: Paragraph with {{k}} placeholders (None after three
+            failed attempts) and the rejected attempts with the reason.
     """
     listing = "\n".join(f"{{{{{k}}}}}: {d} (shown as {f['shown']})"
                         for k, (f, d) in enumerate(facts, 1))  # fmt: skip
@@ -604,13 +610,21 @@ def write_paragraph(study: str, unit: str, facts: list[tuple[dict, str]], settin
     prompt = WRITE_PROMPT.format(study=study, unit=unit, extra=extra, facts=listing)
     schema = {"type": "object", "properties": {"paragraph": {"type": "string"}},
               "required": ["paragraph"]}  # fmt: skip
+    failures = []
     for _ in range(3):
         text = _chat(prompt, schema, model, host, rng.uniform(0.6, 1.0))["paragraph"]
-        ok = all(text.count(f"{{{{{k}}}}}") == 1 for k in range(1, len(facts) + 1))
-        stray = re.sub(r"\{\{\d+\}\}", "", text.replace(setting or "\0", ""))
-        if ok and not re.search(r"\d\.\d", stray) and (not setting or setting in text):
-            return text
-    return None
+        counts = {k: text.count(f"{{{{{k}}}}}") for k in range(1, len(facts) + 1)}
+        stray = re.search(r"\d\.\d", re.sub(r"\{\{\d+\}\}", "", text.replace(setting or "\0", "")))
+        if any(c != 1 for c in counts.values()):
+            reason = f"placeholder counts {counts}"
+        elif stray:
+            reason = f"number written out: {stray.group()}"
+        elif setting and setting not in text:
+            reason = "setting not verbatim"
+        else:
+            return text, failures
+        failures.append({"reason": reason, "text": text})
+    return None, failures
 
 
 def _latex(text: str) -> str:
@@ -770,13 +784,14 @@ def make_paper(pid: str, field: str, out: Path, model: str, host: str, seed: int
     vocab = _clean_vocab(_chat(VOCAB_PROMPT.format(field=field), VOCAB_SCHEMA, model, host,
                                rng.uniform(0.7, 1.0)))  # fmt: skip
     built = build_tables(vocab, rng)
-    written, dropped = [], 0
+    written, dropped, rejected = [], 0, []
     for facts in stories(vocab, built, rng):
         setting = (
             rng.choice(vocab["settings"]) if vocab["settings"] and rng.random() < 0.25 else None
         )
-        text = write_paragraph(vocab["study"], vocab["measure"]["unit"], facts, setting,
-                               model, host, rng)  # fmt: skip
+        text, failures = write_paragraph(vocab["study"], vocab["measure"]["unit"], facts,
+                                         setting, model, host, rng)  # fmt: skip
+        rejected += failures
         if text is None:
             dropped += 1
             continue
@@ -802,7 +817,7 @@ def make_paper(pid: str, field: str, out: Path, model: str, host: str, seed: int
     (d / "items.json").write_text(json.dumps(items, indent=1, ensure_ascii=False), encoding="utf-8")
     meta = {"id": pid, "field": field, "seed": seed, "model": model, "vocab": vocab,
             "names": built["names"], "paragraphs": len(written), "dropped": dropped,
-            "items": len(items)}  # fmt: skip
+            "items": len(items), "rejected": rejected}  # fmt: skip
     (d / "meta.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False), encoding="utf-8")
     return {k: meta[k] for k in ("id", "field", "items", "paragraphs", "dropped")}
 
