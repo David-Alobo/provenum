@@ -21,7 +21,10 @@ import time
 from collections import Counter, defaultdict
 from pathlib import Path
 
-PREFIX = '{"path": '  # every reply starts here, as under provenum's JSON schema
+# Every reply starts here, as under provenum's JSON schema. It ends at the colon: Qwen's tokenizer
+# writes ' "' as one token, so a prefix ending in a space forces a split the fine-tuned model never
+# saw in training, and it then often answered {"path": 0}.
+PREFIX = '{"path":'
 
 
 def parse(reply: str, meta: dict) -> str | None:
