@@ -1,0 +1,17 @@
+8592 candidate values; 778 numbers; 7s
+real text: {'unanchored-untraced': 11, 'unanchored-traced': 632, 'unsourced': 28, 'mismatch': 44, 'traced': 63}
+decimals: 562; originals traced (anchored): 26; corruptions caught among those: 23 (88%)
+overall catch rate on all decimals: 20%
+false alarms (real numbers flagged mismatch): 44
+    41       16 expected 100 [n] rdock box_padding_6 site failed | returned: 89 in the right site in the wrong binding mode and 20 in the
+    50      183 expected 4 [replicates] vina | four replicates, 183 complexes always succeeded, 212 always failed and
+    50      212 expected 4 [replicates] vina | four replicates, 183 complexes always succeeded, 212 always failed and
+    50       33 expected 0 [failed] gnina baseline | four replicates, 183 complexes always succeeded, 212 always failed and
+    79       52 expected 31 [gained] gnina pb_valid ligand_dimorphite | RDKit gave 50.7\% (+4.4 points; 52 gained, 33 lost; unadjusted $p = 0.
+   150      103 expected 11 [gained] top1 vina | neural network, reached 62.6\% [57.9, 67.1] at baseline, 16.4 points a
+   159      105 expected 11 [gained] top1 vina | 33.9] at baseline, 16.8 points below Vina (33 complexes gained, 105 lo
+   166     -4.0 expected 100 [p_holm] rdock ligand_dimorphite charge_changed s | significantly: protonation gave +0.2 points and the RDKit conformer $-
+   179     41.1 expected 29.44 [baseline] top1 rdock | (58.6--65.7\%) and 23.8 points for rDock (17.3--41.1\%). At the baseli
+   225      5.5 expected 11 [gained] top1 vina | for Vina (+5.5 points; 25 gained, 8 lost; Holm $p = 0.023$) and Smina 
+   228      428 expected 29.44 [baseline] rdock top1 ligand_dimorphite | Holm $p = 0.08$) against 3.3 points on all 428. rDock's baseline was 2
+   234     -5.5 expected 79.14 [p_holm] rdock pb_valid ligand_dimorphite | lowered rDock's \pbvalid{} success significantly ($-5.5$ points; Holm 

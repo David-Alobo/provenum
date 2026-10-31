@@ -1,0 +1,10 @@
+70.8	agreement_levels/gnina/2/high	wrong (coincidence)	model: untraced, pick None
+0.4	noise/vina/top1_sd	correct	model: traced, pick noise/vina/top1_sd
+8.9	agreement_levels/smina/2/low	wrong (coincidence)	model: untraced, pick None
+10.5	agreement_subsets/rdock/5/unanimous_share	wrong (coincidence)	model: untraced, pick None
+7.0	subset_308/comparisons/gnina/top1/box_padding_2/delta_high	wrong (coincidence)	model: untraced, pick None
+23.8	agreement_levels/rdock/2/low	wrong (coincidence)	model: untraced, pick None
+6.2	robust_no_cofactor_comparisons/gnina/pb_valid/box_padding_8/delta_high	wrong (coincidence)	model: untraced, pick subset_308/comparisons/gnina/top1/ligand_dimorphite/delta_pts
+10.5	agreement_subsets/rdock/5/unanimous_share	wrong (coincidence)	model: untraced, pick None
+1.7	comparisons/gnina/pb_valid/ligand_dimorphite/delta_high	wrong (coincidence)	model: untraced, pick None
+0.093	astex_h2_h3/gnina/H3/diff_vs_cnn_high	wrong (coincidence)	model: untraced, pick agreement_signals/gnina/cnn/diff_low_vs_prep

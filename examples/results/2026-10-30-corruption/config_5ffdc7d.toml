@@ -1,0 +1,13 @@
+# numcheck config for the DockPrepBench manuscript: how its prose names table labels.
+
+exclude = ["agreement_per_complex.csv", "*ligand_properties.csv", "robust_cofactor_list.csv"]
+
+[aliases]
+'(\d)\s*(?:å|\\angstrom|\\aa\{?\}?)?\s*(?:box|padding)' = "box_padding_\\1"
+'(?:padding|box)\s*(?:of\s*)?(\d)\s*(?:å|\\angstrom)?' = "box_padding_\\1"
+'protonat\w*' = "ligand_dimorphite"
+'rdkit\s*(?:start\s*)?conformer|start\s*conformer|regenerated\s*conformer' = "ligand_rdkit_conformer"
+'\bauroc\b' = "auroc"
+'\bholm\b' = "p_holm"
+'wilson' = "low high"
+'\bbaseline\b' = "baseline"

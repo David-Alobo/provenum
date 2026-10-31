@@ -1,0 +1,22 @@
+You are the anchoring step of a tool that links numbers in a scientific manuscript to the table value they report. For each item, a program has already listed the candidate table paths whose value equals the number; most candidates are coincidences. Choose the ONE candidate whose quantity the sentence actually reports, or null if none of them is what the sentence means. Do not open any other file, CSV or the repository: decide from the sentence, paragraph and candidate paths only.
+
+Input: SCRATCH/anchor2\items.json
+Each item: id, line, number (canonical), written (as in the text), sentence (target marked [[like this]]), paragraph, candidates (paths), n_candidates.
+
+How to read paths (table/keys.../column):
+- summary/<engine>/<run>/<top1|top1_low|top1_high|pb_valid|...>: success rates and Wilson bounds on the PoseBusters set (428). Engines vina, smina, gnina, rdock. Runs baseline, box_padding_2/6/8, ligand_dimorphite (protonation pH 7.4), ligand_rdkit_conformer, and for vina also follow-ups and baseline_seed1-3.
+- comparisons/<engine>/<top1|pb_valid>/<arm>/<delta_pts|delta_low|delta_high|gained|lost|p|p_holm|...>: arm vs baseline. delta_* are points.
+- subset_308/... and robust_no_cofactor_... : same structures on the 308-complex subset and on the 184 complexes without cofactors.
+- engines/<engine_a>/<engine_b>/<all|shared>/<rate_a|rate_b|diff_pts|only_a|only_b|p|n>: engine vs engine at baseline; shared = complexes both docked (412 for Vina pairs). diff_pts is the magnitude of the gap.
+- sampling/<engine>/<run>/<top1|any_pose|top1_miss|failed|n>: counts; any_pose = complexes with any pose below 2 Å.
+- noise/vina/<...>: seed replicates (top1_mean, flips_mean, always_succeed, always_fail, seed_sensitive, seed_stable).
+- posebusters_published/<all|docked>/<theirs_top1|theirs_top1_low|theirs_top1_high|theirs_pb_valid|ours_top1|diff_pts|only_theirs|only_ours|agree|p|theirs_solved_our_failures>: comparison with the PoseBusters authors' own Vina run.
+- followup_interaction/<2|4|6|8>/<rate_a (supplied ligand)|rate_b (protonated)|*_low|*_high|diff_pts|gained|lost|p|p_holm|vs_baseline_padding_p_holm>; followup_combined/box_padding_2+ligand_dimorphite/<rate_b|low_b|high_b|diff_pts|gained|lost|p> (vs baseline); followup_gyration/<vs_baseline|vs_box_padding_2|vs_baseline_inside|vs_baseline_outside>/<rate_a|rate_b|...|gained|lost|p|n>; followup_gyration_geometry/<smaller_than_baseline|median_ratio_to_baseline|smaller_than_box2|median_ratio_to_box2|crystal_partly_outside>.
+- agreement_signals/<engine>/<signal>/<auroc|low|high|diff|diff_low|diff_high|diff_vs_prep|...>: in-sample AUROCs; signals score, prep_agree, engine_agree, prep_plus_engine, cnn, seed_agree; diff = vs score; *_vs_prep = vs prep_agree.
+- agreement_validation/<engine>/<score|prep_agree|score+prep_agree|best_pair>/<auroc|auroc_lo|auroc_hi|brier|...|lr_stat|lr_p>: cross-validated.
+- agreement_levels/<engine>/<0-5>/<rate|low|high|n>; agreement_subsets/<engine>/<k>/<auroc_mean|auroc_min|auroc_max|...>; agreement_consensus/<top1|pb_valid>/<engine>/<baseline|consensus|diff|gained|lost|p|p_holm|changed_pose>; agreement_oracle/<engine>/<baseline|best_of_arms|best_of_seeds>; agreement_missing/<engine>/...; agreement_pose_change/<engine>/<arms_moved|seeds_moved>.
+- robust_threshold/<engine>/<run>/<threshold>/<site|mode>; robust_cofactor_failures/<engine>/baseline/<with_cofactor|top1_success_with_cofactor|failed_on_cofactor_only>.
+- astex_baseline/<engine>/<rate|low|high>; astex_h1/<engine>/<baseline|box2|diff_pts|diff_low|diff_high|gained|lost|p_holm>; astex_h2_h3/<engine>/<H2|H3>/<auroc|low|high|score_auroc|diff_vs_score|diff_low|diff_high|cnn_auroc|diff_vs_cnn|...>; astex_h4/<engine>/<rate|low|high|n|pb_rate|...>.
+Match engine, arm, metric, dataset (PoseBusters 428 vs 308 subset vs no-cofactor 184 vs Astex 85) and statistic exactly. A bracketed pair after a value is that value's interval bounds. If the sentence's quantity is not among the candidates, answer null.
+
+Output: write a JSON array to SCRATCH/anchor2\answers.json with {"id": <id>, "path": "<one of the candidates>" or null} for all 245 items. Reply with a one-line count of paths and nulls.

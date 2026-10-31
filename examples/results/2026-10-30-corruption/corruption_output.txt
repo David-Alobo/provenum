@@ -1,0 +1,13 @@
+prose items not found among the extracted decimals: 0
+all decimals
+  value only, corruptions caught: 13/562 (2.3%)
+  value only, correct numbers flagged: 4/562 (0.7%)
+  context, corruptions caught: 113/562 (20.1%)
+  context, correct numbers flagged (mismatch): 29/562 (5.2%)
+  context, corruptions caught where the original is anchored and traced: 23/26 (88.5%)
+prose decimals
+  value only, corruptions caught: 10/307 (3.3%)
+  value only, correct numbers flagged: 4/307 (1.3%)
+  context, corruptions caught: 57/307 (18.6%)
+  context, correct numbers flagged (mismatch): 26/307 (8.5%)
+  context, corruptions caught where the original is anchored and traced: 8/11 (72.7%)

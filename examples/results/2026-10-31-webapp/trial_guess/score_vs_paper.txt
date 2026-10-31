@@ -1,0 +1,33 @@
+different cell: app followup_gyration/vs_baseline_outside/diff_high = 6.1; paper posebusters_published/all/diff_pts
+    [47.6,57.0]top-1successand51.2\%\pbvalidsuccess,6.1pointsaboveourbaseline
+no \val in paper there: app agreement_levels/gnina/2/high = 70.8; paper None
+    \SI2\angstromwasamongtheninereturnedfor303complexes(70.8\%),butrankedfirst
+different cell: app summary/rdock/box_padding_6/top1_low = 16.4; paper engines/gnina/vina/all/diff_pts
+    neuralnetwork,reached62.6\%[57.9,67.1]atbaseline,16.4pointsaboveVina(103
+no \val in paper there: app agreement_levels/smina/2/low = 8.9; paper None
+    Thespreadoftop-1successoverthesixprotocols(baselineandfivearms)was8.9pointsforVina
+no \val in paper there: app agreement_subsets/rdock/box_padding_2+box_padding_6+box_padding_8+ligand_dimorphite+ligand_rdkit_conformer/unanimous_share = 10.5; paper None
+    (44.2--53.0\%),10.5pointsforSmina(44.2--54.7\%),7.0poin
+no \val in paper there: app subset_308/comparisons/gnina/top1/box_padding_2/delta_high = 7.0; paper None
+    (44.2--53.0\%),10.5pointsforSmina(44.2--54.7\%),7.0pointsforGnina
+no \val in paper there: app agreement_levels/rdock/2/low = 23.8; paper None
+    (58.6--65.7\%)and23.8pointsforrDock(17.3--41.1\%).Attheba
+different cell: app summary/rdock/box_padding_6/top1_low = 16.4; paper engines/gnina/vina/all/diff_pts
+    enginesspanned33.2points,fromrDocktoGnina,andGninaledVinaby16.4.Thesespreads
+different cell: app summary/rdock/box_padding_6/top1_low = 16.4; paper engines/gnina/vina/all/diff_pts
+    andGnina(6.8of16.4points).ForrDock,theboxalonemovedsuc
+no \val in paper there: app robust_no_cofactor_comparisons/gnina/pb_valid/box_padding_8/delta_high = 6.2; paper None
+    protonationarm,whichloweredsuccessby6.2pointsonthissubset(19gained,38lost;
+no \val in paper there: app agreement_subsets/rdock/box_padding_2+box_padding_6+box_padding_8+ligand_dimorphite+ligand_rdkit_conformer/unanimous_share = 10.5; paper None
+    arm'sflips(oddsratios10.5--37;Holmp<10^-8foreveryarm):withthe
+no \val in paper there: app robust_no_cofactor_comparisons/vina/pb_valid/ligand_rdkit_conformer/p = 0.024; paper None
+    complexes,oddsratio2.5,p=0.024;Gnina1.7;Smina1.6)butnotforrDock(0
+no \val in paper there: app comparisons/gnina/pb_valid/ligand_dimorphite/delta_high = 1.7; paper None
+    complexes,oddsratio2.5,p=0.024;Gnina1.7;Smina1.6)butnotforrDock(0.87),
+no \val in paper there: app astex_h2_h3/gnina/H3/diff_vs_cnn_high = 0.093; paper None
+    0.812;difference0.051[0.011,0.093]).Agreementacrossengines,theestabl
+different cell: app comparisons/rdock/pb_valid/ligand_rdkit_conformer/p = 0.048; paper agreement_signals/smina/engine_agree/diff_vs_prep
+    consensus,wascomparable:betterforSmina(difference0.048[0.009,0.087]),worsefor
+different cell: app robust_no_cofactor_comparisons/vina/pb_valid/ligand_rdkit_conformer/p = 0.024; paper agreement_signals/gnina/prep_plus_engine/diff_vs_prep
+    foreveryengine(by0.024to0.069,allintervalsexcludingzero),
+{'same cell': 67, 'different cell': 6, 'no \\val in paper there': 10}

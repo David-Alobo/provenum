@@ -1,0 +1,15 @@
+# Commands that produced the local-model answer files (recovered from the session transcript,
+# 2026-10-30, run from the DockPrepBench repository root; S = the session's scratch folder holding
+# the files now in this directory). Ollama on maddog, tunnelled to 127.0.0.1:11500.
+# paper/numbers.toml in DockPrepBench listed the same 5 tables as ../../dockprepbench_values.toml.
+
+# Qwen2.5-14B, blind and shortlist (07:55 and 08:00 UTC)
+python -m provenum.cli anchor "$S/results_original.tex" --spec paper/numbers.toml --tables paper/tables --model qwen2.5:14b-instruct --host http://127.0.0.1:11500 --notes ../provenum/examples/dockprepbench_notes.txt --out "$S/answers_qwen14b.json"
+python -m provenum.cli anchor "$S/results_original.tex" --spec paper/numbers.toml --tables paper/tables --model qwen2.5:14b-instruct --host http://127.0.0.1:11500 --notes ../provenum/examples/dockprepbench_notes.txt --shortlist --out "$S/answers_qwen14b_shortlist.json"
+
+# Qwen2.5-32B, blind (08:09 UTC); shortlist rerun with the provenum copy of the spec (08:15 UTC)
+python -m provenum.cli anchor "$S/results_original.tex" --spec paper/numbers.toml --tables paper/tables --model qwen2.5:32b-instruct --host http://127.0.0.1:11500 --notes ../provenum/examples/dockprepbench_notes.txt --out "$S/answers_qwen32b_blind.json"
+python -m provenum.cli anchor "$S/results_original.tex" --spec ../provenum/examples/dockprepbench_values.toml --tables paper/tables --model qwen2.5:32b-instruct --host http://127.0.0.1:11500 --notes ../provenum/examples/dockprepbench_notes.txt --shortlist --out "$S/answers_qwen32b_shortlist.json"
+
+# Claude Sonnet: not through provenum. A Claude Code subagent (model sonnet) read items.json and
+# catalogue.txt and wrote answers.json in one pass; its full prompt is prompt_claude_sonnet.txt.

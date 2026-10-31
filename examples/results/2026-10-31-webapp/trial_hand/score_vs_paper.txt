@@ -1,0 +1,21 @@
+no \val in paper there: app agreement_levels/gnina/2/high = 70.8; paper None
+    \SI2\angstromwasamongtheninereturnedfor303complexes(70.8\%),butrankedfirst
+no \val in paper there: app noise/vina/top1_sd = 0.4; paper None
+    47.0\%and47.2\%(mean46.8\%,standarddeviation0.4points,range0.9points).The
+no \val in paper there: app agreement_levels/smina/2/low = 8.9; paper None
+    Thespreadoftop-1successoverthesixprotocols(baselineandfivearms)was8.9pointsforVina
+no \val in paper there: app agreement_subsets/rdock/5/unanimous_share = 10.5; paper None
+    (44.2--53.0\%),10.5pointsforSmina(44.2--54.7\%),7.0poin
+no \val in paper there: app subset_308/comparisons/gnina/top1/box_padding_2/delta_high = 7.0; paper None
+    (44.2--53.0\%),10.5pointsforSmina(44.2--54.7\%),7.0pointsforGnina
+no \val in paper there: app agreement_levels/rdock/2/low = 23.8; paper None
+    (58.6--65.7\%)and23.8pointsforrDock(17.3--41.1\%).Attheba
+no \val in paper there: app robust_no_cofactor_comparisons/gnina/pb_valid/box_padding_8/delta_high = 6.2; paper None
+    protonationarm,whichloweredsuccessby6.2pointsonthissubset(19gained,38lost;
+no \val in paper there: app agreement_subsets/rdock/5/unanimous_share = 10.5; paper None
+    arm'sflips(oddsratios10.5--37;Holmp<10^-8foreveryarm):withthe
+no \val in paper there: app comparisons/gnina/pb_valid/ligand_dimorphite/delta_high = 1.7; paper None
+    complexes,oddsratio2.5,p=0.024;Gnina1.7;Smina1.6)butnotforrDock(0.87),
+no \val in paper there: app astex_h2_h3/gnina/H3/diff_vs_cnn_high = 0.093; paper None
+    0.812;difference0.051[0.011,0.093]).Agreementacrossengines,theestabl
+{'same cell': 68, 'no \\val in paper there': 10}

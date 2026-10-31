@@ -1,0 +1,90 @@
+\section{Evaluation}
+\label{sec:evaluation}
+
+All experiments use the Results section of the DockPrepBench manuscript and the tables its
+analysis scripts write. The tables grew while the section was being traced, so the experiments
+used different sets: 24 tables for the value-only and context methods, the 5 tables of the first
+specification for the first model runs, and the 28 tables of the final specification for the
+benchmark and the review trial. Supplementary Section~S1 gives the commit and table set of each
+experiment; the inputs, model answers and scoring scripts are in the repository
+(\texttt{examples/results/}).
+
+\subsection{Corruption test}
+
+What matters for a checking tool is whether it catches wrong numbers, and a manuscript in good
+shape contains few of those to count. We therefore made them. The extractor found 307 decimal
+numbers in the original Results section (integers were left out because counts such as ``428
+complexes'' match too many cells). For each number we made a copy changed by three units in its
+last digit, so 46.3 became 46.6, and asked whether each method would flag it. We also counted
+correct numbers flagged, the false alarms an author would have to read.
+
+Three methods were compared. \emph{Value only}: a number passes if any cell, or any difference
+between two cells in the same row, rounds to it. \emph{Context}: the audit of
+Section~\ref{sec:design}. \emph{Model
+proposes, code verifies}: blind-mode anchoring, with a corruption caught when the model's address
+was traced for the original number and the corrupted number fails the value check against the
+same address. The proposing models were Claude Sonnet, Qwen2.5-14B-Instruct and
+Qwen2.5-32B-Instruct~\cite{qwen2024qwen25}. The Qwen models ran in Ollama on one GPU, through
+\pv{}'s own prompts, one number per request. Claude Sonnet ran as a Claude Code subagent that
+read all 307 numbers and the catalogue at once, with instructions of the same substance but
+different wording; both received the same notes on the project's vocabulary. Supplementary
+Section~S2 gives every prompt. The value-only and context methods were scored on the same 307
+numbers; scores on all 562 decimals in the section, including those inside LaTeX tables, are in
+Supplementary Section~S3. Shortlist
+mode was run with the two Qwen models and scored by agreement with Claude's blind-mode addresses,
+since there was no independent gold standard at that stage.
+
+\subsection{Gold-standard benchmark}
+
+Once the section had been migrated, every \texttt{\textbackslash val\{\}} in it was a
+human-written sentence with a known correct address, checked twice: by the value check and by the
+compiled text being unchanged. The benchmark script turns each \texttt{\textbackslash val\{\}}
+back into the number a reader sees, asks a model for its address in both modes, and compares the
+answer with the address it replaced. This gave 311 numbers. Two settings quoted in the text that
+come from no table (the protonation pH and the box-scaling factor from earlier work), mentioned
+four times in all, test whether a model abstains rather than guesses.
+
+Each answer is scored as \emph{right} (the gold address), \emph{wrong} (another address),
+\emph{caught wrong} (a wrong address rejected by the value check), \emph{abstain}, or, for the
+settings with no address, \emph{false anchor}. We ran Qwen2.5 at 7, 14 and 32 billion parameters,
+Qwen3 at 8, 14 and 32 billion~\cite{yang2025qwen3}, and Llama~3.1-8B and Llama~3.3-70B~\cite{grattafiori2024llama3},
+all with Ollama's Q4\_K\_M 4-bit quantisation, in Ollama 0.12.6 on one NVIDIA RTX 6000 Ada
+(48~GB). Requests used temperature 0, so each model was run once.
+
+\subsection{Fine-tuned model}
+\label{sec:eval-finetune}
+
+Qwen3-32B, the best local model in the benchmark, was fine-tuned with QLoRA~\cite{dettmers2023qlora}
+on 10,268 examples from 304 synthetic papers. In each paper a language model wrote results
+paragraphs around placeholders and code generated the tables and filled them in, so the correct
+cell of every number is known; the examples use \pv{}'s own prompts in both modes. Papers from
+eight fields were held out for testing, and DockPrepBench was not used for training. The base and
+the fine-tuned model were compared example by example, with the same evaluation code, on the 311
+gold numbers and on 40 held-out synthetic papers. Supplementary Section~S7 gives the data, the
+training setup and the loss curve.
+
+\subsection{Review trial}
+\label{sec:eval-review}
+
+To measure what the review lists of Section~\ref{sec:review} do, the application's workflow was
+run without a browser on the original Results section (307 hand-typed decimals in 504 lines). It
+used the 28 tables listed in the manuscript's specification, which hold 3,452 values, and was run
+under two specifications:
+\begin{itemize}
+\item the manuscript's own (\emph{hand});
+\item the one \pv{} guessed from the same tables (\emph{guessed}).
+\end{itemize}
+In each case the numbers were either linked by Qwen3-32B in shortlist mode, with every suggestion
+accepted, or, with no model, linked wherever exactly one cell reproduced the text.
+
+Each link was compared with the hand-checked migration of the same section, matching lines by
+their text and comparing links as cells (table, row and column) rather than as addresses, since
+the two specifications name some cells differently. A link is counted as:
+\begin{itemize}
+\item the \emph{same cell} as the migration;
+\item a \emph{different cell};
+\item a number the migration \emph{left typed}.
+\end{itemize}
+To test whether the model's choices vary between runs, the Qwen3-32B run with the hand
+specification was repeated three times. Inputs, answers, scripts and the classification of every
+disagreement are in the repository (\texttt{examples/results/2026-10-31-webapp/}).

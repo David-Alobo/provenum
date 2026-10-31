@@ -1,0 +1,43 @@
+no \val in paper there: app noise/vina/top1_sd = 0.4; paper None
+    47.0\%and47.2\%(mean46.8\%,standarddeviation0.4points,range0.9points).The
+no \val in paper there: app noise/vina/top1_range = 0.9; paper None
+    47.0\%and47.2\%(mean46.8\%,standarddeviation0.4points,range0.9points).The
+different cell: app comparisons/vina/top1/box_padding_2/baseline = 46.3; paper summary/vina/baseline/top1
+    \SI2\angstromraisedtop-1successfrom46.3\%[41.6,51.0]to53.0\%[48.3,57.7]
+different cell: app comparisons/vina/top1/box_padding_2/arm_rate = 53.0; paper summary/vina/box_padding_2/top1
+    \SI2\angstromraisedtop-1successfrom46.3\%[41.6,51.0]to53.0\%[48.3,57.7]
+different cell: app comparisons/vina/pb_valid/box_padding_2/baseline = 41.8; paper summary/vina/baseline/pb_valid
+    successfrom41.8\%to47.9\%(+6.1points;41gained,15los
+different cell: app comparisons/smina/pb_valid/box_padding_6/delta_pts = \ensuremath{-}1.9; paper comparisons/vina/top1/box_padding_6/delta_pts
+    boxesloweredsuccessslightly:\SI6\angstrompaddingto44.4\%(-1.9points;10
+different cell: app comparisons/vina/top1/box_padding_8/arm_rate = 44.2; paper summary/vina/box_padding_8/top1
+    gained,18lost;Holmp=0.37)and\SI8\angstromto44.2\%(-2.1points;19
+different cell: app comparisons/vina/top1/box_padding_6/p_holm = 0.37; paper comparisons/vina/top1/box_padding_8/p_holm
+    gained,28lost;Holmp=0.37).
+different cell: app engines/smina/vina/shared/rate_b = 48.1; paper engines/gnina/vina/shared/rate_b
+    48.1\%forVinaand63.1\%forGnina(p=3.8x10^
+different cell: app summary/rdock/box_padding_6/pb_valid = 17.3; paper summary/rdock/box_padding_8/top1
+    (58.6--65.7\%)and23.8pointsforrDock(17.3--41.1\%).Atthebaselineprotocolthe
+no \val in paper there: app agreement_consensus/top1/rdock/p_holm = 0.12; paper None
+    andnoengine'sassociationsurvivedcorrection(Holmp\ge0.12).FlipsfromtheRDKitconformershowedno
+different cell: app comparisons/vina/top1/ligand_dimorphite/delta_pts = +2.8; paper followup_interaction/4/diff_pts
+    separatefromthefiveprimaryarms)to+2.8,+1.4and
+different cell: app summary/smina/ligand_rdkit_conformer/top1_low = 45.5; paper followup_gyration/vs_baseline/low_b
+    ligandlayoutsidethebox.Successwas50.2\%[45.5,54.9],abovethebaseline(+4.0
+different cell: app summary/vina/box_padding_2/top1 = 53.0; paper followup_gyration/vs_box_padding_2/rate_a
+    \SI2\angstrombox(53.0\%;p=0.21).Theresultsplitcleanlyonwh
+different cell: app agreement_subsets/rdock/5/auroc_mean = 0.897; paper agreement_signals/rdock/prep_agree/auroc
+    against0.857,0.830,0.863and0.897withallfivearms;asinglearmgave0.67t
+different cell: app agreement_subsets/gnina/2/auroc_max = 0.828; paper agreement_subsets/vina/2/auroc_max
+    tenforallfourengines(0.828,0.810,0.828and0.894),within0.03to0
+different cell: app agreement_validation/gnina/best_pair/brier_hi = 0.162; paper agreement_validation/smina/prep_agree/brier
+    Brierscores(0.118to0.162against0.201to0.234).Agreementadded
+different cell: app agreement_missing/vina/prep_auroc_all = 0.857; paper agreement_signals/vina/prep_agree/auroc
+    0.857.Allofthisremainswithinonedataset;S
+different cell: app agreement_consensus/top1/vina/baseline = 46.3; paper summary/vina/baseline/top1
+    foreveryengine:Vinafrom46.3\%to48.1\%(11gained,3lost),Sminafrom
+different cell: app agreement_consensus/top1/smina/baseline = 47.0; paper summary/smina/baseline/top1
+    foreveryengine:Vinafrom46.3\%to48.1\%(11gained,3lost),Sminafrom47.0\%to
+different cell: app agreement_consensus/top1/gnina/baseline = 62.6; paper summary/gnina/baseline/top1
+    48.6\%(8gained,1lost),Gninafrom62.6\%to65.7\%(19gained,6lost)andrDockfr
+{'same cell': 228, 'no \\val in paper there': 3, 'different cell': 18}
