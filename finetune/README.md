@@ -35,10 +35,65 @@ DockPrepBench manuscript is only used for testing.
 `choose_prompt`, the functions `provenum anchor` uses, so a model is trained on exactly what it
 will see.
 
+## Model and training setup
+
+```
+ one example per number: the exact prompt provenum sends, and the reply
+ ┌─────────────────────────────────────────────────────────────────────────────────────┐
+ │ system: task rules │ user: catalogue or candidates + sentence [[n]] │ assistant: {"path": …} │
+ └─────────────────────────────────────────────────────────────────────────────────────┘
+               no loss on the prompt                                  loss on the reply only
+                                        │  Qwen3 chat template, thinking off, ≤ 8,192 tokens
+                                        ▼
+ ┌──────────────── Qwen3-32B, 4-bit (bitsandbytes), frozen ────────────────┐
+ │ 64 decoder layers, hidden size 5,120                                     │
+ │   attention: 64 query heads, 8 key-value heads (grouped-query)           │
+ │   feed-forward: 5,120 → 25,600 → 5,120                                   │
+ │ LoRA adapters in every layer on q, k, v, o, gate, up and down            │
+ │   rank 16, alpha 32, dropout 0                                           │
+ │   134,217,728 trainable parameters of 32.9 billion (0.41%)               │
+ └──────────────────────────────────────────────────────────────────────────┘
+                                        │
+                                        ▼
+                  adapter/: loaded on top of the same base model
+```
+
+| Setting | Value (run `qwen3-32b-r16`) |
+|---|---|
+| Base model | `unsloth/Qwen3-32B-unsloth-bnb-4bit`, a pre-quantised Qwen3-32B (vocabulary 151,936, context up to 40,960 tokens) |
+| Method | QLoRA with unsloth and TRL's `SFTTrainer`: the 4-bit base stays frozen, only the adapters are trained |
+| Loss | Assistant reply only (`train_on_responses_only`, response marker `<|im_start|>assistant\n`) |
+| Training data | 10,268 examples (5,251 blind, 5,017 shortlist) from 304 papers; 2 examples longer than the context were dropped |
+| Validation data | 692 examples (353 blind, 339 shortlist) from 16 papers |
+| Batch | 2 per device × 8 gradient-accumulation steps = 16 examples per update |
+| Length | 1 epoch, 642 updates |
+| Optimiser | 8-bit AdamW, learning rate 1 × 10⁻⁴, cosine schedule, 3% warm-up, bf16 |
+| Memory | Unsloth gradient checkpointing; about 43 GB on one RTX 6000 Ada (48 GB) |
+| Checks | Validation loss every 100 updates; checkpoint every 200 (the last 3 are kept) |
+| Software | Python 3.11, torch 2.11 (CUDA 12.8), transformers 5.17, TRL 1.15; seed 0 |
+
+Every setting is recorded in the run's `config.json`, and the trainer's losses in
+`log_history.json`.
+
+**Evaluation.** `evaluate.py` runs the base model and the fine-tuned model (base plus adapter)
+through the same code: the same prompts, greedy decoding, at most 96 new tokens, and the same
+parser. Every reply is started with `{"path": ` to stand in for the JSON schema provenum gives
+Ollama; without it the base model often answers in prose. In shortlist mode, a path that is not
+among the offered candidates counts as no answer, as in provenum.
+
+Scores are reported per test set (held-out synthetic papers, DockPrepBench) and per mode. For
+numbers that have a cell:
+- **right**;
+- **wrong**, split into wrong answers the value check would catch and wrong answers it would
+  pass (the wrong cell has the same rounded value);
+- **no answer**.
+
+For numbers with no cell, a **false anchor** is any cell the model chose.
+
 ## Where things are kept
 
 On maddog, under `/mnt/STORAGE3/alobo/provenum-finetune/`: `papers/`, `data/`, `runs/`, `evals/`,
-and the logs `gen.log`, `setup.log` and `train.log`. Small results (stats, configs, training logs,
+and the logs `gen.log`, `setup.log`, `pipeline.log`, `train_<run>.log` and `eval_<name>.log`. Small results (stats, configs, training logs,
 scores and per-item answers) are copied into `finetune/results/` in this repository. The papers,
 the training data and the adapter will be published on Hugging Face.
 
