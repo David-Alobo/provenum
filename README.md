@@ -135,6 +135,12 @@ writes `\val{recorded/vina_vs_gnina/ratio}`, and `provenum init` adds the table 
 provenum serve          # then open http://127.0.0.1:8765
 ```
 
+![The web app on a real manuscript: upload, spec, a local model links the numbers, review, download](docs/demo/provenum_demo.gif)
+
+*The app on the Results section of the DockPrepBench manuscript (307 hand-typed decimals, 28
+tables), with Qwen3-32B in Ollama. Every frame is a screenshot of the running app;
+[`docs/demo`](docs/demo) has the frames and the script that records them.*
+
 1. Upload the paper: in Overleaf, *Menu → Download → Source*, or any zipped LaTeX project.
 2. Upload the result tables (a zip of CSVs), or pick a folder of the project that holds them.
 3. Check the spec provenum guessed (which columns name a row, how each column is printed).

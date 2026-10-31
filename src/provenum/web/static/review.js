@@ -55,6 +55,18 @@ export function isLocalHost(url) {
 }
 
 /**
+ * Which model to select after the model list is (re)loaded.
+ * @param {string[]} models Models on the server.
+ * @param {string} current The model selected now ("" for none).
+ * @returns {string} The current model if the server still has it, else Qwen3-32B, else any
+ *   Qwen model, else "" (no model).
+ */
+export function chooseModel(models, current) {
+  if (current && models.includes(current)) return current;
+  return models.find((m) => m.startsWith("qwen3:32b")) || models.find((m) => m.startsWith("qwen")) || "";
+}
+
+/**
  * Escape text for HTML.
  * @param {string} text Any text.
  * @returns {string} Safe HTML.

@@ -1,8 +1,20 @@
 import { describe, expect, it } from "vitest";
 import {
-  escapeHtml, filterItems, fitting, groupItems, initialDecisions, isLocalHost, markSentence,
-  progressText, summary,
+  chooseModel, escapeHtml, filterItems, fitting, groupItems, initialDecisions, isLocalHost,
+  markSentence, progressText, summary,
 } from "../../src/provenum/web/static/review.js";
+
+describe("model choice", () => {
+  it("keeps the user's model, else prefers Qwen3-32B, else any Qwen, else none", () => {
+    const models = ["llama3.1:8b", "qwen2.5:14b", "qwen3:32b"];
+    expect(chooseModel(models, "llama3.1:8b")).toBe("llama3.1:8b");
+    expect(chooseModel(models, "")).toBe("qwen3:32b");
+    expect(chooseModel(models, "gone:1b")).toBe("qwen3:32b");
+    expect(chooseModel(["llama3.1:8b", "qwen2.5:14b"], "")).toBe("qwen2.5:14b");
+    expect(chooseModel(["llama3.1:8b"], "")).toBe("");
+    expect(chooseModel([], "qwen3:32b")).toBe("");
+  });
+});
 
 describe("model server warning", () => {
   it("treats only this computer as local", () => {

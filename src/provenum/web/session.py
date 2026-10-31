@@ -28,6 +28,7 @@ MAX_UNPACKED = 200 * 2**20  # bytes; a LaTeX project with figures is rarely abov
 MAX_FILES = 5000
 NUMBERS = "numbers.tex"
 MARKER = ".provenum-session"  # marks a directory the server may delete when it is stale
+SYMBOLS = {"ge": "≥", "geq": "≥", "le": "≤", "leq": "≤", "times": "×", "pm": "±", "approx": "≈"}
 
 
 class SessionError(ValueError):
@@ -117,6 +118,8 @@ def _readable(sentence: str) -> str:
         str: e.g. "within 2 Å of ... for [[46.3]]% of complexes" instead of "2~\\AA{} ... \\%".
     """
     text = sentence.replace("\\%", "%").replace("~", " ").replace("\\AA", "Å")
+    text = re.sub(r"\\(geq?|leq?|times|pm|approx)(?![A-Za-z])",
+                  lambda m: SYMBOLS[m.group(1)], text)  # fmt: skip
     text = re.sub(r"\\(?:emph|textit|textbf|mathrm|text)\{([^{}]*)\}", r"\1", text)
     text = re.sub(r"\\([A-Za-z]+)\{\}", r"\1", text)  # argument-less macros such as \pbvalid{}
     text = text.replace("{}", "").replace("$", "").replace("\\,", " ").replace("--", "–")

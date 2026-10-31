@@ -1,0 +1,60 @@
+{
+ "session": "NXkrDbepO19VTyOB-HBt8etx45ciQGSv",
+ "frames": [
+  {
+   "file": "frame_00.png",
+   "seconds": 1.6,
+   "shows": "1: upload the Overleaf project"
+  },
+  {
+   "file": "frame_01.png",
+   "seconds": 2.0,
+   "shows": "2-3: tables uploaded, spec guessed"
+  },
+  {
+   "file": "frame_02.png",
+   "seconds": 2.4,
+   "shows": "3-4: the author's spec; model chosen"
+  },
+  {
+   "file": "frame_03.png",
+   "seconds": 0.7,
+   "shows": "4: linking, 15%"
+  },
+  {
+   "file": "frame_04.png",
+   "seconds": 0.7,
+   "shows": "4: linking, 40%"
+  },
+  {
+   "file": "frame_05.png",
+   "seconds": 0.7,
+   "shows": "4: linking, 65%"
+  },
+  {
+   "file": "frame_06.png",
+   "seconds": 0.7,
+   "shows": "4: linking, 90%"
+  },
+  {
+   "file": "frame_07.png",
+   "seconds": 3.2,
+   "shows": "5: review, to confirm"
+  },
+  {
+   "file": "frame_08.png",
+   "seconds": 2.0,
+   "shows": "5: review, linked"
+  },
+  {
+   "file": "frame_09.png",
+   "seconds": 2.0,
+   "shows": "5: review, left as typed"
+  },
+  {
+   "file": "frame_10.png",
+   "seconds": 3.5,
+   "shows": "6: download for Overleaf"
+  }
+ ]
+}

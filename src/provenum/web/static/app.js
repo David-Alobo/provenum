@@ -1,7 +1,7 @@
 // Page wiring for the provenum web app. The review logic lives in review.js.
 import {
-  escapeHtml, filterItems, isLocalHost, fitting, groupItems, initialDecisions, markSentence,
-  progressText, summary,
+  chooseModel, escapeHtml, filterItems, isLocalHost, fitting, groupItems, initialDecisions,
+  markSentence, progressText, summary,
 } from "./review.js";
 
 const $ = (id) => document.getElementById(id);
@@ -119,13 +119,17 @@ async function poll() {
   render();
 }
 
+let modelRequest = 0;
 async function loadModels() {
+  const request = ++modelRequest;
   const host = $("host").value;
   const { models } = await api(`/api/models?host=${encodeURIComponent(host)}`);
+  // An earlier request (for another server address) can answer last; it must not replace the list.
+  if (request !== modelRequest) return;
+  const current = $("model").value;
   $("model").innerHTML = `<option value="">No model: I will choose</option>` +
     models.map((m) => `<option>${escapeHtml(m)}</option>`).join("");
-  const preferred = models.find((m) => m.startsWith("qwen3:32b")) || models.find((m) => m.startsWith("qwen"));
-  if (preferred) $("model").value = preferred;
+  $("model").value = chooseModel(models, current);
 }
 
 $("project-file").addEventListener("change", (e) => guarded(async () => {

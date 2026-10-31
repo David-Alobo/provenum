@@ -12,9 +12,23 @@ from provenum.web.server import App, handler, model_host, remove_stale
 from provenum.web.session import MARKER, Session, SessionError, _readable, categorise, unpack
 
 
+def test_numbers_given_with_siunitx_keep_known_units_in_the_sentence(tmp_path):
+    from provenum.anchor import items
+
+    tex = tmp_path / "r.tex"
+    tex.write_text(r"Within \SI{2}{\angstrom} of the ligand for 46.3\% at \SI{25}{\furlong}." + "\n",
+                   encoding="utf-8")  # fmt: skip
+    (it,) = items(tex)
+    assert it["number"] == "46.3"
+    assert "Within 2 Å of the ligand" in _readable(it["sentence"])
+    assert "furlong" not in it["sentence"]  # unknown units are dropped, as before
+
+
 def test_readable_sentence_drops_latex_markup_but_keeps_the_mark():
     s = r"Within 2~\AA{} for [[46.3]]\% of complexes, \pbvalid{} in \emph{all} ($n=428$)."
     assert _readable(s) == "Within 2 Å for [[46.3]]% of complexes, pbvalid in all (n=428)."
+    s = r"(Holm $p \ge [[0.059]]$, $\leq 3 \times 10^{-4}$, $\pm 2$, \textbf{x})"
+    assert _readable(s) == "(Holm p ≥ [[0.059]], ≤ 3 × 10^{-4}, ± 2, x)"
 
 
 MAIN = r"""\documentclass{article}
