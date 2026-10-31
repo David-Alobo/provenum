@@ -1,0 +1,77 @@
+[
+ {
+  "key": "sections/results.tex#15",
+  "written": "0.014",
+  "trial_model": {
+   "list": "check",
+   "pick": "posebusters_published/docked/p",
+   "selected": "posebusters_published/docked/p"
+  },
+  "this_run": {
+   "list": "untraced",
+   "pick": null,
+   "selected": null
+  },
+  "sentence": "Our preparation failures account for little of the difference: their run solved 5 of those 16 complexes, and on the 412 we docked the gap was 5.1 points (53.2% against 48.1%, p = [[0.014]])."
+ },
+ {
+  "key": "sections/results.tex#84",
+  "written": "48.1",
+  "trial_model": {
+   "list": "check",
+   "pick": "engines/smina/vina/shared/rate_b",
+   "selected": "engines/smina/vina/shared/rate_b"
+  },
+  "this_run": {
+   "list": "check",
+   "pick": "engines/gnina/vina/shared/rate_b",
+   "selected": "engines/gnina/vina/shared/rate_b"
+  },
+  "sentence": "The difference is not an artefact of Vina's 16 preparation failures: on the 412 complexes both engines docked, success was [[48.1]]% for Vina and 63.1% for Gnina (p = 3.8 × 10^{-8})."
+ },
+ {
+  "key": "sections/results.tex#118",
+  "written": "44.2",
+  "trial_model": {
+   "list": "untraced",
+   "pick": null,
+   "selected": null
+  },
+  "this_run": {
+   "list": "check",
+   "pick": "summary/vina/box_padding_8/top1",
+   "selected": "summary/vina/box_padding_8/top1"
+  },
+  "sentence": "The spread of top-1 success over the six protocols (baseline and five arms) was 8.9 points for Vina ([[44.2]] – 53.0%), 10.5 points for Smina (44.2 – 54.7%), 7.0 points for Gnina (58.6 – 65.7%) and 23.8 points for rDock (17.3 – 41.1%)."
+ },
+ {
+  "key": "sections/results.tex#198",
+  "written": "4.2",
+  "trial_model": {
+   "list": "check",
+   "pick": "followup_interaction/2/diff_pts",
+   "selected": "followup_interaction/2/diff_pts"
+  },
+  "this_run": {
+   "list": "untraced",
+   "pick": "comparisons/vina/pb_valid/box_padding_6/delta_low",
+   "selected": null
+  },
+  "sentence": "Its effect declined steadily as the box grew, from +[[4.2]] points at 2 Å (30 complexes gained, 12 lost; Holm p = 0.032 over the four paddings, a correction family separate from the five primary arms) to +2.8, +1.4 and -0.5 points at 4, 6 and 8 Å ."
+ },
+ {
+  "key": "sections/results.tex#271",
+  "written": "0.67",
+  "trial_model": {
+   "list": "untraced",
+   "pick": "agreement_subsets/smina/2/unanimous_success",
+   "selected": null
+  },
+  "this_run": {
+   "list": "untraced",
+   "pick": "agreement_subsets/smina/1/auroc_mean",
+   "selected": null
+  },
+  "sentence": "Averaged over every pair of arms, agreement gave an AUROC of 0.775 for Vina, 0.744 for Smina, 0.801 for Gnina and 0.836 for rDock, against 0.857, 0.830, 0.863 and 0.897 with all five arms; a single arm gave [[0.67]] to 0.76."
+ }
+]

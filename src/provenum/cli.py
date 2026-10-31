@@ -10,6 +10,7 @@ Commands:
                                                            what a rerun changed in the text
     provenum check MANUSCRIPT... --values numbers.tex      guards and wording against the values
     provenum init TABLES_DIR [--out numbers.toml]          guess a starting spec from the tables
+    provenum serve [--port 8765]                           web app for the whole workflow
 """
 
 import argparse
@@ -116,44 +117,6 @@ def _audit(args: argparse.Namespace) -> int:
     return 1 if flagged else 0
 
 
-def _anchor(args: argparse.Namespace) -> int:
-    """
-    Ask a local model (Ollama) which value each hand-typed number reports; write [{id, path}].
-
-    Args:
-        args (argparse.Namespace): Parsed arguments.
-
-    Returns:
-        int: Exit code.
-    """
-    from provenum.anchor import catalogue, items, judge, values
-    from provenum.llm import anchor_all
-    from provenum.macros import load_specs
-
-    specs = load_specs(args.spec)
-    notes = args.notes.read_text(encoding="utf-8") if args.notes else ""
-    found = items(args.manuscript)
-    shortlists = None
-    if args.shortlist:  # migration mode: the model only picks among value-matching cells
-        table = values(specs, args.tables)
-        shortlists = {
-            i["id"]: [p for p in table if judge(i["number"], p, table) == "traced"] for i in found
-        }
-
-    def progress(done: int, total: int) -> None:
-        if done % 25 == 0 or done == total:
-            print(f"  {done}/{total}", flush=True)
-
-    answers = anchor_all(
-        found, catalogue(specs, args.tables), notes, args.model, args.host, progress, shortlists
-    )
-    args.out.write_text(json.dumps(answers, indent=1), encoding="utf-8", newline="\n")
-    print(
-        f"{sum(1 for a in answers if a['path'])} of {len(answers)} anchored; written to {args.out}"
-    )
-    return 0
-
-
 def _diff(args: argparse.Namespace) -> int:
     """
     Report cited values that changed between two values files, flagging claim-breaking changes.
@@ -240,6 +203,60 @@ def _init(args: argparse.Namespace) -> int:
     return 0
 
 
+def _anchor(args: argparse.Namespace) -> int:
+    """
+    Ask a local model (Ollama) which value each hand-typed number reports; write [{id, path}].
+
+    Args:
+        args (argparse.Namespace): Parsed arguments.
+
+    Returns:
+        int: Exit code.
+    """
+    from provenum.anchor import catalogue, items, judge, values
+    from provenum.llm import anchor_all
+    from provenum.macros import load_specs
+
+    specs = load_specs(args.spec)
+    notes = args.notes.read_text(encoding="utf-8") if args.notes else ""
+    found = items(args.manuscript)
+    shortlists = None
+    if args.shortlist:  # migration mode: the model only picks among value-matching cells
+        table = values(specs, args.tables)
+        shortlists = {
+            i["id"]: [p for p in table if judge(i["number"], p, table) == "traced"] for i in found
+        }
+
+    def progress(done: int, total: int) -> None:
+        if done % 25 == 0 or done == total:
+            print(f"  {done}/{total}", flush=True)
+
+    answers = anchor_all(
+        found, catalogue(specs, args.tables), notes, args.model, args.host, progress, shortlists
+    )
+    args.out.write_text(json.dumps(answers, indent=1), encoding="utf-8", newline="\n")
+    print(
+        f"{sum(1 for a in answers if a['path'])} of {len(answers)} anchored; written to {args.out}"
+    )
+    return 0
+
+
+def _serve(args: argparse.Namespace) -> int:
+    """
+    Run the local web app.
+
+    Args:
+        args (argparse.Namespace): Parsed arguments.
+
+    Returns:
+        int: Exit code.
+    """
+    from provenum.web.server import serve
+
+    serve(args.host, args.port, args.workdir, args.ttl * 3600, tuple(args.allow_host))
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """
     Dispatch a provenum command.
@@ -317,6 +334,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     p.add_argument("--out", type=Path, default=Path("numbers.toml"))
     p.add_argument("--force", action="store_true", help="overwrite an existing spec")
     p.set_defaults(run=_init)
+
+    p = sub.add_parser("serve", help="web app: upload a LaTeX project and tables, review, download")
+    p.add_argument("--host", default="127.0.0.1", help="interface to listen on")
+    p.add_argument("--port", type=int, default=8765)
+    p.add_argument("--workdir", type=Path, help="where sessions are kept (default: temp)")
+    p.add_argument(
+        "--ttl",
+        type=float,
+        default=6.0,
+        help="hours a session may sit idle before its files are deleted (default 6)",
+    )
+    p.add_argument("--allow-host", action="append", default=[], metavar="HOST:PORT",
+                   help="extra Host header to accept, e.g. behind a reverse proxy")  # fmt: skip
+    p.set_defaults(run=_serve)
 
     args = parser.parse_args(argv)
     return args.run(args)

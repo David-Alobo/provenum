@@ -103,7 +103,8 @@ def items(path: str | Path) -> list[dict]:
                   for m in re.finditer(r"(?<![\w.\\])[-−]?\d+\.\d+(?![\w])", text)
                   if not any(a <= m.start() < b for a, b, _, _ in found)]  # fmt: skip
         for start, end, number, written in sorted(found):
-            s0 = max(text.rfind(". ", 0, start) + 2, 0)
+            s0 = text.rfind(". ", 0, start)
+            s0 = s0 + 2 if s0 >= 0 else 0  # the paragraph's first sentence starts at 0
             s1 = text.find(". ", end)
             sentence = text[s0 : s1 + 1 if s1 > 0 else len(text)]
             line = max(i for p, i in starts if p <= start) + 1

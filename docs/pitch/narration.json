@@ -1,0 +1,11 @@
+[
+ {"scene": "hook", "text": "You rerun your analysis. The tables update. The numbers in your paper don't."},
+ {"scene": "problem", "text": "A results section can hold hundreds of numbers typed by hand. One stale value, a sign that flips, a p-value that crosses point zero five, and the text no longer says what the data say."},
+ {"scene": "idea", "text": "provenum ties every number to the table cell that produced it. Instead of typing fifty-three point zero, you write a reference. Rerun the analysis, and the text follows."},
+ {"scene": "hard", "text": "Converting an existing paper is the hard part. Our test paper has three hundred and seven numbers, and most of them match more than one cell. So a local language model proposes the cell each sentence means, and the code accepts it only if the value reproduces exactly what you wrote."},
+ {"scene": "upload", "text": "In the app, you upload your Overleaf project and your result tables. provenum works out how each table is laid out, finds every number, and asks the model."},
+ {"scene": "review", "text": "Then you review. Where several cells share a value, you confirm the choice, because a value check alone cannot tell them apart. Nothing changes until you apply."},
+ {"scene": "same", "text": "On our test paper, the model's suggestions linked two hundred and forty-nine numbers. Two hundred and twenty-eight match the hand-checked version, and twenty of the other twenty-one were in the list you confirm. And the PDF reads exactly the same."},
+ {"scene": "diff", "text": "After the next rerun, provenum diff lists the sentences whose numbers changed, and flags the claims that broke."},
+ {"scene": "close", "text": "Your manuscript stays on your machine, and the model runs locally. provenum. Numbers you can trace."}
+]

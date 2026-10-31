@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>provenum pitch</title>
+<style>
+:root { --bg:#0f1420; --ink:#eef1f7; --muted:#9aa4b8; --accent:#7aa2ff; --ok:#6fcf9a; --bad:#ff8a80;
+  --card:#1a2131; --line:#2c3549; --mark:#f5c84c; }
+* { box-sizing:border-box; margin:0; }
+html,body { width:1920px; height:1080px; overflow:hidden; background:var(--bg); color:var(--ink);
+  font-family:"Segoe UI", system-ui, sans-serif; }
+.scene { position:absolute; inset:0; padding:120px 160px; display:none; flex-direction:column;
+  justify-content:center; gap:40px; }
+.scene.on { display:flex; }
+h1 { font-size:88px; font-weight:650; letter-spacing:-1px; line-height:1.1; }
+h2 { font-size:60px; font-weight:600; line-height:1.15; }
+.big { font-size:64px; line-height:1.35; }
+.muted { color:var(--muted); }
+.kicker { font-size:30px; letter-spacing:4px; text-transform:uppercase; color:var(--accent); font-weight:600; }
+.s { opacity:0; transition:none; }
+.s.on { opacity:1; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:40px 48px; }
+.para { font-size:40px; line-height:1.6; font-family:Georgia, "Times New Roman", serif; }
+.num { padding:0 6px; border-radius:6px; }
+.stale .num { background:rgba(255,138,128,.18); color:var(--bad); }
+.new { color:var(--ok); font-weight:600; }
+.new::before { content:" → "; color:var(--muted); font-weight:400; }
+code, .mono { font-family:"Cascadia Code", Consolas, monospace; }
+.code { font-size:38px; line-height:1.5; }
+.val { color:var(--accent); }
+.arrow { font-size:60px; color:var(--muted); text-align:center; }
+.grid { display:grid; grid-template-columns: 1fr 1fr; gap:24px 60px; }
+.cell { font-family:Consolas, monospace; font-size:28px; padding:14px 20px; border-radius:10px;
+  border:1px solid var(--line); background:var(--card); }
+.cell b { color:var(--mark); }
+.picked .cell.pick { border-color:var(--ok); box-shadow:0 0 0 3px var(--ok); }
+.check { color:var(--ok); font-size:40px; font-weight:600; }
+.shot { border-radius:14px; box-shadow:0 30px 80px rgba(0,0,0,.5); max-width:100%; height:800px;
+  align-self:center; }
+.row { display:flex; gap:60px; align-items:center; }
+.stat { max-width:330px; }
+.stat b { display:block; font-size:112px; line-height:1; font-weight:700; }
+.stat span { font-size:34px; color:var(--muted); }
+.term { font-family:Consolas, monospace; font-size:27px; line-height:1.55; white-space:pre-wrap;
+  background:#0a0d14; border:1px solid var(--line); border-radius:14px; padding:36px 44px; }
+.term .flag { color:var(--bad); font-weight:700; } .term .ok { color:var(--muted); }
+.term .chg { color:var(--mark); }
+.brand { font-size:150px; font-weight:700; letter-spacing:-3px; }
+.foot { position:absolute; left:160px; bottom:60px; font-size:24px; color:var(--muted); }
+</style></head><body>
+
+<section class="scene" id="hook">
+  <h1 class="s">You rerun your analysis.</h1>
+  <h1 class="s">The tables update.</h1>
+  <h1 class="s" style="color:var(--bad)">The numbers in your paper don't.</h1>
+</section>
+
+<section class="scene" id="problem">
+  <div class="kicker">The problem</div>
+  <div class="card para" id="para">Vina's top-1 success rose from 46.3% to <span class="num">53.0</span><span class="new s">47.9</span>% with the
+    2 Å box (<span class="num">+6.8</span><span class="new s">+1.6</span> points; Holm <i>p</i> = <span class="num">4.1 × 10⁻⁴</span><span class="new s">0.31</span>).</div>
+  <div class="big s muted">The data now say: no detectable effect. The sentence still says it rose.</div>
+  <div class="foot">Illustration: values from provenum's documentation example</div>
+</section>
+
+<section class="scene" id="idea">
+  <div class="kicker">The idea</div>
+  <div class="card code mono">rose to <span class="val">\val{summary/vina/box2/top1}</span>\%</div>
+  <div class="arrow s">↓ &nbsp;compiled from the table</div>
+  <div class="card para s">rose to 53.0%</div>
+  <div class="big s muted">Rerun the analysis → regenerate → the text follows.</div>
+</section>
+
+<section class="scene" id="hard">
+  <div class="kicker">The hard part: an existing paper</div>
+  <h2>“… for <span style="color:var(--mark)">46.3</span>% of complexes” &nbsp;<span class="muted s">→ 17 cells hold this value</span></h2>
+  <div class="grid s">
+    <div class="cell pick" id="pick">summary/vina/<b>baseline</b>/top1 = 46.3</div>
+    <div class="cell">summary/<b>smina</b>/ligand_rdkit_conformer/pb_valid = 46.3</div>
+    <div class="cell">engines/gnina/vina/all/rate_b = 46.3</div>
+    <div class="cell">posebusters_published/all/ours_top1 = 46.3</div>
+  </div>
+  <div class="row s"><div class="check">Model proposes the cell. Code checks the value reproduces “46.3”.</div></div>
+  <div class="foot">Real cells from the DockPrepBench tables (4 of the 17 shown)</div>
+</section>
+
+<section class="scene" id="upload">
+  <div class="kicker">In the app</div>
+  <img class="shot" src="shot_upload_c.png" alt="">
+</section>
+
+<section class="scene" id="review">
+  <div class="kicker">You stay in charge</div>
+  <img class="shot" src="shot_review_model.png" alt="">
+</section>
+
+<section class="scene" id="same">
+  <div class="kicker">Tested on a real paper (DockPrepBench results section, qwen3:32b)</div>
+  <div class="row" style="gap:90px">
+    <div class="stat"><b>249</b><span>of 307 numbers linked</span></div>
+    <div class="stat s"><b style="color:var(--ok)">228</b><span>same cell as the hand-checked version</span></div>
+    <div class="stat s"><b style="color:var(--mark); white-space:nowrap">20/21</b><span>others flagged for you to confirm</span></div>
+    <div class="stat s"><b style="color:var(--ok)">0</b><span>of 504 lines changed in the PDF</span></div>
+  </div>
+</section>
+
+<section class="scene" id="diff">
+  <div class="kicker">After the next rerun</div>
+  <div class="term"><span class="ok">$ provenum diff paper/tables/numbers.tex --manuscript paper/sections/*.tex</span>
+provenum diff: 7 cited value(s) changed in 3 sentence(s); <span class="flag">3 need a look</span>
+
+results.tex:2  <span class="flag">NEEDS A LOOK</span>
+    Vina's top-1 success rose from 46.3% to <span class="chg">[53.0 -&gt; 47.9]</span>% with the 2 Å box
+    (<span class="chg">[+6.8 -&gt; +1.6]</span> points; Holm p = <span class="chg">[4.1e-04 -&gt; 0.31]</span>).
+    <span class="flag">! cmp/vina/box2/delta_low: 3.5 -&gt; -1.2: sign changed; interval now includes 0</span>
+    <span class="flag">! cmp/vina/box2/p_holm: 4.1e-04 -&gt; 0.31: now not below 0.05</span></div>
+</section>
+
+<section class="scene" id="close">
+  <div class="brand">provenum</div>
+  <h2 class="muted">Numbers you can trace.</h2>
+  <div class="row s" style="font-size:34px; gap:50px">
+    <span>● Runs on your machine</span><span>● Local open model (Ollama)</span><span>● MIT licence</span></div>
+  <div class="mono s" style="font-size:34px; color:var(--accent)">github.com/David-Alobo/provenum</div>
+</section>
+
+<script>
+// #scene:step shows that scene with its first `step` .s elements visible.
+const [id, step] = (location.hash.slice(1) || "hook:0").split(":");
+const scene = document.getElementById(id);
+scene.classList.add("on");
+scene.classList.toggle("stale", id === "problem" && Number(step) > 0);
+scene.classList.toggle("picked", id === "hard" && Number(step) >= 3);
+[...scene.querySelectorAll(".s")].forEach((el, i) => { if (i < Number(step)) el.classList.add("on"); });
+</script>
+</body></html>

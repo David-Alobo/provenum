@@ -14,6 +14,10 @@ DROP_COMMANDS = re.compile(
 )
 SCI = re.compile(r"(\d+(?:\.\d+)?)\s*(?:\\times|×)\s*10\^\{?\s*([-−]?\d+)\s*\}?")
 NUMBER = re.compile(r"(?<![\w.\\])([-−]?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?![\w])")
+# siunitx units kept as text so a sentence reads as printed ("within 2 Å"). \percent is left out
+# on purpose: a following "%" changes how a number is matched.
+UNITS = {r"\angstrom": "Å", r"\degreeCelsius": "°C", r"\kelvin": "K", r"\minute": "min",
+         r"\second": "s", r"\hour": "h"}  # fmt: skip
 
 
 @dataclass(frozen=True)
@@ -52,7 +56,9 @@ def _clean(line: str) -> str:
     """
     line = re.sub(r"(?<!\\)%.*", "", line)
     line = DROP_COMMANDS.sub(" ", line)
-    line = re.sub(r"\\(?:SI|num|qty)\{([^{}]*)\}(?:\{[^{}]*\})?", r" \1 ", line)  # keep the value
+    line = re.sub(r"\\(?:SI|num|qty)\{([^{}]*)\}(?:\{([^{}]*)\})?",
+                  lambda m: f" {m.group(1)} {UNITS.get((m.group(2) or '').strip(), '')} ",
+                  line)  # keep the value, and the unit where it is a known one  # fmt: skip
     line = re.sub(
         r"\\SIlist\{([^{}]*)\}\{[^{}]*\}", lambda m: " " + m.group(1).replace(";", " ") + " ", line
     )

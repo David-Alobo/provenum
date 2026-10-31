@@ -31,6 +31,30 @@ def _plain(text: str) -> str:
     return text.replace("{", "").replace("}", "")
 
 
+def find_span(line: str, written: str, formatted: str) -> tuple[int, int] | None:
+    """
+    Where a written number can be replaced by a value without changing the compiled text.
+
+    Args:
+        line (str): Manuscript line holding the number.
+        written (str): The number as written (from `anchor.items`).
+        formatted (str): The value's LaTeX text (from `anchor.values`).
+
+    Returns:
+        tuple[int, int] | None: (start, end) of the span to replace, or None if no span around
+            the number reproduces the formatted value.
+    """
+    target = _plain(formatted)
+    # Candidate spans around the written number: as is, with a sign, or a whole $...$.
+    spans = [re.escape(written)]
+    spans = [rf"\$\s*{s}\s*\$" for s in spans] + [rf"[+]{s}" for s in spans] + spans
+    for pattern in spans:
+        m = next((m for m in re.finditer(rf"(?<![\w.]){pattern}(?![\w])", line)), None)
+        if m and _plain(m.group()) == target:
+            return m.start(), m.end()
+    return None
+
+
 def migrate(
     path: str | Path, answers: list[dict], table: dict, dry_run: bool = False
 ) -> list[dict]:
@@ -58,6 +82,7 @@ def migrate(
             continue
         status = judge(item["number"], a["path"], table)
         entry = {
+            "id": item["id"],
             "line": item["line"],
             "number": item["number"],
             "path": a["path"],
@@ -69,17 +94,11 @@ def migrate(
     for line_no, group in by_line.items():
         line = lines[line_no - 1]
         for item, val_path, entry in group:
-            formatted = _plain(table[val_path][1])
             written = item.get("written", item["number"])
-            # Candidate spans around the written number: as is, with a sign, or a whole $...$.
-            spans = [re.escape(written)]
-            spans = [rf"\$\s*{s}\s*\$" for s in spans] + [rf"[+]{s}" for s in spans] + spans
-            for pattern in spans:
-                m = next((m for m in re.finditer(rf"(?<![\w.]){pattern}(?![\w])", line)), None)
-                if m and _plain(m.group()) == formatted:
-                    line = line[: m.start()] + rf"\val{{{val_path}}}" + line[m.end() :]
-                    entry["status"] = "replaced"
-                    break
+            span = find_span(line, written, table[val_path][1])
+            if span:
+                line = line[: span[0]] + rf"\val{{{val_path}}}" + line[span[1] :]
+                entry["status"] = "replaced"
             else:
                 entry["status"] = (
                     "format-differs" if re.search(re.escape(written), line) else "not-found"
