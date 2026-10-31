@@ -3,33 +3,35 @@
 
 \subsection{Corruption test}
 
-Table~\ref{tab:corruption} gives the main result. Matching by value alone caught 1\% of the
-corrupted numbers. The 25 tables hold thousands of values, so a corrupted number almost always
-rounds to some unrelated cell and passes. Matching by surrounding words caught 20\% overall. Where the audit did choose a cell it
-was usually the right one, and 88\% of corruptions among those numbers were caught, but it
-flagged 44 correct numbers whose words pointed at the wrong cell.
+Table~\ref{tab:corruption} gives the main result. Matching by value alone caught 10 of the 307
+corrupted numbers (3.3\%). Its 24 tables give 56,166 candidate values once proportions are also
+read as percentages and differences between cells of a row are added, so a corrupted number
+almost always rounds to some unrelated value and passes. Matching by surrounding words caught 57
+(18.6\%). It seldom tied a prose number to the cell its words pointed to (11 numbers, of which 8
+corruptions were caught), and it flagged 26 correct numbers whose words pointed at the wrong
+cell.
 
 \begin{table}[t]
 \centering
-\caption{Corrupted numbers caught on the DockPrepBench Results section (307 decimals, each changed
-by three units in its last digit).}
+\caption{Corrupted numbers caught on the DockPrepBench Results section (307 decimals in prose,
+each changed by three units in its last digit). \emph{Where anchored}: among the numbers the
+method ties to one cell. Supplementary Table~S3 also scores all 562 decimals.}
 \label{tab:corruption}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \toprule
-Method & Corruptions caught & Correct numbers flagged \\
+Method & Caught & Where anchored & Correct numbers flagged \\
 \midrule
-Value only & 1\% & 0 \\
-Context (audit) & 20\% (88\% where anchored) & 44 \\
-Model proposes, code verifies & 134 of 134 anchored & 0 \\
-\quad (Claude Sonnet, blind mode) & & \\
+Value only & 10 (3.3\%) & -- & 4 \\
+Context (audit) & 57 (18.6\%) & 8 of 11 & 26 \\
+Model proposes, code verifies & 134 (43.6\%) & 134 of 134 & 0 \\
+\quad (Claude Sonnet, blind mode) & & & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 With Claude Sonnet proposing addresses in blind mode, 134 numbers were anchored and every one of
-their corruptions was caught, with no correct number flagged. The remaining numbers were not
-anchored, either because the model abstained or because its address did not reproduce the
-original value, so the test says nothing about them. Coverage, not accuracy, is the limit of this
+their corruptions was caught, with no correct number flagged. For the other 173 the model gave
+no address, so the test says nothing about them. Coverage, not accuracy, is the limit of this
 configuration.
 
 \subsection{Local models}
@@ -75,7 +77,8 @@ add them to a table, not to the text.
 
 \subsection{Model benchmark}
 
-Table~\ref{tab:bench} gives the results on the 311 gold numbers. These are not the numbers of
+Table~\ref{tab:bench} gives the results on the 311 gold numbers; Supplementary Table~S5 adds
+the share right, false anchors and time per number in both modes. These are not the numbers of
 the first experiment: they are the migrated numbers written back out, scored against a known
 cell rather than against Claude, so the Qwen2.5 figures differ from those above. In blind mode no local model
 traced half of them. The best, Qwen3-32B, gave the right cell for 152 (48.9\%), and most of its
@@ -172,7 +175,8 @@ was correct. Read one by one, the 21 differences fall into three groups:
 summary and the comparison table (8 clearly, 2 probably);
 \item 3 link numbers the migration left typed, correctly or probably correctly.
 \end{itemize}
-\todo{Author to confirm the classification in \texttt{disagreements\_classified.csv}.} On this
+\todo{Author to confirm the classification in \texttt{disagreements\_classified.csv}.}
+Supplementary Tables~S7 and~S8 list every disagreement and every single match. On this
 reading, 8 of 249 links (3.2\%) point to the wrong cell, and all 8 were in the list the author
 is asked to confirm. None of them could have been caught by value, since every cell offered in
 shortlist mode holds the written value. They are cells of another engine, arm or interval bound,

@@ -1,0 +1,1230 @@
+{
+ "sections/results.tex#0": {
+  "pick": "summary/vina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#1": {
+  "pick": "summary/vina/baseline/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#2": {
+  "pick": "summary/vina/baseline/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#3": {
+  "pick": "summary/vina/baseline/pb_valid",
+  "category": "check"
+ },
+ "sections/results.tex#4": {
+  "pick": "summary/vina/baseline/pb_valid_low",
+  "category": "check"
+ },
+ "sections/results.tex#5": {
+  "pick": "summary/vina/baseline/pb_valid_high",
+  "category": "check"
+ },
+ "sections/results.tex#6": {
+  "pick": "posebusters_published/all/theirs_top1",
+  "category": "check"
+ },
+ "sections/results.tex#7": {
+  "pick": "posebusters_published/all/theirs_top1_low",
+  "category": "traced"
+ },
+ "sections/results.tex#8": {
+  "pick": "posebusters_published/all/theirs_top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#9": {
+  "pick": "posebusters_published/all/theirs_pb_valid",
+  "category": "check"
+ },
+ "sections/results.tex#10": {
+  "pick": "posebusters_published/all/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#11": {
+  "pick": "posebusters_published/all/p",
+  "category": "untraced"
+ },
+ "sections/results.tex#12": {
+  "pick": "posebusters_published/docked/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#13": {
+  "pick": "posebusters_published/docked/theirs_top1",
+  "category": "traced"
+ },
+ "sections/results.tex#14": {
+  "pick": "posebusters_published/docked/ours_top1",
+  "category": "check"
+ },
+ "sections/results.tex#15": {
+  "pick": "posebusters_published/docked/p",
+  "category": "check"
+ },
+ "sections/results.tex#16": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#17": {
+  "pick": "summary/vina/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#18": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#19": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#20": {
+  "pick": "summary/vina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#21": {
+  "pick": "summary/vina/baseline_seed1/top1",
+  "category": "check"
+ },
+ "sections/results.tex#22": {
+  "pick": "summary/vina/baseline_seed2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#23": {
+  "pick": "summary/vina/baseline_seed3/top1",
+  "category": "traced"
+ },
+ "sections/results.tex#24": {
+  "pick": "noise/vina/top1_mean",
+  "category": "traced"
+ },
+ "sections/results.tex#25": {
+  "pick": "noise/vina/top1_sd",
+  "category": "traced"
+ },
+ "sections/results.tex#26": {
+  "pick": "noise/vina/top1_range",
+  "category": "check"
+ },
+ "sections/results.tex#27": {
+  "pick": "noise/vina/flips_mean",
+  "category": "check"
+ },
+ "sections/results.tex#28": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#29": {
+  "pick": "noise/vina/flips_mean",
+  "category": "check"
+ },
+ "sections/results.tex#30": {
+  "pick": "comparisons/vina/top1/box_padding_2/baseline",
+  "category": "check"
+ },
+ "sections/results.tex#31": {
+  "pick": "summary/vina/baseline/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#32": {
+  "pick": "summary/vina/baseline/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#33": {
+  "pick": "comparisons/vina/top1/box_padding_2/arm_rate",
+  "category": "check"
+ },
+ "sections/results.tex#34": {
+  "pick": "summary/vina/box_padding_2/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#35": {
+  "pick": "summary/vina/box_padding_2/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#36": {
+  "pick": "comparisons/vina/top1/box_padding_2/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#37": {
+  "pick": "comparisons/vina/top1/box_padding_2/delta_low",
+  "category": "traced"
+ },
+ "sections/results.tex#38": {
+  "pick": "comparisons/vina/top1/box_padding_2/delta_high",
+  "category": "check"
+ },
+ "sections/results.tex#39": {
+  "pick": "comparisons/vina/top1/box_padding_2/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#40": {
+  "pick": "comparisons/vina/pb_valid/box_padding_2/baseline",
+  "category": "check"
+ },
+ "sections/results.tex#41": {
+  "pick": "summary/vina/box_padding_2/pb_valid",
+  "category": "check"
+ },
+ "sections/results.tex#42": {
+  "pick": "comparisons/vina/pb_valid/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#43": {
+  "pick": "comparisons/vina/pb_valid/box_padding_2/p_holm",
+  "category": "untraced"
+ },
+ "sections/results.tex#44": {
+  "pick": "summary/vina/box_padding_6/top1",
+  "category": "check"
+ },
+ "sections/results.tex#45": {
+  "pick": "comparisons/smina/pb_valid/box_padding_6/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#46": {
+  "pick": "comparisons/vina/top1/box_padding_6/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#47": {
+  "pick": "comparisons/vina/top1/box_padding_8/arm_rate",
+  "category": "check"
+ },
+ "sections/results.tex#48": {
+  "pick": "comparisons/vina/top1/box_padding_8/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#49": {
+  "pick": "comparisons/vina/top1/box_padding_6/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#50": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#51": {
+  "pick": "summary/vina/ligand_dimorphite/top1",
+  "category": "check"
+ },
+ "sections/results.tex#52": {
+  "pick": "comparisons/vina/top1/ligand_dimorphite/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#53": {
+  "pick": "comparisons/vina/top1/ligand_dimorphite/p",
+  "category": "untraced"
+ },
+ "sections/results.tex#54": {
+  "pick": "comparisons/vina/top1/ligand_dimorphite/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#55": {
+  "pick": "comparisons/vina/pb_valid/ligand_dimorphite/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#56": {
+  "pick": "comparisons/vina/pb_valid/ligand_dimorphite/p",
+  "category": "untraced"
+ },
+ "sections/results.tex#57": {
+  "pick": "comparisons/vina/pb_valid/ligand_dimorphite/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#58": {
+  "pick": "summary/vina/ligand_rdkit_conformer/top1",
+  "category": "check"
+ },
+ "sections/results.tex#59": {
+  "pick": "comparisons/vina/top1/ligand_rdkit_conformer/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#60": {
+  "pick": "comparisons/vina/top1/ligand_rdkit_conformer/p",
+  "category": "untraced"
+ },
+ "sections/results.tex#61": {
+  "pick": "comparisons/vina/top1/ligand_rdkit_conformer/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#62": {
+  "pick": "noise/vina/flips_mean",
+  "category": "check"
+ },
+ "sections/results.tex#63": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#64": {
+  "pick": "comparisons/vina/top1/ligand_rdkit_conformer/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#65": {
+  "pick": "summary/smina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#66": {
+  "pick": "summary/smina/baseline/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#67": {
+  "pick": "summary/smina/baseline/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#68": {
+  "pick": "engines/smina/vina/all/p",
+  "category": "traced"
+ },
+ "sections/results.tex#69": {
+  "pick": "summary/smina/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#70": {
+  "pick": "summary/smina/box_padding_2/top1_low",
+  "category": "traced"
+ },
+ "sections/results.tex#71": {
+  "pick": "summary/smina/box_padding_2/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#72": {
+  "pick": "comparisons/smina/top1/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#73": {
+  "pick": "comparisons/smina/top1/box_padding_2/delta_low",
+  "category": "check"
+ },
+ "sections/results.tex#74": {
+  "pick": "comparisons/smina/top1/box_padding_2/delta_high",
+  "category": "check"
+ },
+ "sections/results.tex#75": {
+  "pick": "comparisons/smina/top1/box_padding_2/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#76": {
+  "pick": "comparisons/smina/top1/box_padding_6/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#77": {
+  "pick": "comparisons/smina/top1/box_padding_8/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#78": {
+  "pick": "comparisons/smina/top1/box_padding_8/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#79": {
+  "pick": "summary/gnina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#80": {
+  "pick": "summary/gnina/baseline/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#81": {
+  "pick": "summary/gnina/baseline/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#82": {
+  "pick": "engines/gnina/vina/all/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#83": {
+  "pick": "engines/gnina/vina/all/p",
+  "category": "traced"
+ },
+ "sections/results.tex#84": {
+  "pick": "engines/smina/vina/shared/rate_b",
+  "category": "check"
+ },
+ "sections/results.tex#85": {
+  "pick": "engines/gnina/vina/shared/rate_a",
+  "category": "traced"
+ },
+ "sections/results.tex#86": {
+  "pick": "engines/gnina/vina/shared/p",
+  "category": "traced"
+ },
+ "sections/results.tex#87": {
+  "pick": "comparisons/gnina/top1/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#88": {
+  "pick": "astex_h2_h3/gnina/H2/diff_low",
+  "category": "untraced"
+ },
+ "sections/results.tex#89": {
+  "pick": "comparisons/gnina/top1/box_padding_2/delta_high",
+  "category": "check"
+ },
+ "sections/results.tex#90": {
+  "pick": "comparisons/gnina/top1/box_padding_8/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#91": {
+  "pick": "comparisons/gnina/top1/box_padding_2/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#92": {
+  "pick": "comparisons/gnina/top1/box_padding_8/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#93": {
+  "pick": "comparisons/gnina/top1/ligand_dimorphite/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#94": {
+  "pick": "comparisons/gnina/top1/ligand_rdkit_conformer/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#95": {
+  "pick": "summary/rdock/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#96": {
+  "pick": "summary/rdock/baseline/top1_low",
+  "category": "traced"
+ },
+ "sections/results.tex#97": {
+  "pick": "summary/rdock/baseline/top1_high",
+  "category": "traced"
+ },
+ "sections/results.tex#98": {
+  "pick": "engines/rdock/vina/all/diff_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#99": {
+  "pick": "engines/rdock/vina/all/p",
+  "category": "traced"
+ },
+ "sections/results.tex#100": {
+  "pick": "engines/gnina/rdock/all/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#101": {
+  "pick": "summary/rdock/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#102": {
+  "pick": "summary/rdock/box_padding_2/top1_low",
+  "category": "traced"
+ },
+ "sections/results.tex#103": {
+  "pick": "summary/rdock/box_padding_2/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#104": {
+  "pick": "comparisons/rdock/top1/box_padding_2/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#105": {
+  "pick": "comparisons/rdock/top1/box_padding_2/delta_low",
+  "category": "check"
+ },
+ "sections/results.tex#106": {
+  "pick": "comparisons/rdock/top1/box_padding_2/delta_high",
+  "category": "traced"
+ },
+ "sections/results.tex#107": {
+  "pick": "comparisons/rdock/top1/box_padding_2/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#108": {
+  "pick": "summary/rdock/box_padding_6/top1",
+  "category": "check"
+ },
+ "sections/results.tex#109": {
+  "pick": "comparisons/rdock/top1/box_padding_6/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#110": {
+  "pick": "comparisons/rdock/top1/box_padding_6/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#111": {
+  "pick": "summary/rdock/box_padding_8/top1",
+  "category": "check"
+ },
+ "sections/results.tex#112": {
+  "pick": "comparisons/rdock/top1/box_padding_8/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#113": {
+  "pick": "comparisons/rdock/top1/box_padding_8/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#114": {
+  "pick": "comparisons/rdock/top1/ligand_dimorphite/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#115": {
+  "pick": "comparisons/rdock/top1/ligand_rdkit_conformer/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#116": {
+  "pick": "comparisons/rdock/top1/ligand_rdkit_conformer/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#117": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#118": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#119": {
+  "pick": "summary/vina/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#120": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#121": {
+  "pick": "summary/vina/box_padding_8/top1",
+  "category": "check"
+ },
+ "sections/results.tex#122": {
+  "pick": "summary/smina/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#123": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#124": {
+  "pick": "summary/gnina/box_padding_8/top1",
+  "category": "check"
+ },
+ "sections/results.tex#125": {
+  "pick": "summary/gnina/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#126": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#127": {
+  "pick": "summary/rdock/box_padding_6/pb_valid",
+  "category": "check"
+ },
+ "sections/results.tex#128": {
+  "pick": "summary/rdock/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#129": {
+  "pick": "engines/gnina/rdock/all/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#130": {
+  "pick": "engines/gnina/vina/all/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#131": {
+  "pick": "comparisons/vina/top1/box_padding_2/delta_pts",
+  "category": "untraced"
+ },
+ "sections/results.tex#132": {
+  "pick": "engines/gnina/vina/all/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#133": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#134": {
+  "pick": "subset_308/summary/vina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#135": {
+  "pick": "subset_308/summary/vina/baseline/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#136": {
+  "pick": "subset_308/summary/vina/baseline/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#137": {
+  "pick": "subset_308/summary/smina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#138": {
+  "pick": "subset_308/summary/smina/baseline/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#139": {
+  "pick": "subset_308/summary/smina/baseline/top1_high",
+  "category": "check"
+ },
+ "sections/results.tex#140": {
+  "pick": "subset_308/summary/gnina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#141": {
+  "pick": "subset_308/summary/gnina/baseline/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#142": {
+  "pick": "subset_308/summary/gnina/baseline/top1_high",
+  "category": "traced"
+ },
+ "sections/results.tex#143": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#144": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#145": {
+  "pick": "subset_308/comparisons/vina/top1/box_padding_2/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#146": {
+  "pick": "subset_308/comparisons/vina/top1/box_padding_2/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#147": {
+  "pick": "subset_308/comparisons/smina/top1/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#148": {
+  "pick": "subset_308/comparisons/smina/top1/box_padding_2/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#149": {
+  "pick": "subset_308/comparisons/gnina/top1/ligand_dimorphite/delta_pts",
+  "category": "untraced"
+ },
+ "sections/results.tex#150": {
+  "pick": "subset_308/comparisons/gnina/top1/ligand_dimorphite/p_holm",
+  "category": "untraced"
+ },
+ "sections/results.tex#151": {
+  "pick": "comparisons/gnina/top1/ligand_dimorphite/delta_pts",
+  "category": "untraced"
+ },
+ "sections/results.tex#152": {
+  "pick": "subset_308/summary/rdock/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#153": {
+  "pick": "subset_308/comparisons/rdock/top1/box_padding_2/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#154": {
+  "pick": "subset_308/comparisons/rdock/top1/box_padding_6/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#155": {
+  "pick": "subset_308/comparisons/rdock/top1/box_padding_8/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#156": {
+  "pick": "subset_308/comparisons/rdock/top1/box_padding_6/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#157": {
+  "pick": "subset_308/comparisons/vina/pb_valid/box_padding_2/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#158": {
+  "pick": "subset_308/comparisons/smina/pb_valid/box_padding_2/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#159": {
+  "pick": "subset_308/comparisons/rdock/pb_valid/ligand_rdkit_conformer/delta_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#160": {
+  "pick": "subset_308/comparisons/rdock/pb_valid/ligand_rdkit_conformer/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#161": {
+  "pick": "robust_no_cofactor_summary/vina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#162": {
+  "pick": "robust_no_cofactor_summary/smina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#163": {
+  "pick": "robust_no_cofactor_summary/gnina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#164": {
+  "pick": "robust_no_cofactor_summary/rdock/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#165": {
+  "pick": "robust_no_cofactor_comparisons/vina/top1/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#166": {
+  "pick": "robust_no_cofactor_comparisons/vina/top1/box_padding_2/delta_low",
+  "category": "check"
+ },
+ "sections/results.tex#167": {
+  "pick": "robust_no_cofactor_comparisons/vina/top1/box_padding_2/delta_high",
+  "category": "traced"
+ },
+ "sections/results.tex#168": {
+  "pick": "robust_no_cofactor_comparisons/smina/top1/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#169": {
+  "pick": "robust_no_cofactor_comparisons/smina/top1/box_padding_2/delta_low",
+  "category": "traced"
+ },
+ "sections/results.tex#170": {
+  "pick": "robust_no_cofactor_comparisons/smina/top1/box_padding_2/delta_high",
+  "category": "check"
+ },
+ "sections/results.tex#171": {
+  "pick": "robust_no_cofactor_comparisons/gnina/top1/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#172": {
+  "pick": "robust_no_cofactor_comparisons/gnina/top1/box_padding_2/delta_low",
+  "category": "check"
+ },
+ "sections/results.tex#173": {
+  "pick": "robust_no_cofactor_comparisons/smina/top1/box_padding_2/delta_pts",
+  "category": "untraced"
+ },
+ "sections/results.tex#174": {
+  "pick": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#175": {
+  "pick": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/delta_low",
+  "category": "check"
+ },
+ "sections/results.tex#176": {
+  "pick": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/delta_high",
+  "category": "traced"
+ },
+ "sections/results.tex#177": {
+  "pick": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#178": {
+  "pick": "robust_no_cofactor_comparisons/vina/top1/ligand_rdkit_conformer/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#179": {
+  "pick": "robust_no_cofactor_comparisons/vina/top1/ligand_rdkit_conformer/delta_low",
+  "category": "check"
+ },
+ "sections/results.tex#180": {
+  "pick": "robust_no_cofactor_comparisons/vina/top1/ligand_rdkit_conformer/delta_high",
+  "category": "traced"
+ },
+ "sections/results.tex#181": {
+  "pick": "robust_no_cofactor_comparisons/smina/top1/ligand_rdkit_conformer/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#182": {
+  "pick": "robust_no_cofactor_comparisons/smina/top1/ligand_rdkit_conformer/delta_low",
+  "category": "check"
+ },
+ "sections/results.tex#183": {
+  "pick": "robust_no_cofactor_comparisons/smina/top1/ligand_rdkit_conformer/delta_high",
+  "category": "check"
+ },
+ "sections/results.tex#184": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#185": {
+  "pick": "comparisons/smina/top1/ligand_rdkit_conformer/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#186": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#187": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#188": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#189": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#190": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#191": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#192": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#193": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#194": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#195": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#196": {
+  "pick": "agreement_consensus/top1/rdock/p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#197": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#198": {
+  "pick": "followup_interaction/2/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#199": {
+  "pick": "followup_interaction/2/p_holm",
+  "category": "traced"
+ },
+ "sections/results.tex#200": {
+  "pick": "comparisons/vina/top1/ligand_dimorphite/delta_pts",
+  "category": "check"
+ },
+ "sections/results.tex#201": {
+  "pick": "comparisons/vina/pb_valid/box_padding_8/delta_pts",
+  "category": "untraced"
+ },
+ "sections/results.tex#202": {
+  "pick": "astex_h2_h3/gnina/H2/diff_low",
+  "category": "untraced"
+ },
+ "sections/results.tex#203": {
+  "pick": "followup_interaction/8/vs_baseline_padding_p_holm",
+  "category": "check"
+ },
+ "sections/results.tex#204": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#205": {
+  "pick": "followup_combined/box_padding_2+ligand_dimorphite/rate_b",
+  "category": "check"
+ },
+ "sections/results.tex#206": {
+  "pick": "followup_combined/box_padding_2+ligand_dimorphite/low_b",
+  "category": "check"
+ },
+ "sections/results.tex#207": {
+  "pick": "followup_combined/box_padding_2+ligand_dimorphite/high_b",
+  "category": "check"
+ },
+ "sections/results.tex#208": {
+  "pick": "followup_combined/box_padding_2+ligand_dimorphite/diff_pts",
+  "category": "traced"
+ },
+ "sections/results.tex#209": {
+  "pick": "followup_combined/box_padding_2+ligand_dimorphite/p",
+  "category": "traced"
+ },
+ "sections/results.tex#210": {
+  "pick": "summary/gnina/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#211": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#212": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#213": {
+  "pick": "followup_gyration_geometry/median_ratio_to_baseline",
+  "category": "check"
+ },
+ "sections/results.tex#214": {
+  "pick": "followup_gyration_geometry/median_ratio_to_box2",
+  "category": "traced"
+ },
+ "sections/results.tex#215": {
+  "pick": "followup_gyration/vs_baseline/rate_b",
+  "category": "check"
+ },
+ "sections/results.tex#216": {
+  "pick": "summary/smina/ligand_rdkit_conformer/top1_low",
+  "category": "check"
+ },
+ "sections/results.tex#217": {
+  "pick": "followup_gyration/vs_baseline/high_b",
+  "category": "check"
+ },
+ "sections/results.tex#218": {
+  "pick": "followup_gyration/vs_baseline/diff_pts",
+  "category": "check"
+ },
+ "sections/results.tex#219": {
+  "pick": "followup_gyration/vs_baseline/p",
+  "category": "traced"
+ },
+ "sections/results.tex#220": {
+  "pick": "summary/vina/box_padding_2/top1",
+  "category": "check"
+ },
+ "sections/results.tex#221": {
+  "pick": "followup_gyration/vs_box_padding_2/p",
+  "category": "check"
+ },
+ "sections/results.tex#222": {
+  "pick": "followup_gyration/vs_baseline_inside/rate_a",
+  "category": "check"
+ },
+ "sections/results.tex#223": {
+  "pick": "followup_gyration/vs_baseline_inside/rate_b",
+  "category": "traced"
+ },
+ "sections/results.tex#224": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#225": {
+  "pick": "followup_gyration/vs_baseline_outside/rate_b",
+  "category": "traced"
+ },
+ "sections/results.tex#226": {
+  "pick": "agreement_levels/vina/5/rate",
+  "category": "check"
+ },
+ "sections/results.tex#227": {
+  "pick": "agreement_levels/vina/5/low",
+  "category": "check"
+ },
+ "sections/results.tex#228": {
+  "pick": "agreement_levels/vina/5/high",
+  "category": "check"
+ },
+ "sections/results.tex#229": {
+  "pick": "agreement_levels/smina/5/rate",
+  "category": "check"
+ },
+ "sections/results.tex#230": {
+  "pick": "agreement_levels/smina/5/low",
+  "category": "check"
+ },
+ "sections/results.tex#231": {
+  "pick": "agreement_levels/smina/5/high",
+  "category": "check"
+ },
+ "sections/results.tex#232": {
+  "pick": "agreement_levels/gnina/5/rate",
+  "category": "check"
+ },
+ "sections/results.tex#233": {
+  "pick": "agreement_levels/gnina/5/low",
+  "category": "check"
+ },
+ "sections/results.tex#234": {
+  "pick": "agreement_levels/gnina/5/high",
+  "category": "check"
+ },
+ "sections/results.tex#235": {
+  "pick": "agreement_levels/rdock/5/rate",
+  "category": "check"
+ },
+ "sections/results.tex#236": {
+  "pick": "agreement_levels/rdock/5/low",
+  "category": "check"
+ },
+ "sections/results.tex#237": {
+  "pick": "agreement_levels/rdock/5/high",
+  "category": "check"
+ },
+ "sections/results.tex#238": {
+  "pick": "agreement_levels/vina/0/rate",
+  "category": "check"
+ },
+ "sections/results.tex#239": {
+  "pick": "agreement_signals/gnina/prep_agree/diff",
+  "category": "untraced"
+ },
+ "sections/results.tex#240": {
+  "pick": "agreement_signals/vina/prep_plus_engine/diff_low",
+  "category": "untraced"
+ },
+ "sections/results.tex#241": {
+  "pick": "agreement_signals/gnina/prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#242": {
+  "pick": "agreement_signals/gnina/cnn/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#243": {
+  "pick": "agreement_signals/gnina/cnn/diff_vs_prep",
+  "category": "untraced"
+ },
+ "sections/results.tex#244": {
+  "pick": "agreement_signals/gnina/cnn/diff_high_vs_prep",
+  "category": "untraced"
+ },
+ "sections/results.tex#245": {
+  "pick": "agreement_signals/gnina/cnn/diff_low_vs_prep",
+  "category": "untraced"
+ },
+ "sections/results.tex#246": {
+  "pick": "agreement_signals/smina/engine_agree/diff_vs_prep",
+  "category": "check"
+ },
+ "sections/results.tex#247": {
+  "pick": "agreement_signals/smina/engine_agree/diff_low_vs_prep",
+  "category": "traced"
+ },
+ "sections/results.tex#248": {
+  "pick": "agreement_signals/smina/engine_agree/diff_high_vs_prep",
+  "category": "check"
+ },
+ "sections/results.tex#249": {
+  "pick": "agreement_signals/gnina/engine_agree/diff_vs_prep",
+  "category": "traced"
+ },
+ "sections/results.tex#250": {
+  "pick": "agreement_signals/gnina/engine_agree/diff_low_vs_prep",
+  "category": "traced"
+ },
+ "sections/results.tex#251": {
+  "pick": "agreement_signals/gnina/engine_agree/diff_high_vs_prep",
+  "category": "traced"
+ },
+ "sections/results.tex#252": {
+  "pick": "agreement_signals/gnina/prep_plus_engine/diff_vs_prep",
+  "category": "check"
+ },
+ "sections/results.tex#253": {
+  "pick": "agreement_signals/smina/prep_plus_engine/diff_vs_prep",
+  "category": "check"
+ },
+ "sections/results.tex#254": {
+  "pick": "agreement_signals/rdock/prep_plus_engine/auroc",
+  "category": "untraced"
+ },
+ "sections/results.tex#255": {
+  "pick": "agreement_signals/vina/seed_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#256": {
+  "pick": "agreement_signals/vina/seed_agree/low",
+  "category": "check"
+ },
+ "sections/results.tex#257": {
+  "pick": "agreement_signals/vina/seed_agree/high",
+  "category": "traced"
+ },
+ "sections/results.tex#258": {
+  "pick": "agreement_signals/vina/seed_agree/diff_vs_prep",
+  "category": "untraced"
+ },
+ "sections/results.tex#259": {
+  "pick": "agreement_signals/vina/seed_agree/diff_high_vs_prep",
+  "category": "untraced"
+ },
+ "sections/results.tex#260": {
+  "pick": "agreement_signals/vina/seed_agree/diff_low_vs_prep",
+  "category": "untraced"
+ },
+ "sections/results.tex#261": {
+  "pick": "agreement_pose_change/vina/seeds_moved",
+  "category": "check"
+ },
+ "sections/results.tex#262": {
+  "pick": "agreement_pose_change/vina/arms_moved",
+  "category": "traced"
+ },
+ "sections/results.tex#263": {
+  "pick": "agreement_subsets/vina/2/auroc_mean",
+  "category": "traced"
+ },
+ "sections/results.tex#264": {
+  "pick": "agreement_subsets/smina/2/auroc_mean",
+  "category": "traced"
+ },
+ "sections/results.tex#265": {
+  "pick": "agreement_subsets/gnina/2/auroc_mean",
+  "category": "check"
+ },
+ "sections/results.tex#266": {
+  "pick": "agreement_subsets/rdock/2/auroc_mean",
+  "category": "traced"
+ },
+ "sections/results.tex#267": {
+  "pick": "agreement_signals/vina/prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#268": {
+  "pick": "agreement_signals/smina/prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#269": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#270": {
+  "pick": "agreement_subsets/rdock/5/auroc_mean",
+  "category": "check"
+ },
+ "sections/results.tex#271": {
+  "pick": "agreement_subsets/smina/2/unanimous_success",
+  "category": "untraced"
+ },
+ "sections/results.tex#272": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#273": {
+  "pick": "agreement_subsets/gnina/2/auroc_max",
+  "category": "check"
+ },
+ "sections/results.tex#274": {
+  "pick": "agreement_subsets/smina/2/auroc_max",
+  "category": "traced"
+ },
+ "sections/results.tex#275": {
+  "pick": "agreement_subsets/gnina/2/auroc_max",
+  "category": "check"
+ },
+ "sections/results.tex#276": {
+  "pick": "agreement_subsets/rdock/2/auroc_max",
+  "category": "traced"
+ },
+ "sections/results.tex#277": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#278": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#279": {
+  "pick": "agreement_validation/vina/prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#280": {
+  "pick": "agreement_validation/smina/prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#281": {
+  "pick": "agreement_validation/gnina/prep_agree/auroc",
+  "category": "traced"
+ },
+ "sections/results.tex#282": {
+  "pick": "agreement_validation/rdock/prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#283": {
+  "pick": "agreement_validation/smina/score/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#284": {
+  "pick": "agreement_validation/rdock/score/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#285": {
+  "pick": "agreement_validation/rdock/prep_agree/brier",
+  "category": "traced"
+ },
+ "sections/results.tex#286": {
+  "pick": "agreement_validation/gnina/best_pair/brier_hi",
+  "category": "check"
+ },
+ "sections/results.tex#287": {
+  "pick": "agreement_validation/rdock/score/brier",
+  "category": "traced"
+ },
+ "sections/results.tex#288": {
+  "pick": "agreement_validation/smina/score/brier",
+  "category": "traced"
+ },
+ "sections/results.tex#289": {
+  "pick": "agreement_validation/smina/score+prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#290": {
+  "pick": "agreement_validation/rdock/score+prep_agree/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#291": {
+  "pick": "agreement_validation/smina/best_pair/auroc",
+  "category": "traced"
+ },
+ "sections/results.tex#292": {
+  "pick": "agreement_validation/rdock/best_pair/auroc",
+  "category": "check"
+ },
+ "sections/results.tex#293": {
+  "pick": null,
+  "category": "untraced"
+ },
+ "sections/results.tex#294": {
+  "pick": "agreement_missing/vina/prep_auroc_complete",
+  "category": "check"
+ },
+ "sections/results.tex#295": {
+  "pick": "agreement_missing/vina/prep_auroc_all",
+  "category": "check"
+ },
+ "sections/results.tex#296": {
+  "pick": "agreement_consensus/top1/vina/changed_pose",
+  "category": "check"
+ },
+ "sections/results.tex#297": {
+  "pick": "agreement_consensus/top1/gnina/changed_pose",
+  "category": "check"
+ },
+ "sections/results.tex#298": {
+  "pick": "agreement_consensus/top1/vina/baseline",
+  "category": "check"
+ },
+ "sections/results.tex#299": {
+  "pick": "agreement_consensus/top1/vina/consensus",
+  "category": "check"
+ },
+ "sections/results.tex#300": {
+  "pick": "agreement_consensus/top1/smina/baseline",
+  "category": "check"
+ },
+ "sections/results.tex#301": {
+  "pick": "agreement_consensus/top1/smina/consensus",
+  "category": "traced"
+ },
+ "sections/results.tex#302": {
+  "pick": "agreement_consensus/top1/gnina/baseline",
+  "category": "check"
+ },
+ "sections/results.tex#303": {
+  "pick": "agreement_consensus/top1/gnina/consensus",
+  "category": "check"
+ },
+ "sections/results.tex#304": {
+  "pick": "summary/rdock/baseline/top1",
+  "category": "check"
+ },
+ "sections/results.tex#305": {
+  "pick": "agreement_consensus/top1/rdock/consensus",
+  "category": "check"
+ },
+ "sections/results.tex#306": {
+  "pick": "agreement_consensus/top1/gnina/p_holm",
+  "category": "check"
+ }
+}

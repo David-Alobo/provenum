@@ -1,0 +1,11 @@
+n,app_cell,value,sentence_context,reading,note
+1,agreement_levels/gnina/2/high,70.8,"2 Å was among the nine returned for 303 complexes (70.8%), but ranked first",wrong (coincidence),303 of 428 complexes; the cell is an interval bound in the agreement table
+2,noise/vina/top1_sd,0.4,"(mean 46.8%, standard deviation 0.4 points, range 0.9 points)",correct,the SD of Vina top-1 over seeds; the hand migration left it typed
+3,agreement_levels/smina/2/low,8.9,"The spread of top-1 success over the six protocols ... was 8.9 points for Vina",wrong (coincidence),a spread over protocols; the cell is a Smina interval bound
+4,agreement_subsets/rdock/5/unanimous_share,10.5,"10.5 points for Smina (44.2–54.7%)",wrong (coincidence),a spread over protocols; the cell is a share in the agreement subsets table
+5,subset_308/comparisons/gnina/top1/box_padding_2/delta_high,7.0,"7.0 points for Gnina",wrong (coincidence),a spread over protocols; the cell is an interval bound on a subset
+6,agreement_levels/rdock/2/low,23.8,"23.8 points for rDock (17.3–41.1%)",wrong (coincidence),a spread over protocols; the cell is an interval bound
+7,robust_no_cofactor_comparisons/gnina/pb_valid/box_padding_8/delta_high,6.2,"protonation arm, which lowered success by 6.2 points on this subset",wrong (coincidence),the sentence is about the protonation arm; the cell is a box-padding interval bound
+8,agreement_subsets/rdock/5/unanimous_share,10.5,"each arm's flips (odds ratios 10.5–37; Holm p < 10^-8 for every arm)",wrong (coincidence),an odds ratio; the cell is a share
+9,comparisons/gnina/pb_valid/ligand_dimorphite/delta_high,1.7,"(... odds ratio 2.5, p = 0.024; Gnina 1.7; Smina 1.6)",wrong (coincidence),an odds ratio; the cell is an interval bound of a difference
+10,astex_h2_h3/gnina/H3/diff_vs_cnn_high,0.093,"(0.863 against 0.812; difference 0.051 [0.011, 0.093])",wrong (coincidence),"the sentence is about the main PoseBusters set; the cell is from the Astex table (where the difference is −0.063)"

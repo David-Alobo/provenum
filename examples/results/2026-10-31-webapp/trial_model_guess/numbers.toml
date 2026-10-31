@@ -1,0 +1,287 @@
+# provenum spec, guessed by `provenum init` from the tables in the uploaded tables.
+# Check each guess, then run: provenum values <this file> --tables <dir> --out numbers.tex
+
+# agreement_consensus.csv: 8 rows; keys metric, engine
+#   n, gained, lost: int (whole numbers)
+#   baseline, consensus, changed_pose: pct1 (proportions, shown as percentages)
+#   diff: +pct1 (a difference of proportions, in points)
+#   p, p_holm: p (p-values)
+[[table]]
+file = "agreement_consensus.csv"
+keys = ["metric", "engine"]
+default = "int"
+formats = { baseline = "pct1", consensus = "pct1", diff = "+pct1", p = "p", changed_pose = "pct1", p_holm = "p" }
+
+# agreement_levels.csv: 24 rows; keys engine, prep_agree
+#   n: int (whole numbers)
+#   rate: pct1 (proportions, shown as percentages)
+#   low, high: pct1 (bounds of rate)
+[[table]]
+file = "agreement_levels.csv"
+keys = ["engine", "prep_agree"]
+default = "pct1"
+formats = { n = "int" }
+
+# agreement_missing.csv: 4 rows; keys engine
+#   n, with_missing_pose: int (whole numbers)
+#   missing_success_rate: pct1 (proportions, shown as percentages)
+#   prep_auroc_all, score_auroc_all, prep_auroc_complete, score_auroc_complete: f3 (a score between 0 and 1, written as a decimal)
+[[table]]
+file = "agreement_missing.csv"
+keys = ["engine"]
+default = "f3"
+formats = { n = "int", with_missing_pose = "int", missing_success_rate = "pct1" }
+
+# agreement_oracle.csv: 4 rows; keys engine
+#   n, n_arms, n_seeds: int (whole numbers)
+#   baseline, best_of_arms, best_of_seeds: pct1 (proportions, shown as percentages)
+[[table]]
+file = "agreement_oracle.csv"
+keys = ["engine"]
+default = "int"
+formats = { baseline = "pct1", best_of_arms = "pct1", best_of_seeds = "pct1" }
+
+# agreement_pose_change.csv: 4 rows; keys engine
+#   arms_moved, seeds_moved: pct1 (proportions, shown as percentages)
+[[table]]
+file = "agreement_pose_change.csv"
+keys = ["engine"]
+default = "pct1"
+
+# agreement_signals.csv: 18 rows; keys signal, engine
+#   auroc: f3 (a score between 0 and 1, written as a decimal)
+#   low, high: f3 (bounds of auroc)
+#   diff, diff_vs_prep, diff_low_vs_prep, diff_high_vs_prep: +f3 (a signed difference)
+#   diff_low, diff_high: f3 (bounds of a difference)
+#   n: int (whole numbers)
+[[table]]
+file = "agreement_signals.csv"
+keys = ["signal", "engine"]
+default = "f3"
+formats = { diff = "+f3", diff_vs_prep = "+f3", diff_low_vs_prep = "+f3", diff_high_vs_prep = "+f3", n = "int" }
+
+# agreement_subsets.csv: 20 rows; keys engine, best_subset
+#   k, subsets: int (whole numbers)
+#   auroc_mean, auroc_min, auroc_max: f3 (a score between 0 and 1, written as a decimal)
+#   unanimous_success, unanimous_share: pct1 (proportions, shown as percentages)
+[[table]]
+file = "agreement_subsets.csv"
+keys = ["engine", "best_subset"]
+default = "f3"
+formats = { k = "int", subsets = "int", unanimous_success = "pct1", unanimous_share = "pct1" }
+
+# agreement_validation.csv: 16 rows; keys engine, model
+#   n: int (whole numbers)
+#   auroc, auroc_lo, auroc_hi, brier, brier_lo, brier_hi: f3 (a score between 0 and 1, written as a decimal)
+#   lr_stat: f0 (large values)
+#   lr_p: p (p-values)
+[[table]]
+file = "agreement_validation.csv"
+keys = ["engine", "model"]
+default = "f3"
+formats = { n = "int", lr_stat = "f0", lr_p = "p" }
+
+# astex_baseline.csv: 4 rows; keys engine
+#   n: int (whole numbers)
+#   rate: pct1 (proportions, shown as percentages)
+#   low, high: pct1 (bounds of rate)
+[[table]]
+file = "astex_baseline.csv"
+keys = ["engine"]
+default = "pct1"
+formats = { n = "int" }
+
+# astex_h1.csv: 4 rows; keys engine
+#   n, gained, lost: int (whole numbers)
+#   baseline, box2: pct1 (proportions, shown as percentages)
+#   diff_pts: +f1 (a signed difference)
+#   diff_low, diff_high: f1 (bounds of a difference)
+#   p, p_holm: p (p-values)
+[[table]]
+file = "astex_h1.csv"
+keys = ["engine"]
+default = "int"
+formats = { baseline = "pct1", box2 = "pct1", diff_pts = "+f1", diff_low = "f1", diff_high = "f1", p = "p", p_holm = "p" }
+
+# astex_h2_h3.csv: 8 rows; keys engine, hypothesis
+#   n, incorrect: int (whole numbers)
+#   auroc, score_auroc, cnn_auroc: f3 (a score between 0 and 1, written as a decimal)
+#   low, high: f3 (bounds of auroc)
+#   diff_vs_score, diff_vs_cnn: +f3 (a signed difference)
+#   diff_low, diff_high, diff_vs_cnn_low, diff_vs_cnn_high: f3 (bounds of a difference)
+[[table]]
+file = "astex_h2_h3.csv"
+keys = ["engine", "hypothesis"]
+default = "f3"
+formats = { n = "int", incorrect = "int", diff_vs_score = "+f3", diff_vs_cnn = "+f3" }
+
+# astex_h4.csv: 4 rows; keys engine
+#   n, pb_n: int (whole numbers)
+#   rate, pb_rate, pb_low, pb_high: pct1 (proportions, shown as percentages)
+#   low, high: pct1 (bounds of rate)
+[[table]]
+file = "astex_h4.csv"
+keys = ["engine"]
+default = "pct1"
+formats = { n = "int", pb_n = "int" }
+
+# comparisons.csv: 40 rows; keys engine, metric, arm
+#   n, gained, lost, family_size: int (whole numbers)
+#   baseline, arm_rate: pct1 (proportions, shown as percentages)
+#   delta_pts: +f1 (a signed difference)
+#   delta_low, delta_high: f1 (bounds of a difference)
+#   p, p_holm: p (p-values)
+[[table]]
+file = "comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "int"
+formats = { baseline = "pct1", arm_rate = "pct1", delta_pts = "+f1", delta_low = "f1", delta_high = "f1", p = "p", p_holm = "p" }
+
+# engines.csv: 12 rows; keys engine_a, engine_b, set
+#   n, only_b, only_a: int (whole numbers)
+#   rate_a, rate_b: pct1 (proportions, shown as percentages)
+#   diff_pts: +f1 (a signed difference)
+#   p: p (p-values)
+[[table]]
+file = "engines.csv"
+keys = ["engine_a", "engine_b", "set"]
+default = "int"
+formats = { rate_a = "pct1", rate_b = "pct1", diff_pts = "+f1", p = "p" }
+
+# followup_combined.csv: 1 rows; keys protocol
+#   rate_a, low_a, high_a, rate_b, low_b, high_b: pct1 (proportions, shown as percentages)
+#   diff_pts: +f1 (a signed difference)
+#   diff_low, diff_high: f1 (bounds of a difference)
+#   gained, lost: int (whole numbers)
+#   p: p (p-values)
+[[table]]
+file = "followup_combined.csv"
+keys = ["protocol"]
+default = "pct1"
+formats = { diff_pts = "+f1", diff_low = "f1", diff_high = "f1", gained = "int", lost = "int", p = "p" }
+
+# followup_gyration.csv: 4 rows; keys comparison
+#   n, gained, lost: int (whole numbers)
+#   rate_a, low_a, high_a, rate_b, low_b, high_b: pct1 (proportions, shown as percentages)
+#   diff_pts: +f1 (a signed difference)
+#   diff_low, diff_high: f1 (bounds of a difference)
+#   p: p (p-values)
+[[table]]
+file = "followup_gyration.csv"
+keys = ["comparison"]
+default = "pct1"
+formats = { n = "int", diff_pts = "+f1", diff_low = "f1", diff_high = "f1", gained = "int", lost = "int", p = "p" }
+
+# followup_gyration_geometry.csv: 1 rows; keys (none)
+#   n, smaller_than_baseline, smaller_than_box2, crystal_partly_outside: int (whole numbers)
+#   median_ratio_to_baseline, median_ratio_to_box2: f2 (a ratio)
+[[table]]
+file = "followup_gyration_geometry.csv"
+keys = []
+default = "int"
+formats = { median_ratio_to_baseline = "f2", median_ratio_to_box2 = "f2" }
+
+# followup_interaction.csv: 4 rows; keys padding
+#   rate_a, low_a, high_a, rate_b, low_b, high_b: pct1 (proportions, shown as percentages)
+#   diff_pts: +f1 (a signed difference)
+#   diff_low, diff_high: f1 (bounds of a difference)
+#   gained, lost: int (whole numbers)
+#   p, vs_baseline_padding_p, p_holm, vs_baseline_padding_p_holm: p (p-values)
+[[table]]
+file = "followup_interaction.csv"
+keys = ["padding"]
+default = "pct1"
+formats = { diff_pts = "+f1", diff_low = "f1", diff_high = "f1", gained = "int", lost = "int", p = "p", vs_baseline_padding_p = "p", p_holm = "p", vs_baseline_padding_p_holm = "p" }
+
+# noise.csv: 1 rows; keys engine
+#   replicates, flips_min, flips_max, always_succeed, always_fail, seed_sensitive, seed_stable: int (whole numbers)
+#   top1_mean, flips_mean: f1 (values above 1)
+#   top1_sd, top1_range: pct1 (proportions, shown as percentages)
+[[table]]
+file = "noise.csv"
+keys = ["engine"]
+default = "int"
+formats = { top1_mean = "f1", top1_sd = "pct1", top1_range = "pct1", flips_mean = "f1" }
+
+# posebusters_published.csv: 2 rows; keys set
+#   n, only_theirs, only_ours, agree, theirs_solved_our_failures: int (whole numbers)
+#   theirs_top1, theirs_top1_low, theirs_top1_high, theirs_pb_valid, ours_top1: pct1 (proportions, shown as percentages)
+#   diff_pts: +f1 (a signed difference)
+#   p: p (p-values)
+[[table]]
+file = "posebusters_published.csv"
+keys = ["set"]
+default = "int"
+formats = { theirs_top1 = "pct1", theirs_top1_low = "pct1", theirs_top1_high = "pct1", theirs_pb_valid = "pct1", ours_top1 = "pct1", diff_pts = "+f1", p = "p" }
+
+# robust_cofactor_failures.csv: 24 rows; keys engine, run
+#   with_cofactor, top1_success_with_cofactor, failed_on_cofactor_only: int (whole numbers)
+[[table]]
+file = "robust_cofactor_failures.csv"
+keys = ["engine", "run"]
+default = "int"
+
+# robust_no_cofactor_comparisons.csv: 40 rows; keys engine, metric, arm
+#   n, gained, lost, family_size: int (whole numbers)
+#   baseline, arm_rate: pct1 (proportions, shown as percentages)
+#   delta_pts: +f1 (a signed difference)
+#   delta_low, delta_high: f1 (bounds of a difference)
+#   p, p_holm: p (p-values)
+[[table]]
+file = "robust_no_cofactor_comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "int"
+formats = { baseline = "pct1", arm_rate = "pct1", delta_pts = "+f1", delta_low = "f1", delta_high = "f1", p = "p", p_holm = "p" }
+
+# robust_no_cofactor_summary.csv: 27 rows; keys engine, run
+#   n, failed: int (whole numbers)
+#   top1, top1_low, top1_high, pb_valid, pb_valid_low, pb_valid_high: pct1 (proportions, shown as percentages)
+[[table]]
+file = "robust_no_cofactor_summary.csv"
+keys = ["engine", "run"]
+default = "pct1"
+formats = { n = "int", failed = "int" }
+
+# robust_threshold.csv: 120 rows; keys engine, run, threshold
+#   site, mode: int (whole numbers)
+[[table]]
+file = "robust_threshold.csv"
+keys = ["engine", "run", "threshold"]
+default = "int"
+
+# sampling.csv: 24 rows; keys engine, run
+#   n, top1, any_pose, top1_miss, failed: int (whole numbers)
+[[table]]
+file = "sampling.csv"
+keys = ["engine", "run"]
+default = "int"
+
+# subset_308/comparisons.csv: 40 rows; keys engine, metric, arm
+#   n, gained, lost, family_size: int (whole numbers)
+#   baseline, arm_rate: pct1 (proportions, shown as percentages)
+#   delta_pts: +f1 (a signed difference)
+#   delta_low, delta_high: f1 (bounds of a difference)
+#   p, p_holm: p (p-values)
+[[table]]
+file = "subset_308/comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "int"
+formats = { baseline = "pct1", arm_rate = "pct1", delta_pts = "+f1", delta_low = "f1", delta_high = "f1", p = "p", p_holm = "p" }
+
+# subset_308/summary.csv: 27 rows; keys engine, run
+#   n, failed: int (whole numbers)
+#   top1, top1_low, top1_high, pb_valid, pb_valid_low, pb_valid_high: pct1 (proportions, shown as percentages)
+[[table]]
+file = "subset_308/summary.csv"
+keys = ["engine", "run"]
+default = "pct1"
+formats = { n = "int", failed = "int" }
+
+# summary.csv: 27 rows; keys engine, run
+#   n, failed: int (whole numbers)
+#   top1, top1_low, top1_high, pb_valid, pb_valid_low, pb_valid_high: pct1 (proportions, shown as percentages)
+[[table]]
+file = "summary.csv"
+keys = ["engine", "run"]
+default = "pct1"
+formats = { n = "int", failed = "int" }

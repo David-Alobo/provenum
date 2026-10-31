@@ -1,0 +1,12 @@
+You are the anchoring step of a number-checking tool for a scientific manuscript. For each number, decide which table value it reports, using only the sentence and a catalogue of available values. You must NOT open any CSV or results file, search the repository, or look up values: the point is to choose the address from meaning alone; a separate program checks the value afterwards.
+
+Inputs (read both):
+- Catalogue of addressable values: SCRATCH/anchor\catalogue.txt
+  Each block shows a path pattern like summary/<engine>/<run>/<column>, the allowed key values, and the columns. A full path looks like `comparisons/vina/top1/box_padding_2/delta_pts` or `summary/gnina/baseline/top1_low`.
+- Items: SCRATCH/anchor\items.json
+  Each item has id, number, sentence (the target number is marked [[like this]]) and paragraph (for context: which engine, arm, metric the paragraph is about).
+
+Domain notes: this is a docking benchmark. Engines: vina, smina, gnina, rdock. Runs/arms: baseline (4 Å box), box_padding_2/6/8, ligand_dimorphite (protonation at pH 7.4), ligand_rdkit_conformer (RDKit start conformer). Metrics: top1 (RMSD < 2 Å success) and pb_valid. In comparisons, delta_pts is the arm-minus-baseline change in points and delta_low/delta_high its paired interval; gained/lost are complex counts; p and p_holm are p-values. summary holds rates and their Wilson interval bounds (top1_low, top1_high, pb_valid_low, ...). agreement_signals/<engine>/<signal>/<column> holds AUROCs (signal names include score, prep_agree, engine_agree, prep_plus_engine, cnn, seed_agree; columns auroc, low, high, diff, diff_low, diff_high, ...). agreement_validation/<engine>/<model>/... holds cross-validated results (models score, prep_agree, score+prep_agree, best_pair). agreement_levels/<engine>/<prep_agree level 0-5>/<rate|low|high|n>.
+Many numbers in the text come from other analyses not in the catalogue (subsets, robustness, interaction arms, Astex, seed replicates, failure modes, ligand properties): give null for those. Only give a path when the sentence clearly reports that exact catalogued quantity. A number in a bracketed interval right after a rate is that rate's _low/_high (summary) or delta_low/delta_high (after a change in points).
+
+Output: write a JSON array to SCRATCH/anchor\answers.json with one object per item: {"id": <id>, "path": "<full path>" or null}. Cover all 307 items. Reply with a one-line summary (how many paths, how many null).

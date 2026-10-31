@@ -1,9 +1,12 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-All experiments use the Results section of the DockPrepBench manuscript and the 25 tables its
-analysis scripts write. The section and the tables are fixed at their state on 30 October 2026;
-the inputs, model answers and scoring script are in the repository
+All experiments use the Results section of the DockPrepBench manuscript and the tables its
+analysis scripts write. The tables grew while the section was being traced, so the experiments
+used different sets: 24 tables for the value-only and context methods, the 5 tables of the first
+specification for the first model runs, and the 28 tables of the final specification for the
+benchmark and the review trial. Supplementary Section~S1 gives the commit and table set of each
+experiment; the inputs, model answers and scoring scripts are in the repository
 (\texttt{examples/results/}).
 
 \subsection{Corruption test}
@@ -21,7 +24,13 @@ Section~\ref{sec:design}. \emph{Model
 proposes, code verifies}: blind-mode anchoring, with a corruption caught when the model's address
 was traced for the original number and the corrupted number fails the value check against the
 same address. The proposing models were Claude Sonnet, Qwen2.5-14B-Instruct and
-Qwen2.5-32B-Instruct~\cite{qwen2024qwen25}; the Qwen models ran in Ollama on one GPU. Shortlist
+Qwen2.5-32B-Instruct~\cite{qwen2024qwen25}. The Qwen models ran in Ollama on one GPU, through
+\pv{}'s own prompts, one number per request. Claude Sonnet ran as a Claude Code subagent that
+read all 307 numbers and the catalogue at once, with instructions of the same substance but
+different wording; both received the same notes on the project's vocabulary. Supplementary
+Section~S2 gives every prompt. The value-only and context methods were scored on the same 307
+numbers; scores on all 562 decimals in the section, including those inside LaTeX tables, are in
+Supplementary Section~S3. Shortlist
 mode was run with the two Qwen models and scored by agreement with Claude's blind-mode addresses,
 since there was no independent gold standard at that stage.
 

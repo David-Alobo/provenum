@@ -1,0 +1,166 @@
+# Which DockPrepBench tables become \val{} entries, and how each column is formatted.
+# Paths are relative to paper/tables/.
+
+[[table]]
+file = "summary.csv"
+keys = ["engine", "run"]
+default = "pct1"
+formats = { n = "int", failed = "int" }
+
+[[table]]
+file = "comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "pct1"
+formats = { n = "int", delta_pts = "+f1", delta_low = "f1", delta_high = "f1", gained = "int", lost = "int", p = "p", p_holm = "p", family_size = "int" }
+
+[[table]]
+file = "agreement_signals.csv"
+keys = ["engine", "signal"]
+default = "f3"
+formats = { n = "int" }
+
+[[table]]
+file = "agreement_validation.csv"
+keys = ["engine", "model"]
+default = "f3"
+formats = { n = "int", lr_stat = "f0", lr_p = "p" }
+
+[[table]]
+file = "agreement_levels.csv"
+keys = ["engine", "prep_agree"]
+default = "pct1"
+formats = { n = "int" }
+
+[[table]]
+file = "engines.csv"
+keys = ["engine_a", "engine_b", "set"]
+default = "pct1"
+formats = { n = "int", diff_pts = "~f1", only_a = "int", only_b = "int", p = "p" }
+
+[[table]]
+file = "sampling.csv"
+keys = ["engine", "run"]
+default = "int"
+
+[[table]]
+file = "noise.csv"
+keys = ["engine"]
+default = "int"
+formats = { top1_mean = "f1", top1_sd = "f1", top1_range = "f1", flips_mean = "f1" }
+
+[[table]]
+file = "posebusters_published.csv"
+keys = ["set"]
+default = "pct1"
+formats = { n = "int", diff_pts = "f1", only_theirs = "int", only_ours = "int", agree = "int", p = "p", theirs_solved_our_failures = "int" }
+
+[[table]]
+file = "followup_interaction.csv"
+keys = ["padding"]
+default = "pct1"
+formats = { diff_pts = "+f1", diff_low = "f1", diff_high = "f1", gained = "int", lost = "int", p = "p", p_holm = "p", vs_baseline_padding_p = "p", vs_baseline_padding_p_holm = "p" }
+
+[[table]]
+file = "followup_combined.csv"
+keys = ["protocol"]
+default = "pct1"
+formats = { diff_pts = "f1", diff_low = "f1", diff_high = "f1", gained = "int", lost = "int", p = "p" }
+
+[[table]]
+file = "followup_gyration_geometry.csv"
+keys = []
+default = "int"
+formats = { median_ratio_to_baseline = "f2", median_ratio_to_box2 = "f2" }
+
+[[table]]
+file = "followup_gyration.csv"
+keys = ["comparison"]
+default = "pct1"
+formats = { n = "int", diff_pts = "f1", diff_low = "f1", diff_high = "f1", gained = "int", lost = "int", p = "p" }
+
+[[table]]
+file = "agreement_pose_change.csv"
+keys = ["engine"]
+default = "pct1"
+
+[[table]]
+file = "agreement_subsets.csv"
+keys = ["engine", "k"]
+default = "f3"
+formats = { subsets = "int", unanimous_success = "pct1", unanimous_share = "pct1" }
+
+[[table]]
+file = "agreement_consensus.csv"
+keys = ["metric", "engine"]
+default = "pct1"
+formats = { n = "int", gained = "int", lost = "int", p = "p", p_holm = "p" }
+
+[[table]]
+file = "agreement_oracle.csv"
+keys = ["engine"]
+default = "pct1"
+formats = { n = "int", n_arms = "int", n_seeds = "int" }
+
+[[table]]
+file = "agreement_missing.csv"
+keys = ["engine"]
+default = "f3"
+formats = { n = "int", with_missing_pose = "int", missing_success_rate = "pct1" }
+
+[[table]]
+file = "robust_no_cofactor_summary.csv"
+keys = ["engine", "run"]
+default = "pct1"
+formats = { n = "int", failed = "int" }
+
+[[table]]
+file = "robust_no_cofactor_comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "pct1"
+formats = { n = "int", delta_pts = "+f1", delta_low = "f1", delta_high = "f1", gained = "int", lost = "int", p = "p", p_holm = "p", family_size = "int" }
+
+[[table]]
+file = "robust_cofactor_failures.csv"
+keys = ["engine", "run"]
+default = "int"
+
+[[table]]
+file = "robust_threshold.csv"
+keys = ["engine", "run", "threshold"]
+default = "int"
+
+[[table]]
+file = "subset_308/summary.csv"
+keys = ["engine", "run"]
+default = "pct1"
+formats = { n = "int", failed = "int" }
+
+[[table]]
+file = "subset_308/comparisons.csv"
+keys = ["engine", "metric", "arm"]
+default = "pct1"
+formats = { n = "int", delta_pts = "+f1", delta_low = "f1", delta_high = "f1", gained = "int", lost = "int", p = "p", p_holm = "p", family_size = "int" }
+
+[[table]]
+file = "astex_baseline.csv"
+keys = ["engine"]
+default = "pct1"
+formats = { n = "int" }
+
+[[table]]
+file = "astex_h1.csv"
+keys = ["engine"]
+default = "pct1"
+formats = { n = "int", diff_pts = "+f1", diff_low = "f1", diff_high = "f1", gained = "int", lost = "int", p = "p", p_holm = "p" }
+
+[[table]]
+file = "astex_h2_h3.csv"
+keys = ["engine", "hypothesis"]
+default = "f3"
+formats = { n = "int", incorrect = "int" }
+
+[[table]]
+file = "astex_h4.csv"
+keys = ["engine"]
+default = "pct1"
+formats = { n = "int", pb_n = "int" }

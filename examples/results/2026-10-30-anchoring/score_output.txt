@@ -1,0 +1,5 @@
+answers_claude_sonnet.json         traced 134 mismatch   0 bad   0 none 173 | caught 134/134 | same as Claude 134/134
+answers_qwen14b.json               traced  43 mismatch 205 bad  58 none   1 | caught 43/43 | same as Claude 38/134
+answers_qwen32b_blind.json         traced  68 mismatch 139 bad  24 none  76 | caught 68/68 | same as Claude 64/124
+answers_qwen14b_shortlist.json     traced 177 mismatch   0 bad   0 none 130 | caught 177/177 | same as Claude 123/132
+answers_qwen32b_shortlist.json     traced 129 mismatch   0 bad   0 none 178 | caught 129/129 | same as Claude 114/116
