@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>provenum</title>
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<header class="top">
+  <h1>provenum</h1>
+  <p>Tie the numbers in your paper to the tables that produced them. Your manuscript stays on
+  this machine; the only other connection is to the model server you choose.</p>
+</header>
+
+<main>
+  <section id="step-project" class="step">
+    <h2><span class="n">1</span> Your paper</h2>
+    <p class="help">In Overleaf: <em>Menu → Download → Source</em>. Upload that zip here, or any
+    zipped LaTeX project.</p>
+    <label class="drop"><input type="file" id="project-file" accept=".zip">
+      <span>Choose the project zip</span></label>
+    <div id="project-info" class="info"></div>
+  </section>
+
+  <section id="step-tables" class="step" hidden>
+    <h2><span class="n">2</span> Your result tables</h2>
+    <p class="help">The CSV files your analysis wrote. Upload them as a zip, or use a folder that
+    is already in the project.</p>
+    <div class="row">
+      <label class="drop"><input type="file" id="tables-file" accept=".zip">
+        <span>Choose a zip of CSV files</span></label>
+      <div id="table-dirs"></div>
+    </div>
+    <div id="tables-info" class="info"></div>
+  </section>
+
+  <section id="step-spec" class="step" hidden>
+    <h2><span class="n">3</span> How each table is read</h2>
+    <p class="help">provenum guessed which columns name a row and how each column is printed
+    (percent, p-value, signed difference). Every guess has a comment; fix any that are wrong.
+    Lines marked <code>CHECK</code> need a look.</p>
+    <textarea id="spec" spellcheck="false" rows="16" aria-label="Spec (TOML)"></textarea>
+    <div class="row"><button id="save-spec" class="secondary">Save changes</button>
+      <span id="spec-info" class="info"></span></div>
+  </section>
+
+  <section id="step-run" class="step" hidden>
+    <h2><span class="n">4</span> Find where each number comes from</h2>
+    <p class="help">For every number typed by hand, provenum finds the table cells with the same
+    value. A local model (through <a href="https://ollama.com">Ollama</a>) then picks the cell the
+    sentence means. Without a model, you pick.</p>
+    <div class="grid">
+      <label>Ollama server <input id="host" value="http://127.0.0.1:11434"></label>
+      <label>Model <select id="model"><option value="">No model: I will choose</option></select></label>
+    </div>
+    <label>Notes for the model (optional): your project's terms, e.g. "arm = preparation
+      protocol; top1 = success rate"
+      <textarea id="notes" rows="3"></textarea></label>
+    <div class="row"><button id="run">Run</button><span id="run-info" class="info" aria-live="polite"></span></div>
+    <progress id="run-progress" hidden></progress>
+  </section>
+
+  <section id="step-review" class="step" hidden>
+    <h2><span class="n">5</span> Review</h2>
+    <p class="help">Nothing changes in your paper until you apply. A number is replaced only by a
+    cell whose value, printed as the spec says, gives exactly what you wrote, so the PDF reads
+    the same.</p>
+    <div id="summary" class="summary"></div>
+    <div class="row">
+      <input id="search" type="search" placeholder="Search sentences, files or cells" aria-label="Search">
+      <button id="accept-singles" class="secondary" hidden>Accept every number with one matching cell</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-cat="check">To confirm <span></span></button>
+      <button role="tab" data-cat="traced">Linked <span></span></button>
+      <button role="tab" data-cat="untraced">Left as typed <span></span></button>
+    </div>
+    <p id="cat-help" class="help"></p>
+    <ol id="items" class="items"></ol>
+    <div class="row sticky"><button id="apply">Apply and build the new project</button>
+      <span id="apply-info" class="info"></span></div>
+  </section>
+
+  <section id="step-done" class="step" hidden>
+    <h2><span class="n">6</span> Take it back to Overleaf</h2>
+    <div id="done-info"></div>
+    <div class="row">
+      <a id="dl-project" class="button" download>Download project.zip</a>
+      <a id="dl-report" class="button secondary" download>Report</a>
+      <a id="dl-spec" class="button secondary" download>numbers.toml</a>
+    </div>
+    <p class="help">In Overleaf: <em>New Project → Upload Project</em> with project.zip opens the
+    linked version as a new project, so the original stays untouched. Keep
+    <code>numbers.toml</code> with your analysis: after a rerun, <code>provenum values</code>
+    regenerates <code>numbers.tex</code> and <code>provenum diff</code> lists the sentences whose
+    claims changed.</p>
+  </section>
+
+  <p id="error" class="error" role="alert" hidden></p>
+</main>
+</body>
+</html>

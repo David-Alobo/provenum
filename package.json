@@ -1,0 +1,12 @@
+{
+  "name": "provenum-web",
+  "private": true,
+  "description": "Front-end tests for the provenum web app (the app itself needs no build step).",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "3.2.4"
+  }
+}

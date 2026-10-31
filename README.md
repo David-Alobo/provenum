@@ -51,6 +51,7 @@ proposal only if the value at that address matches what is written.
 | `provenum diff` | After a rerun, list the sentences whose numbers changed and flag the changes that can break a claim. |
 | `provenum init` | Write a starting spec from a folder of tables, with each guess explained. |
 | `provenum check` | Check that the words around each number still match it: guards you write, such as `\val[>0]{...}`, and common phrasings such as "rose from X to Y" or "significant". |
+| `provenum serve` | A web app for the whole workflow: upload an Overleaf project and its tables, review, download the linked project. |
 
 An undefined `\val{}` path prints a bold **??** in the PDF and a LaTeX warning, so a broken
 reference cannot slip through.
@@ -127,6 +128,28 @@ provenum.record("vina_vs_gnina/ratio", gnina_rate / vina_rate, fmt="f1")
 This writes `recorded.csv` (or `$PROVENUM_RECORD`) with the name, value, format and the file that
 recorded it; recording a name again replaces it, so rerunning a cell adds no duplicates. The text
 writes `\val{recorded/vina_vs_gnina/ratio}`, and `provenum init` adds the table to the spec.
+
+### In the browser, from an Overleaf project
+
+```bash
+provenum serve          # then open http://127.0.0.1:8765
+```
+
+1. Upload the paper: in Overleaf, *Menu → Download → Source*, or any zipped LaTeX project.
+2. Upload the result tables (a zip of CSVs), or pick a folder of the project that holds them.
+3. Check the spec provenum guessed (which columns name a row, how each column is printed).
+4. Run. Every hand-typed number is matched against the table values; a local model through
+   [Ollama](https://ollama.com) then picks the cell each sentence means. With no model, you pick.
+5. Review three lists: *to confirm* (several cells hold the same value, which the value check
+   cannot tell apart), *linked* and *left as typed*, each with the reason.
+6. Download `project.zip` (upload it to Overleaf as a new project), a report of what was linked
+   and why the rest was not, and `numbers.toml` to keep with the analysis.
+
+Nothing is changed until you apply, and a number is replaced only by a cell whose value, printed
+as the spec says, gives exactly what was written, so the PDF reads the same. The manuscript stays
+on the machine running `provenum serve`; the only other connection is to the Ollama server you
+choose. The app uses only the Python standard library; its front-end tests run with Vitest
+(`npm install && npm test`).
 
 ## Quick start
 

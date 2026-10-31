@@ -10,6 +10,7 @@ Commands:
                                                            what a rerun changed in the text
     provenum check MANUSCRIPT... --values numbers.tex      guards and wording against the values
     provenum init TABLES_DIR [--out numbers.toml]          guess a starting spec from the tables
+    provenum serve [--port 8765]                           web app for the whole workflow
 """
 
 import argparse
@@ -240,6 +241,22 @@ def _anchor(args: argparse.Namespace) -> int:
     return 0
 
 
+def _serve(args: argparse.Namespace) -> int:
+    """
+    Run the local web app.
+
+    Args:
+        args (argparse.Namespace): Parsed arguments.
+
+    Returns:
+        int: Exit code.
+    """
+    from provenum.web.server import serve
+
+    serve(args.host, args.port, args.workdir)
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """
     Dispatch a provenum command.
@@ -317,6 +334,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     p.add_argument("--out", type=Path, default=Path("numbers.toml"))
     p.add_argument("--force", action="store_true", help="overwrite an existing spec")
     p.set_defaults(run=_init)
+
+    p = sub.add_parser("serve", help="web app: upload a LaTeX project and tables, review, download")
+    p.add_argument("--host", default="127.0.0.1", help="interface to listen on")
+    p.add_argument("--port", type=int, default=8765)
+    p.add_argument("--workdir", type=Path, help="where sessions are kept (default: temp)")
+    p.set_defaults(run=_serve)
 
     args = parser.parse_args(argv)
     return args.run(args)
