@@ -148,7 +148,9 @@ provenum serve          # then open http://127.0.0.1:8765
 Nothing is changed until you apply, and a number is replaced only by a cell whose value, printed
 as the spec says, gives exactly what was written, so the PDF reads the same. The manuscript stays
 on the machine running `provenum serve`; the only other connection is to the Ollama server you
-choose. The app uses only the Python standard library; its front-end tests run with Vitest
+choose. Session files are deleted after 6 idle hours (`--ttl`) or with *Delete my files now*. See
+[SECURITY.md](SECURITY.md) for what is stored, what leaves the machine, and the app's protections.
+The app uses only the Python standard library; its front-end tests run with Vitest
 (`npm install && npm test`).
 
 ## Quick start
