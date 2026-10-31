@@ -12,6 +12,7 @@ trained on maddog (RTX 6000 Ada) from 2026-10-30 23:20 to 2026-10-31 07:48 UTC.
 | `train_result.json` | The trainer's final metrics (mean training loss 0.041, 30,394 s). |
 | `eval_step0.json`, `eval_step0.log` | Validation loss before training (update 0), measured afterwards with `train.py --eval-only` on the same 692 examples: 2.18. |
 | `plot_loss.py` → `loss.png`, `loss.pdf` | Loss against epoch. |
+| `dataset_stats.json` | Examples per split and mode, and papers per split (304 train, 16 validation, 40 test). |
 | `pipeline.log` | Every step of the overnight pipeline and the reruns, with times and code versions. |
 
 Validation loss fell from 2.18 (update 0) to 0.0105 at update 100 and 0.0050 at update 200, then
@@ -22,8 +23,9 @@ figure joins two measurements; the loss between them was not measured.
 
 `evals/` holds every answer of both models (`answers_*.jsonl`: the reply, the parsed path and the
 example's metadata) and their scores. Both runs used `evaluate.py` at provenum `05d1523`: greedy
-decoding, at most 96 new tokens, replies started with `{"path":`. The test sets are the 16
-held-out synthetic papers (559 numbers with a cell, 103 and 53 without) and the DockPrepBench
+decoding, at most 96 new tokens, replies started with `{"path":`. The test sets are the 40
+synthetic papers from eight fields never used in training (559 numbers with a cell; 103 and 53
+examples without one, in blind and shortlist mode) and the DockPrepBench
 Results section (311 numbers with a cell, 4 and 3 without), which was never used in training.
 
 `compare.py` pairs the two runs example by example and writes `comparison.json`;
