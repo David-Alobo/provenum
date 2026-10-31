@@ -1,0 +1,1230 @@
+[
+ {
+  "id": 0,
+  "path": "summary/vina/baseline/top1"
+ },
+ {
+  "id": 1,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 2,
+  "path": "summary/vina/baseline/top1_high"
+ },
+ {
+  "id": 3,
+  "path": "summary/vina/baseline/pb_valid"
+ },
+ {
+  "id": 4,
+  "path": "summary/vina/baseline/pb_valid_low"
+ },
+ {
+  "id": 5,
+  "path": "summary/vina/baseline/pb_valid_high"
+ },
+ {
+  "id": 6,
+  "path": "summary/vina/baseline/top1"
+ },
+ {
+  "id": 7,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 8,
+  "path": "summary/vina/baseline/top1_high"
+ },
+ {
+  "id": 9,
+  "path": "summary/vina/baseline/pb_valid"
+ },
+ {
+  "id": 10,
+  "path": "null"
+ },
+ {
+  "id": 11,
+  "path": null
+ },
+ {
+  "id": 12,
+  "path": "comparisons/vina/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 13,
+  "path": null
+ },
+ {
+  "id": 14,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 15,
+  "path": "comparisons/vina/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 16,
+  "path": "null"
+ },
+ {
+  "id": 17,
+  "path": "summary/vina/box_padding_2/top1"
+ },
+ {
+  "id": 18,
+  "path": "comparisons/vina/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 19,
+  "path": "summary/vina/baseline/top1"
+ },
+ {
+  "id": 20,
+  "path": "summary/vina/baseline_seed1/top1"
+ },
+ {
+  "id": 21,
+  "path": null
+ },
+ {
+  "id": 22,
+  "path": null
+ },
+ {
+  "id": 23,
+  "path": null
+ },
+ {
+  "id": 24,
+  "path": "null"
+ },
+ {
+  "id": 25,
+  "path": null
+ },
+ {
+  "id": 26,
+  "path": null
+ },
+ {
+  "id": 27,
+  "path": null
+ },
+ {
+  "id": 28,
+  "path": null
+ },
+ {
+  "id": 29,
+  "path": null
+ },
+ {
+  "id": 30,
+  "path": "summary/vina/baseline/top1"
+ },
+ {
+  "id": 31,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 32,
+  "path": "summary/vina/baseline/top1_high"
+ },
+ {
+  "id": 33,
+  "path": "summary/vina/box_padding_2/top1"
+ },
+ {
+  "id": 34,
+  "path": "summary/vina/box_padding_2/top1_low"
+ },
+ {
+  "id": 35,
+  "path": "summary/vina/box_padding_2/top1_high"
+ },
+ {
+  "id": 36,
+  "path": "comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 37,
+  "path": "comparisons/vina/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 38,
+  "path": "comparisons/vina/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 39,
+  "path": "comparisons/vina/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 40,
+  "path": "summary/vina/baseline/pb_valid"
+ },
+ {
+  "id": 41,
+  "path": "comparisons/vina/top1/box_padding_2/arm_rate"
+ },
+ {
+  "id": 42,
+  "path": "comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 43,
+  "path": "comparisons/vina/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 44,
+  "path": "comparisons/vina/top1/box_padding_6/arm_rate"
+ },
+ {
+  "id": 45,
+  "path": "comparisons/vina/top1/box_padding_6/delta_pts"
+ },
+ {
+  "id": 46,
+  "path": "comparisons/vina/top1/box_padding_6/p_holm"
+ },
+ {
+  "id": 47,
+  "path": "comparisons/vina/top1/box_padding_8/baseline"
+ },
+ {
+  "id": 48,
+  "path": "comparisons/vina/top1/box_padding_8/delta_pts"
+ },
+ {
+  "id": 49,
+  "path": "comparisons/vina/top1/box_padding_6/p_holm"
+ },
+ {
+  "id": 50,
+  "path": null
+ },
+ {
+  "id": 51,
+  "path": "comparisons/rdock/top1/ligand_dimorphite/baseline"
+ },
+ {
+  "id": 52,
+  "path": "comparisons/<engine>/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 53,
+  "path": "comparisons/rdock/top1/ligand_dimorphite/p"
+ },
+ {
+  "id": 54,
+  "path": "comparisons/rdock/top1/ligand_dimorphite/p_holm"
+ },
+ {
+  "id": 55,
+  "path": "comparisons/rdock/pb_valid/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 56,
+  "path": "comparisons/<engine>/pb_valid/ligand_dimorphite/p"
+ },
+ {
+  "id": 57,
+  "path": "comparisons/<engine>/pb_valid/ligand_dimorphite/p_holm"
+ },
+ {
+  "id": 58,
+  "path": "summary/smina/ligand_rdkit_conformer/top1"
+ },
+ {
+  "id": 59,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 60,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/p"
+ },
+ {
+  "id": 61,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/p_holm"
+ },
+ {
+  "id": 62,
+  "path": null
+ },
+ {
+  "id": 63,
+  "path": null
+ },
+ {
+  "id": 64,
+  "path": "comparisons/vina/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 65,
+  "path": "summary/smina/baseline/top1"
+ },
+ {
+  "id": 66,
+  "path": "summary/smina/baseline/top1_low"
+ },
+ {
+  "id": 67,
+  "path": "summary/smina/baseline/top1_high"
+ },
+ {
+  "id": 68,
+  "path": null
+ },
+ {
+  "id": 69,
+  "path": "summary/smina/box_padding_2/top1"
+ },
+ {
+  "id": 70,
+  "path": "summary/smina/box_padding_2/top1_low"
+ },
+ {
+  "id": 71,
+  "path": "summary/smina/box_padding_2/pb_valid_high"
+ },
+ {
+  "id": 72,
+  "path": "comparisons/smina/pb_valid/box_padding_2/delta_pts"
+ },
+ {
+  "id": 73,
+  "path": "comparisons/smina/pb_valid/box_padding_2/delta_low"
+ },
+ {
+  "id": 74,
+  "path": "comparisons/smina/pb_valid/box_padding_2/delta_high"
+ },
+ {
+  "id": 75,
+  "path": "comparisons/smina/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 76,
+  "path": "comparisons/smina/top1/box_padding_6/delta_pts"
+ },
+ {
+  "id": 77,
+  "path": "comparisons/smina/top1/box_padding_8/delta_pts"
+ },
+ {
+  "id": 78,
+  "path": "comparisons/smina/p_holm/box_padding_6"
+ },
+ {
+  "id": 79,
+  "path": "summary/gnina/baseline/top1"
+ },
+ {
+  "id": 80,
+  "path": "summary/gnina/baseline/top1_low"
+ },
+ {
+  "id": 81,
+  "path": "summary/gnina/baseline/top1_high"
+ },
+ {
+  "id": 82,
+  "path": "comparisons/gnina/top1/baseline/delta_pts"
+ },
+ {
+  "id": 83,
+  "path": "comparisons/gnina/top1/baseline/p"
+ },
+ {
+  "id": 84,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 85,
+  "path": "summary/gnina/baseline/top1"
+ },
+ {
+  "id": 86,
+  "path": null
+ },
+ {
+  "id": 87,
+  "path": "comparisons/gnina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 88,
+  "path": "comparisons/gnina/pb_valid/box_padding_2/delta_low"
+ },
+ {
+  "id": 89,
+  "path": "comparisons/gnina/pb_valid/box_padding_2/delta_high"
+ },
+ {
+  "id": 90,
+  "path": "comparisons/vina/top1/box_padding_8/delta_pts"
+ },
+ {
+  "id": 91,
+  "path": "comparisons/gnina/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 92,
+  "path": "comparisons/gnina/pb_valid/box_padding_8/p_holm"
+ },
+ {
+  "id": 93,
+  "path": "comparisons/gnina/pb_valid/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 94,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 95,
+  "path": "summary/rdock/baseline/top1"
+ },
+ {
+  "id": 96,
+  "path": "summary/rdock/baseline/top1_low"
+ },
+ {
+  "id": 97,
+  "path": "summary/rdock/baseline/top1_high"
+ },
+ {
+  "id": 98,
+  "path": "comparisons/rdock/top1/baseline/delta_pts"
+ },
+ {
+  "id": 99,
+  "path": "comparisons/rdock/top1/baseline/p_holm"
+ },
+ {
+  "id": 100,
+  "path": null
+ },
+ {
+  "id": 101,
+  "path": "summary/rdock/box_padding_2/top1"
+ },
+ {
+  "id": 102,
+  "path": "summary/rdock/box_padding_2/top1_low"
+ },
+ {
+  "id": 103,
+  "path": "summary/rdock/box_padding_2/top1_high"
+ },
+ {
+  "id": 104,
+  "path": "comparisons/rdock/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 105,
+  "path": "comparisons/rdock/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 106,
+  "path": "comparisons/rdock/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 107,
+  "path": "comparisons/rdock/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 108,
+  "path": "summary/rdock/box_padding_6/top1"
+ },
+ {
+  "id": 109,
+  "path": "comparisons/rdock/top1/box_padding_6/delta_pts"
+ },
+ {
+  "id": 110,
+  "path": "comparisons/rdock/pb_valid/box_padding_6/delta_high"
+ },
+ {
+  "id": 111,
+  "path": "summary/rdock/box_padding_8/top1"
+ },
+ {
+  "id": 112,
+  "path": "comparisons/rdock/pb_valid/box_padding_8/delta_pts"
+ },
+ {
+  "id": 113,
+  "path": "comparisons/rdock/pb_valid/box_padding_8/arm_rate"
+ },
+ {
+  "id": 114,
+  "path": "comparisons/rdock/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 115,
+  "path": "comparisons/rdock/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 116,
+  "path": "comparisons/rdock/top1/ligand_rdkit_conformer/p_holm"
+ },
+ {
+  "id": 117,
+  "path": null
+ },
+ {
+  "id": 118,
+  "path": null
+ },
+ {
+  "id": 119,
+  "path": "summary/vina/baseline/top1_high"
+ },
+ {
+  "id": 120,
+  "path": null
+ },
+ {
+  "id": 121,
+  "path": null
+ },
+ {
+  "id": 122,
+  "path": null
+ },
+ {
+  "id": 123,
+  "path": null
+ },
+ {
+  "id": 124,
+  "path": null
+ },
+ {
+  "id": 125,
+  "path": "summary/gnina/baseline/top1_high"
+ },
+ {
+  "id": 126,
+  "path": null
+ },
+ {
+  "id": 127,
+  "path": "summary/rdock/baseline/top1_low"
+ },
+ {
+  "id": 128,
+  "path": "summary/rdock/baseline/top1_high"
+ },
+ {
+  "id": 129,
+  "path": null
+ },
+ {
+  "id": 130,
+  "path": null
+ },
+ {
+  "id": 131,
+  "path": null
+ },
+ {
+  "id": 132,
+  "path": "null"
+ },
+ {
+  "id": 133,
+  "path": "null"
+ },
+ {
+  "id": 134,
+  "path": "summary/vina/baseline/top1"
+ },
+ {
+  "id": 135,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 136,
+  "path": "summary/vina/baseline/top1_high"
+ },
+ {
+  "id": 137,
+  "path": "summary/vina/baseline/top1"
+ },
+ {
+  "id": 138,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 139,
+  "path": "summary/smina/baseline/top1_high"
+ },
+ {
+  "id": 140,
+  "path": "summary/gnina/baseline/top1"
+ },
+ {
+  "id": 141,
+  "path": "summary/gnina/baseline/top1_low"
+ },
+ {
+  "id": 142,
+  "path": "summary/gnina/baseline/top1_high"
+ },
+ {
+  "id": 143,
+  "path": null
+ },
+ {
+  "id": 144,
+  "path": null
+ },
+ {
+  "id": 145,
+  "path": "comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 146,
+  "path": "comparisons/vina/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 147,
+  "path": "comparisons/smina/pb_valid/box_padding_2/delta_pts"
+ },
+ {
+  "id": 148,
+  "path": "comparisons/smina/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 149,
+  "path": "comparisons/gnina/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 150,
+  "path": "comparisons/gnina/pb_valid/ligand_dimorphite/p_holm"
+ },
+ {
+  "id": 151,
+  "path": "comparisons/gnina/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 152,
+  "path": "summary/rdock/baseline/top1"
+ },
+ {
+  "id": 153,
+  "path": "comparisons/rdock/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 154,
+  "path": "comparisons/rdock/top1/box_padding_6/delta_pts"
+ },
+ {
+  "id": 155,
+  "path": "comparisons/rdock/top1/box_padding_8/delta_pts"
+ },
+ {
+  "id": 156,
+  "path": "comparisons/rdock/pb_valid/box_padding_6/p_holm"
+ },
+ {
+  "id": 157,
+  "path": "comparisons/vina/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 158,
+  "path": "comparisons/smina/pb_valid/ligand_rdkit_conformer/p_holm"
+ },
+ {
+  "id": 159,
+  "path": "comparisons/rdock/pb_valid/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 160,
+  "path": "comparisons/rdock/pb_valid/ligand_rdkit_conformer/p_holm"
+ },
+ {
+  "id": 161,
+  "path": "summary/vina/baseline/top1"
+ },
+ {
+  "id": 162,
+  "path": "summary/smina/baseline/top1"
+ },
+ {
+  "id": 163,
+  "path": "summary/gnina/baseline/top1"
+ },
+ {
+  "id": 164,
+  "path": "summary/rdock/baseline/top1"
+ },
+ {
+  "id": 165,
+  "path": "comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 166,
+  "path": "comparisons/vina/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 167,
+  "path": "comparisons/vina/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 168,
+  "path": "comparisons/smina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 169,
+  "path": "comparisons/smina/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 170,
+  "path": "comparisons/smina/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 171,
+  "path": "comparisons/gnina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 172,
+  "path": "comparisons/gnina/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 173,
+  "path": "comparisons/smina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 174,
+  "path": "comparisons/rDock/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 175,
+  "path": "comparisons/rDock/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 176,
+  "path": "comparisons/rDock/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 177,
+  "path": "comparisons/rDock/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 178,
+  "path": "null"
+ },
+ {
+  "id": 179,
+  "path": "comparisons/vina/top1/ligand_rdkit_conformer/delta_low"
+ },
+ {
+  "id": 180,
+  "path": "comparisons/vina/top1/ligand_rdkit_conformer/delta_high"
+ },
+ {
+  "id": 181,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 182,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/delta_low"
+ },
+ {
+  "id": 183,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/delta_high"
+ },
+ {
+  "id": 184,
+  "path": null
+ },
+ {
+  "id": 185,
+  "path": null
+ },
+ {
+  "id": 186,
+  "path": null
+ },
+ {
+  "id": 187,
+  "path": null
+ },
+ {
+  "id": 188,
+  "path": "null"
+ },
+ {
+  "id": 189,
+  "path": null
+ },
+ {
+  "id": 190,
+  "path": null
+ },
+ {
+  "id": 191,
+  "path": null
+ },
+ {
+  "id": 192,
+  "path": null
+ },
+ {
+  "id": 193,
+  "path": null
+ },
+ {
+  "id": 194,
+  "path": null
+ },
+ {
+  "id": 195,
+  "path": null
+ },
+ {
+  "id": 196,
+  "path": null
+ },
+ {
+  "id": 197,
+  "path": null
+ },
+ {
+  "id": 198,
+  "path": "comparisons/vina/pb_valid/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 199,
+  "path": "comparisons/vina/pb_valid/ligand_dimorphite/p_holm"
+ },
+ {
+  "id": 200,
+  "path": "comparisons/vina/pb_valid/box_padding_6/delta_pts"
+ },
+ {
+  "id": 201,
+  "path": "comparisons/vina/pb_valid/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 202,
+  "path": "comparisons/vina/pb_valid/box_padding_8/delta_pts"
+ },
+ {
+  "id": 203,
+  "path": null
+ },
+ {
+  "id": 204,
+  "path": null
+ },
+ {
+  "id": 205,
+  "path": "summary/vina/ligand_dimorphite/top1"
+ },
+ {
+  "id": 206,
+  "path": "summary/vina/ligand_dimorphite/top1_low"
+ },
+ {
+  "id": 207,
+  "path": "summary/vina/ligand_dimorphite/pb_valid_high"
+ },
+ {
+  "id": 208,
+  "path": "comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 209,
+  "path": null
+ },
+ {
+  "id": 210,
+  "path": null
+ },
+ {
+  "id": 211,
+  "path": null
+ },
+ {
+  "id": 212,
+  "path": null
+ },
+ {
+  "id": 213,
+  "path": null
+ },
+ {
+  "id": 214,
+  "path": null
+ },
+ {
+  "id": 215,
+  "path": "summary/smina/ligand_rdkit_conformer/top1"
+ },
+ {
+  "id": 216,
+  "path": "summary/vina/ligand_rdkit_conformer/top1_low"
+ },
+ {
+  "id": 217,
+  "path": "summary/vina/ligand_rdkit_conformer/top1_high"
+ },
+ {
+  "id": 218,
+  "path": "comparisons/vina/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 219,
+  "path": null
+ },
+ {
+  "id": 220,
+  "path": "comparisons/vina/top1/ligand_dimorphite/baseline"
+ },
+ {
+  "id": 221,
+  "path": "comparisons/<engine>/top1/ligand_dimorphite/p"
+ },
+ {
+  "id": 222,
+  "path": "null"
+ },
+ {
+  "id": 223,
+  "path": null
+ },
+ {
+  "id": 224,
+  "path": null
+ },
+ {
+  "id": 225,
+  "path": null
+ },
+ {
+  "id": 226,
+  "path": "agreement_levels/vina/5/rate"
+ },
+ {
+  "id": 227,
+  "path": "agreement_levels/vina/5/low"
+ },
+ {
+  "id": 228,
+  "path": "agreement_levels/vina/5/high"
+ },
+ {
+  "id": 229,
+  "path": "agreement_levels/vina/5/rate"
+ },
+ {
+  "id": 230,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 231,
+  "path": "agreement_levels/vina/5/high"
+ },
+ {
+  "id": 232,
+  "path": "agreement_levels/gnina/5/rate"
+ },
+ {
+  "id": 233,
+  "path": "agreement_levels/gnina/5/high"
+ },
+ {
+  "id": 234,
+  "path": "agreement_levels/gnina/5/high"
+ },
+ {
+  "id": 235,
+  "path": "agreement_levels/rdock/5/rate"
+ },
+ {
+  "id": 236,
+  "path": "agreement_levels/rDock/5/low"
+ },
+ {
+  "id": 237,
+  "path": "agreement_levels/rdock/5/high"
+ },
+ {
+  "id": 238,
+  "path": "agreement_levels/vina/0/rate"
+ },
+ {
+  "id": 239,
+  "path": null
+ },
+ {
+  "id": 240,
+  "path": null
+ },
+ {
+  "id": 241,
+  "path": "agreement_signals/gnina/cnn/auroc"
+ },
+ {
+  "id": 242,
+  "path": null
+ },
+ {
+  "id": 243,
+  "path": "agreement_signals/gnina/cnn/diff"
+ },
+ {
+  "id": 244,
+  "path": "agreement_signals/gnina/cnn/diff_low"
+ },
+ {
+  "id": 245,
+  "path": "agreement_signals/gnina/cnn/high"
+ },
+ {
+  "id": 246,
+  "path": "agreement_signals/smina/engine_agree/diff"
+ },
+ {
+  "id": 247,
+  "path": "agreement_signals/smina/engine_agree/diff_low"
+ },
+ {
+  "id": 248,
+  "path": "agreement_signals/smina/engine_agree/diff_high"
+ },
+ {
+  "id": 249,
+  "path": "agreement_signals/gnina/engine_agree/diff"
+ },
+ {
+  "id": 250,
+  "path": "agreement_signals/gnina/seed_agree/diff_low"
+ },
+ {
+  "id": 251,
+  "path": "agreement_signals/gnina/engine_agree/diff_high_vs_prep"
+ },
+ {
+  "id": 252,
+  "path": null
+ },
+ {
+  "id": 253,
+  "path": null
+ },
+ {
+  "id": 254,
+  "path": null
+ },
+ {
+  "id": 255,
+  "path": "agreement_signals/vina/seed_agree/auroc"
+ },
+ {
+  "id": 256,
+  "path": "agreement_signals/vina/seed_agree/low"
+ },
+ {
+  "id": 257,
+  "path": "agreement_signals/vina/seed_agree/high"
+ },
+ {
+  "id": 258,
+  "path": "agreement_signals/vina/seed_agree/diff_low"
+ },
+ {
+  "id": 259,
+  "path": "agreement_signals/vina/seed_agree/diff_low"
+ },
+ {
+  "id": 260,
+  "path": "agreement_signals/vina/seed_agree/high"
+ },
+ {
+  "id": 261,
+  "path": null
+ },
+ {
+  "id": 262,
+  "path": "agreement_levels/vina/0/rate"
+ },
+ {
+  "id": 263,
+  "path": null
+ },
+ {
+  "id": 264,
+  "path": "agreement_signals/smina/engine_agree/auroc"
+ },
+ {
+  "id": 265,
+  "path": "agreement_signals/gnina/engine_agree/auroc"
+ },
+ {
+  "id": 266,
+  "path": "agreement_signals/rdock/engine_agree/auroc"
+ },
+ {
+  "id": 267,
+  "path": "agreement_signals/vina/score/auroc"
+ },
+ {
+  "id": 268,
+  "path": "agreement_signals/smina/prep_plus_engine/auroc"
+ },
+ {
+  "id": 269,
+  "path": "agreement_signals/smina/score/auroc"
+ },
+ {
+  "id": 270,
+  "path": "agreement_signals/rdock/prep_plus_engine/auroc"
+ },
+ {
+  "id": 271,
+  "path": null
+ },
+ {
+  "id": 272,
+  "path": null
+ },
+ {
+  "id": 273,
+  "path": "agreement_signals/gnina/engine_agree/auroc"
+ },
+ {
+  "id": 274,
+  "path": "agreement_signals/rdock/engine_agree/auroc"
+ },
+ {
+  "id": 275,
+  "path": "agreement_signals/gnina/engine_agree/auroc"
+ },
+ {
+  "id": 276,
+  "path": "agreement_signals/rdock/prep_plus_engine/auroc"
+ },
+ {
+  "id": 277,
+  "path": null
+ },
+ {
+  "id": 278,
+  "path": null
+ },
+ {
+  "id": 279,
+  "path": "agreement_validation/vina/score/auroc"
+ },
+ {
+  "id": 280,
+  "path": "agreement_validation/smina/score+prep_agree/auroc"
+ },
+ {
+  "id": 281,
+  "path": "agreement_validation/gnina/score/auroc"
+ },
+ {
+  "id": 282,
+  "path": "agreement_validation/rdock/score/auroc"
+ },
+ {
+  "id": 283,
+  "path": null
+ },
+ {
+  "id": 284,
+  "path": null
+ },
+ {
+  "id": 285,
+  "path": null
+ },
+ {
+  "id": 286,
+  "path": "agreement_validation/vina/score+prep_agree/brier_hi"
+ },
+ {
+  "id": 287,
+  "path": "agreement_validation/rdock/score/brier_lo"
+ },
+ {
+  "id": 288,
+  "path": "agreement_validation/rdock/score/brier_hi"
+ },
+ {
+  "id": 289,
+  "path": null
+ },
+ {
+  "id": 290,
+  "path": null
+ },
+ {
+  "id": 291,
+  "path": "agreement_validation/vina/best_pair/auroc"
+ },
+ {
+  "id": 292,
+  "path": "agreement_validation/rdock/best_pair/auroc"
+ },
+ {
+  "id": 293,
+  "path": null
+ },
+ {
+  "id": 294,
+  "path": null
+ },
+ {
+  "id": 295,
+  "path": null
+ },
+ {
+  "id": 296,
+  "path": null
+ },
+ {
+  "id": 297,
+  "path": null
+ },
+ {
+  "id": 298,
+  "path": "summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 299,
+  "path": "comparisons/vina/top1/ligand_rdkit_conformer/baseline"
+ },
+ {
+  "id": 300,
+  "path": "summary/smina/baseline/top1"
+ },
+ {
+  "id": 301,
+  "path": "comparisons/smina/top1/ligand_rdkit_conformer/arm_rate"
+ },
+ {
+  "id": 302,
+  "path": "summary/gnina/baseline/top1"
+ },
+ {
+  "id": 303,
+  "path": "summary/gnina/ligand_rdkit_conformer/top1"
+ },
+ {
+  "id": 304,
+  "path": "summary/rdock/baseline/top1"
+ },
+ {
+  "id": 305,
+  "path": "comparisons/rdock/top1/ligand_rdkit_conformer/arm_rate"
+ },
+ {
+  "id": 306,
+  "path": "comparisons/<engine>/top1/box_padding_2/p_holm"
+ }
+]

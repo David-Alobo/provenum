@@ -14,6 +14,7 @@ from provenum.migrate import migrate
         (0.000413, "p", r"\ensuremath{4.1 \times 10^{-4}}"),
         (0.2, "p", "0.20"),
         (41.0, "int", "41"),
+        (-16.355, "~f1", "16.4"),
     ],
 )
 def test_fmt(value, how, expected):

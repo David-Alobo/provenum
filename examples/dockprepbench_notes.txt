@@ -1,0 +1,8 @@
+This is a docking benchmark. Engines: vina, smina, gnina, rdock. Runs/arms: baseline (4 Å box), box_padding_2/6/8 (box padding in Å), ligand_dimorphite (protonation at pH 7.4), ligand_rdkit_conformer (RDKit start conformer). Metrics: top1 (RMSD < 2 Å success) and pb_valid.
+In comparisons, delta_pts is the arm-minus-baseline change in points and delta_low/delta_high its paired interval; gained/lost are complex counts; p and p_holm are p-values.
+summary holds success rates and their Wilson interval bounds (top1_low, top1_high, pb_valid_low, pb_valid_high).
+agreement_signals/<engine>/<signal>/<column> holds AUROCs (signals: score, prep_agree, engine_agree, prep_plus_engine, cnn, seed_agree; columns auroc, low, high, diff, diff_low, diff_high, and *_vs_prep).
+agreement_validation/<engine>/<model>/... holds cross-validated results (models: score, prep_agree, score+prep_agree, best_pair).
+agreement_levels/<engine>/<level 0-5>/<rate|low|high|n>.
+Many numbers come from analyses not in the catalogue (subsets, robustness, interaction arms, Astex, seed replicates, failure modes, ligand properties): answer null for those.
+A number in a bracketed interval right after a rate is that rate's _low/_high (summary) or delta_low/delta_high (after a change in points).

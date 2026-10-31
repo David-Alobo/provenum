@@ -1,0 +1,982 @@
+[
+ {
+  "id": 0,
+  "path": "posebusters_published/all/theirs_top1"
+ },
+ {
+  "id": 1,
+  "path": "posebusters_published/all/theirs_top1_low"
+ },
+ {
+  "id": 2,
+  "path": "posebusters_published/all/theirs_top1_high"
+ },
+ {
+  "id": 3,
+  "path": "posebusters_published/all/theirs_pb_valid"
+ },
+ {
+  "id": 4,
+  "path": "posebusters_published/all/diff_pts"
+ },
+ {
+  "id": 5,
+  "path": "posebusters_published/all/p"
+ },
+ {
+  "id": 6,
+  "path": "posebusters_published/docked/diff_pts"
+ },
+ {
+  "id": 7,
+  "path": "posebusters_published/docked/theirs_top1"
+ },
+ {
+  "id": 8,
+  "path": "posebusters_published/docked/ours_top1"
+ },
+ {
+  "id": 9,
+  "path": "posebusters_published/docked/p"
+ },
+ {
+  "id": 10,
+  "path": null
+ },
+ {
+  "id": 11,
+  "path": null
+ },
+ {
+  "id": 12,
+  "path": null
+ },
+ {
+  "id": 13,
+  "path": "summary/vina/baseline_seed1/top1"
+ },
+ {
+  "id": 14,
+  "path": "summary/vina/baseline_seed2/top1"
+ },
+ {
+  "id": 15,
+  "path": "summary/vina/baseline_seed3/top1"
+ },
+ {
+  "id": 16,
+  "path": "noise/vina/top1_mean"
+ },
+ {
+  "id": 17,
+  "path": null
+ },
+ {
+  "id": 18,
+  "path": null
+ },
+ {
+  "id": 19,
+  "path": "noise/vina/flips_mean"
+ },
+ {
+  "id": 20,
+  "path": null
+ },
+ {
+  "id": 21,
+  "path": "noise/vina/flips_mean"
+ },
+ {
+  "id": 22,
+  "path": "comparisons/vina/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 23,
+  "path": null
+ },
+ {
+  "id": 24,
+  "path": "comparisons/vina/top1/ligand_dimorphite/p"
+ },
+ {
+  "id": 25,
+  "path": "comparisons/vina/pb_valid/ligand_dimorphite/p"
+ },
+ {
+  "id": 26,
+  "path": "comparisons/vina/top1/ligand_rdkit_conformer/p"
+ },
+ {
+  "id": 27,
+  "path": "noise/vina/flips_mean"
+ },
+ {
+  "id": 28,
+  "path": null
+ },
+ {
+  "id": 29,
+  "path": "engines/smina/vina/all/p"
+ },
+ {
+  "id": 30,
+  "path": "comparisons/smina/top1/box_padding_8/p_holm"
+ },
+ {
+  "id": 31,
+  "path": "engines/gnina/vina/all/diff_pts"
+ },
+ {
+  "id": 32,
+  "path": "engines/gnina/vina/all/p"
+ },
+ {
+  "id": 33,
+  "path": "engines/gnina/vina/shared/rate_b"
+ },
+ {
+  "id": 34,
+  "path": "engines/gnina/vina/shared/rate_a"
+ },
+ {
+  "id": 35,
+  "path": "engines/gnina/vina/shared/p"
+ },
+ {
+  "id": 36,
+  "path": "engines/rdock/vina/all/diff_pts"
+ },
+ {
+  "id": 37,
+  "path": "engines/rdock/vina/all/p"
+ },
+ {
+  "id": 38,
+  "path": "engines/gnina/rdock/all/diff_pts"
+ },
+ {
+  "id": 39,
+  "path": "comparisons/rdock/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 40,
+  "path": null
+ },
+ {
+  "id": 41,
+  "path": null
+ },
+ {
+  "id": 42,
+  "path": null
+ },
+ {
+  "id": 43,
+  "path": null
+ },
+ {
+  "id": 44,
+  "path": "engines/gnina/rdock/all/diff_pts"
+ },
+ {
+  "id": 45,
+  "path": "engines/gnina/vina/all/diff_pts"
+ },
+ {
+  "id": 46,
+  "path": "comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 47,
+  "path": "engines/gnina/vina/all/diff_pts"
+ },
+ {
+  "id": 48,
+  "path": "engines/rdock/vina/all/diff_pts"
+ },
+ {
+  "id": 49,
+  "path": "subset_308/summary/vina/baseline/top1"
+ },
+ {
+  "id": 50,
+  "path": "subset_308/summary/vina/baseline/top1_low"
+ },
+ {
+  "id": 51,
+  "path": "subset_308/summary/vina/baseline/top1_high"
+ },
+ {
+  "id": 52,
+  "path": "subset_308/summary/smina/baseline/top1"
+ },
+ {
+  "id": 53,
+  "path": "subset_308/summary/smina/baseline/top1_low"
+ },
+ {
+  "id": 54,
+  "path": "subset_308/summary/smina/baseline/top1_high"
+ },
+ {
+  "id": 55,
+  "path": "subset_308/summary/gnina/baseline/top1"
+ },
+ {
+  "id": 56,
+  "path": "subset_308/summary/gnina/baseline/top1_low"
+ },
+ {
+  "id": 57,
+  "path": "subset_308/summary/gnina/baseline/top1_high"
+ },
+ {
+  "id": 58,
+  "path": null
+ },
+ {
+  "id": 59,
+  "path": null
+ },
+ {
+  "id": 60,
+  "path": "subset_308/comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 61,
+  "path": "subset_308/comparisons/vina/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 62,
+  "path": "subset_308/comparisons/smina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 63,
+  "path": "subset_308/comparisons/smina/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 64,
+  "path": "subset_308/comparisons/gnina/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 65,
+  "path": "subset_308/comparisons/gnina/top1/ligand_dimorphite/p_holm"
+ },
+ {
+  "id": 66,
+  "path": "comparisons/gnina/top1/ligand_dimorphite/delta_pts"
+ },
+ {
+  "id": 67,
+  "path": "subset_308/summary/rdock/baseline/top1"
+ },
+ {
+  "id": 68,
+  "path": "subset_308/comparisons/rdock/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 69,
+  "path": "subset_308/comparisons/rdock/top1/box_padding_6/delta_pts"
+ },
+ {
+  "id": 70,
+  "path": "subset_308/comparisons/rdock/top1/box_padding_8/delta_pts"
+ },
+ {
+  "id": 71,
+  "path": "subset_308/comparisons/rdock/top1/box_padding_6/p_holm"
+ },
+ {
+  "id": 72,
+  "path": "subset_308/comparisons/vina/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 73,
+  "path": "subset_308/comparisons/smina/pb_valid/box_padding_2/p_holm"
+ },
+ {
+  "id": 74,
+  "path": "subset_308/comparisons/rdock/pb_valid/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 75,
+  "path": "subset_308/comparisons/rdock/pb_valid/ligand_rdkit_conformer/p_holm"
+ },
+ {
+  "id": 76,
+  "path": "robust_no_cofactor_summary/vina/baseline/top1"
+ },
+ {
+  "id": 77,
+  "path": "robust_no_cofactor_summary/smina/baseline/top1"
+ },
+ {
+  "id": 78,
+  "path": "robust_no_cofactor_summary/gnina/baseline/top1"
+ },
+ {
+  "id": 79,
+  "path": "robust_no_cofactor_summary/rdock/baseline/top1"
+ },
+ {
+  "id": 80,
+  "path": "robust_no_cofactor_comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 81,
+  "path": "robust_no_cofactor_comparisons/vina/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 82,
+  "path": "robust_no_cofactor_comparisons/vina/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 83,
+  "path": "robust_no_cofactor_comparisons/smina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 84,
+  "path": "robust_no_cofactor_comparisons/smina/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 85,
+  "path": "robust_no_cofactor_comparisons/smina/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 86,
+  "path": "robust_no_cofactor_comparisons/gnina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 87,
+  "path": "robust_no_cofactor_comparisons/gnina/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 88,
+  "path": "robust_no_cofactor_comparisons/gnina/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 89,
+  "path": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 90,
+  "path": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/delta_low"
+ },
+ {
+  "id": 91,
+  "path": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/delta_high"
+ },
+ {
+  "id": 92,
+  "path": "robust_no_cofactor_comparisons/rdock/top1/box_padding_2/p_holm"
+ },
+ {
+  "id": 93,
+  "path": "robust_no_cofactor_comparisons/vina/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 94,
+  "path": "robust_no_cofactor_comparisons/vina/top1/ligand_rdkit_conformer/delta_low"
+ },
+ {
+  "id": 95,
+  "path": "robust_no_cofactor_comparisons/vina/top1/ligand_rdkit_conformer/delta_high"
+ },
+ {
+  "id": 96,
+  "path": "robust_no_cofactor_comparisons/smina/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 97,
+  "path": "robust_no_cofactor_comparisons/smina/top1/ligand_rdkit_conformer/delta_low"
+ },
+ {
+  "id": 98,
+  "path": "robust_no_cofactor_comparisons/smina/top1/ligand_rdkit_conformer/delta_high"
+ },
+ {
+  "id": 99,
+  "path": "comparisons/vina/top1/ligand_rdkit_conformer/delta_pts"
+ },
+ {
+  "id": 100,
+  "path": null
+ },
+ {
+  "id": 101,
+  "path": null
+ },
+ {
+  "id": 102,
+  "path": null
+ },
+ {
+  "id": 103,
+  "path": null
+ },
+ {
+  "id": 104,
+  "path": null
+ },
+ {
+  "id": 105,
+  "path": null
+ },
+ {
+  "id": 106,
+  "path": null
+ },
+ {
+  "id": 107,
+  "path": null
+ },
+ {
+  "id": 108,
+  "path": null
+ },
+ {
+  "id": 109,
+  "path": null
+ },
+ {
+  "id": 110,
+  "path": null
+ },
+ {
+  "id": 111,
+  "path": null
+ },
+ {
+  "id": 112,
+  "path": "followup_interaction/2/diff_pts"
+ },
+ {
+  "id": 113,
+  "path": "followup_interaction/2/p_holm"
+ },
+ {
+  "id": 114,
+  "path": "followup_interaction/4/diff_pts"
+ },
+ {
+  "id": 115,
+  "path": "followup_interaction/6/diff_pts"
+ },
+ {
+  "id": 116,
+  "path": null
+ },
+ {
+  "id": 117,
+  "path": "followup_interaction/8/vs_baseline_padding_p_holm"
+ },
+ {
+  "id": 118,
+  "path": null
+ },
+ {
+  "id": 119,
+  "path": "followup_combined/box_padding_2+ligand_dimorphite/rate_b"
+ },
+ {
+  "id": 120,
+  "path": "followup_combined/box_padding_2+ligand_dimorphite/low_b"
+ },
+ {
+  "id": 121,
+  "path": "followup_combined/box_padding_2+ligand_dimorphite/high_b"
+ },
+ {
+  "id": 122,
+  "path": "followup_combined/box_padding_2+ligand_dimorphite/diff_pts"
+ },
+ {
+  "id": 123,
+  "path": "followup_combined/box_padding_2+ligand_dimorphite/p"
+ },
+ {
+  "id": 124,
+  "path": null
+ },
+ {
+  "id": 125,
+  "path": null
+ },
+ {
+  "id": 126,
+  "path": "followup_gyration_geometry/median_ratio_to_baseline"
+ },
+ {
+  "id": 127,
+  "path": "followup_gyration_geometry/median_ratio_to_box2"
+ },
+ {
+  "id": 128,
+  "path": "followup_gyration/vs_baseline/rate_b"
+ },
+ {
+  "id": 129,
+  "path": "followup_gyration/vs_baseline/low_b"
+ },
+ {
+  "id": 130,
+  "path": "followup_gyration/vs_baseline/high_b"
+ },
+ {
+  "id": 131,
+  "path": "followup_gyration/vs_baseline/diff_pts"
+ },
+ {
+  "id": 132,
+  "path": "followup_gyration/vs_baseline/p"
+ },
+ {
+  "id": 133,
+  "path": "followup_gyration/vs_box_padding_2/rate_a"
+ },
+ {
+  "id": 134,
+  "path": "followup_gyration/vs_box_padding_2/p"
+ },
+ {
+  "id": 135,
+  "path": "followup_gyration/vs_baseline_inside/rate_a"
+ },
+ {
+  "id": 136,
+  "path": "followup_gyration/vs_baseline_inside/rate_b"
+ },
+ {
+  "id": 137,
+  "path": "followup_gyration/vs_baseline_outside/rate_a"
+ },
+ {
+  "id": 138,
+  "path": "followup_gyration/vs_baseline_outside/rate_b"
+ },
+ {
+  "id": 139,
+  "path": "agreement_signals/gnina/prep_agree/diff"
+ },
+ {
+  "id": 140,
+  "path": "agreement_signals/vina/prep_agree/diff"
+ },
+ {
+  "id": 141,
+  "path": "agreement_signals/gnina/cnn/diff_vs_prep"
+ },
+ {
+  "id": 142,
+  "path": "agreement_signals/gnina/cnn/diff_high_vs_prep"
+ },
+ {
+  "id": 143,
+  "path": "agreement_signals/gnina/cnn/diff_low_vs_prep"
+ },
+ {
+  "id": 144,
+  "path": "agreement_signals/gnina/prep_plus_engine/diff_vs_prep"
+ },
+ {
+  "id": 145,
+  "path": "agreement_signals/smina/prep_plus_engine/diff_vs_prep"
+ },
+ {
+  "id": 146,
+  "path": "agreement_signals/rdock/prep_plus_engine/auroc"
+ },
+ {
+  "id": 147,
+  "path": "agreement_signals/vina/seed_agree/diff_vs_prep"
+ },
+ {
+  "id": 148,
+  "path": "agreement_signals/vina/seed_agree/diff_high_vs_prep"
+ },
+ {
+  "id": 149,
+  "path": "agreement_signals/vina/seed_agree/diff_low_vs_prep"
+ },
+ {
+  "id": 150,
+  "path": "agreement_pose_change/vina/seeds_moved"
+ },
+ {
+  "id": 151,
+  "path": "agreement_pose_change/vina/arms_moved"
+ },
+ {
+  "id": 152,
+  "path": "agreement_subsets/vina/2/auroc_mean"
+ },
+ {
+  "id": 153,
+  "path": "agreement_subsets/smina/2/auroc_mean"
+ },
+ {
+  "id": 154,
+  "path": "agreement_subsets/gnina/2/auroc_mean"
+ },
+ {
+  "id": 155,
+  "path": "agreement_subsets/rdock/2/auroc_mean"
+ },
+ {
+  "id": 156,
+  "path": "agreement_subsets/smina/1/auroc_mean"
+ },
+ {
+  "id": 157,
+  "path": "agreement_subsets/rdock/1/auroc_mean"
+ },
+ {
+  "id": 158,
+  "path": "agreement_subsets/vina/2/auroc_max"
+ },
+ {
+  "id": 159,
+  "path": "agreement_subsets/smina/2/auroc_max"
+ },
+ {
+  "id": 160,
+  "path": "agreement_subsets/gnina/2/auroc_max"
+ },
+ {
+  "id": 161,
+  "path": "agreement_subsets/rdock/2/auroc_max"
+ },
+ {
+  "id": 162,
+  "path": null
+ },
+ {
+  "id": 163,
+  "path": null
+ },
+ {
+  "id": 164,
+  "path": "agreement_validation/smina/score/auroc"
+ },
+ {
+  "id": 165,
+  "path": "agreement_validation/rdock/score/auroc"
+ },
+ {
+  "id": 166,
+  "path": "agreement_validation/rdock/prep_agree/brier"
+ },
+ {
+  "id": 167,
+  "path": "agreement_validation/smina/prep_agree/brier"
+ },
+ {
+  "id": 168,
+  "path": "agreement_validation/rdock/score/brier"
+ },
+ {
+  "id": 169,
+  "path": "agreement_validation/smina/score/brier"
+ },
+ {
+  "id": 170,
+  "path": "agreement_validation/smina/score+prep_agree/auroc"
+ },
+ {
+  "id": 171,
+  "path": "agreement_validation/rdock/score+prep_agree/auroc"
+ },
+ {
+  "id": 172,
+  "path": "agreement_validation/smina/best_pair/auroc"
+ },
+ {
+  "id": 173,
+  "path": "agreement_validation/rdock/best_pair/auroc"
+ },
+ {
+  "id": 174,
+  "path": null
+ },
+ {
+  "id": 175,
+  "path": "agreement_missing/vina/prep_auroc_complete"
+ },
+ {
+  "id": 176,
+  "path": "agreement_consensus/top1/vina/changed_pose"
+ },
+ {
+  "id": 177,
+  "path": "agreement_consensus/top1/gnina/changed_pose"
+ },
+ {
+  "id": 178,
+  "path": "agreement_consensus/top1/vina/consensus"
+ },
+ {
+  "id": 179,
+  "path": "agreement_consensus/top1/smina/consensus"
+ },
+ {
+  "id": 180,
+  "path": "agreement_consensus/top1/gnina/consensus"
+ },
+ {
+  "id": 181,
+  "path": "agreement_consensus/top1/rdock/consensus"
+ },
+ {
+  "id": 182,
+  "path": "agreement_consensus/top1/gnina/p_holm"
+ },
+ {
+  "id": 183,
+  "path": "astex_baseline/vina/rate"
+ },
+ {
+  "id": 184,
+  "path": "astex_baseline/vina/low"
+ },
+ {
+  "id": 185,
+  "path": "astex_baseline/vina/high"
+ },
+ {
+  "id": 186,
+  "path": "astex_baseline/smina/rate"
+ },
+ {
+  "id": 187,
+  "path": "astex_baseline/smina/low"
+ },
+ {
+  "id": 188,
+  "path": "astex_baseline/smina/high"
+ },
+ {
+  "id": 189,
+  "path": "astex_baseline/gnina/rate"
+ },
+ {
+  "id": 190,
+  "path": "astex_baseline/gnina/low"
+ },
+ {
+  "id": 191,
+  "path": "astex_baseline/gnina/high"
+ },
+ {
+  "id": 192,
+  "path": "astex_baseline/rdock/rate"
+ },
+ {
+  "id": 193,
+  "path": "astex_baseline/rdock/low"
+ },
+ {
+  "id": 194,
+  "path": "astex_baseline/rdock/high"
+ },
+ {
+  "id": 195,
+  "path": "astex_h1/rdock/diff_pts"
+ },
+ {
+  "id": 196,
+  "path": "astex_h1/rdock/diff_low"
+ },
+ {
+  "id": 197,
+  "path": "astex_h1/rdock/diff_high"
+ },
+ {
+  "id": 198,
+  "path": "astex_h1/rdock/p_holm"
+ },
+ {
+  "id": 199,
+  "path": "astex_h1/vina/diff_pts"
+ },
+ {
+  "id": 200,
+  "path": "astex_h1/vina/diff_low"
+ },
+ {
+  "id": 201,
+  "path": "astex_h1/vina/diff_high"
+ },
+ {
+  "id": 202,
+  "path": "astex_h1/smina/diff_pts"
+ },
+ {
+  "id": 203,
+  "path": "astex_h1/smina/diff_low"
+ },
+ {
+  "id": 204,
+  "path": null
+ },
+ {
+  "id": 205,
+  "path": "astex_h1/gnina/diff_pts"
+ },
+ {
+  "id": 206,
+  "path": "astex_h1/gnina/diff_low"
+ },
+ {
+  "id": 207,
+  "path": "astex_h1/gnina/diff_high"
+ },
+ {
+  "id": 208,
+  "path": "comparisons/vina/top1/box_padding_2/delta_pts"
+ },
+ {
+  "id": 209,
+  "path": "astex_h2_h3/vina/H2/auroc"
+ },
+ {
+  "id": 210,
+  "path": "astex_h2_h3/vina/H2/score_auroc"
+ },
+ {
+  "id": 211,
+  "path": "astex_h2_h3/vina/H2/diff_vs_score"
+ },
+ {
+  "id": 212,
+  "path": "astex_h2_h3/vina/H2/diff_low"
+ },
+ {
+  "id": 213,
+  "path": "astex_h2_h3/vina/H2/diff_high"
+ },
+ {
+  "id": 214,
+  "path": "astex_h2_h3/smina/H2/auroc"
+ },
+ {
+  "id": 215,
+  "path": "astex_h2_h3/smina/H2/score_auroc"
+ },
+ {
+  "id": 216,
+  "path": "astex_h2_h3/smina/H2/diff_vs_score"
+ },
+ {
+  "id": 217,
+  "path": "astex_h2_h3/smina/H2/diff_low"
+ },
+ {
+  "id": 218,
+  "path": "astex_h2_h3/smina/H2/diff_high"
+ },
+ {
+  "id": 219,
+  "path": "astex_h2_h3/rdock/H2/auroc"
+ },
+ {
+  "id": 220,
+  "path": "astex_h2_h3/rdock/H2/score_auroc"
+ },
+ {
+  "id": 221,
+  "path": "astex_h2_h3/rdock/H2/diff_vs_score"
+ },
+ {
+  "id": 222,
+  "path": "astex_h2_h3/rdock/H2/diff_low"
+ },
+ {
+  "id": 223,
+  "path": "astex_h2_h3/rdock/H2/diff_high"
+ },
+ {
+  "id": 224,
+  "path": "astex_h2_h3/gnina/H2/auroc"
+ },
+ {
+  "id": 225,
+  "path": "astex_h2_h3/gnina/H2/score_auroc"
+ },
+ {
+  "id": 226,
+  "path": "astex_h2_h3/gnina/H2/diff_vs_score"
+ },
+ {
+  "id": 227,
+  "path": "astex_h2_h3/gnina/H2/diff_low"
+ },
+ {
+  "id": 228,
+  "path": "astex_h2_h3/gnina/H2/diff_high"
+ },
+ {
+  "id": 229,
+  "path": "astex_h2_h3/gnina/H2/cnn_auroc"
+ },
+ {
+  "id": 230,
+  "path": "astex_h2_h3/vina/H3/diff_vs_score"
+ },
+ {
+  "id": 231,
+  "path": "astex_h2_h3/smina/H3/diff_vs_score"
+ },
+ {
+  "id": 232,
+  "path": "astex_h2_h3/rdock/H3/diff_vs_score"
+ },
+ {
+  "id": 233,
+  "path": "astex_h4/vina/rate"
+ },
+ {
+  "id": 234,
+  "path": "astex_h4/vina/low"
+ },
+ {
+  "id": 235,
+  "path": "astex_h4/vina/high"
+ },
+ {
+  "id": 236,
+  "path": "astex_h4/smina/rate"
+ },
+ {
+  "id": 237,
+  "path": "astex_h4/smina/low"
+ },
+ {
+  "id": 238,
+  "path": "astex_h4/smina/high"
+ },
+ {
+  "id": 239,
+  "path": "astex_h4/gnina/rate"
+ },
+ {
+  "id": 240,
+  "path": "astex_h4/gnina/low"
+ },
+ {
+  "id": 241,
+  "path": "astex_h4/gnina/high"
+ },
+ {
+  "id": 242,
+  "path": "astex_h4/rdock/rate"
+ },
+ {
+  "id": 243,
+  "path": "astex_h4/rdock/low"
+ },
+ {
+  "id": 244,
+  "path": "astex_h4/rdock/high"
+ }
+]
