@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  acceptSingles, escapeHtml, filterItems, fitting, groupItems, initialDecisions, markSentence,
+  escapeHtml, filterItems, fitting, groupItems, initialDecisions, markSentence,
   progressText, summary,
 } from "../../src/provenum/web/static/review.js";
 
@@ -36,19 +36,6 @@ describe("decisions", () => {
     expect(initialDecisions(ITEMS)).toEqual({
       "a.tex#0": "summary/vina/top1", "a.tex#1": null, "b.tex#0": null, "b.tex#1": null,
     });
-  });
-
-  it("accepts single-cell numbers only, without touching ambiguous ones or the input", () => {
-    const before = initialDecisions(ITEMS);
-    const after = acceptSingles(ITEMS, before);
-    expect(after["b.tex#1"]).toBe("recorded/ratio");
-    expect(after["a.tex#1"]).toBeNull();
-    expect(before["b.tex#1"]).toBeNull();
-  });
-
-  it("does not override a choice already made", () => {
-    const after = acceptSingles(ITEMS, { ...initialDecisions(ITEMS), "b.tex#1": "other/path" });
-    expect(after["b.tex#1"]).toBe("other/path");
   });
 
   it("counts linked, left and unconfirmed numbers", () => {

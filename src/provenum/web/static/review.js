@@ -32,22 +32,6 @@ export function initialDecisions(items) {
 }
 
 /**
- * Accept the single fitting cell for every undecided number in the "check" list that has
- * exactly one. Used when no model was run: the researcher takes the unambiguous ones at once.
- * @param {object[]} items Numbers from the session state.
- * @param {Record<string, string|null>} decisions Current decisions.
- * @returns {Record<string, string|null>} New decisions (the input is not changed).
- */
-export function acceptSingles(items, decisions) {
-  const out = { ...decisions };
-  for (const it of items) {
-    const fit = fitting(it);
-    if (it.category === "check" && fit.length === 1 && !out[it.key]) out[it.key] = fit[0].path;
-  }
-  return out;
-}
-
-/**
  * Counts for the summary bar.
  * @param {object[]} items Numbers from the session state.
  * @param {Record<string, string|null>} decisions Current decisions.

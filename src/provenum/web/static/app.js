@@ -1,6 +1,6 @@
 // Page wiring for the provenum web app. The review logic lives in review.js.
 import {
-  acceptSingles, escapeHtml, filterItems, fitting, groupItems, initialDecisions, markSentence,
+  escapeHtml, filterItems, fitting, groupItems, initialDecisions, markSentence,
   progressText, summary,
 } from "./review.js";
 
@@ -77,7 +77,6 @@ function renderReview() {
     <div><b class="status-ok">${s.linked}</b>will be linked</div>
     <div><b>${s.left}</b>left as typed</div>
     <div><b class="status-warn">${s.undecidedChecks}</b>to confirm, not yet chosen</div>`;
-  $("accept-singles").hidden = Boolean(state.run.model);
   const groups = groupItems(state.items);
   for (const b of document.querySelectorAll(".tabs button")) {
     b.setAttribute("aria-selected", String(b.dataset.cat === tab));
@@ -174,7 +173,6 @@ $("items").addEventListener("change", (e) => {
   if (key) { decisions[key] = e.target.value || null; renderReview(); }
 });
 $("search").addEventListener("input", renderReview);
-$("accept-singles").addEventListener("click", () => { decisions = acceptSingles(state.items, decisions); renderReview(); });
 document.querySelector(".tabs").addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (b) { tab = b.dataset.cat; renderReview(); }

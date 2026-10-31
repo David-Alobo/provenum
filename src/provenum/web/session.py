@@ -142,6 +142,10 @@ def categorise(written: str, candidates: list[dict], pick: str | None,
     if pick is None:
         return "untraced", (f"{len(fitting)} cell(s) hold this value, but the model judged that "
                             "none is what the sentence reports")  # fmt: skip
+    if pick not in fitting:
+        text = next(c["text"] for c in candidates if c["path"] == pick)
+        return "untraced", (f"the model chose {pick}, which the spec prints as {text}, not "
+                            f"{written}; change its format in the spec to link it")  # fmt: skip
     if len(fitting) == 1:
         return "traced", "the only cell with this value, and the model's choice"
     return "check", (f"{len(fitting)} cells hold this value; the model chose one. Same-value "

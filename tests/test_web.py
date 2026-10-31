@@ -88,6 +88,16 @@ def test_categorise_explains_format_differences():
     assert cat == "untraced" and "53.0" in reason
 
 
+def test_model_pick_that_prints_differently_is_not_preselected():
+    cands = [
+        {"path": "a", "text": "0.530", "fits": False},
+        {"path": "b", "text": "0.53", "fits": True},
+    ]
+    cat, reason = categorise("0.53", cands, "a", True)
+    assert cat == "untraced" and "0.530" in reason
+    assert categorise("0.53", cands, "b", True)[0] == "traced"
+
+
 def test_apply_links_accepted_numbers_and_keeps_the_original(session):
     session.anchor(None)
     keys = {it["written"]: it["key"] for it in session.items}
