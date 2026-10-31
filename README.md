@@ -211,32 +211,56 @@ coverage, never correctness.
 
 ## Evaluation
 
-On the Results section of the DockPrepBench manuscript (307 decimal numbers), each number was
-corrupted by three units in its last digit to measure how many errors each approach catches:
+All on the Results section of the DockPrepBench manuscript. Every number below comes from a file
+in [`examples/results/`](examples/results) or [`finetune/results/`](finetune/results), with the
+script that scores it; the [paper](paper/) and its supplementary information give the details.
 
-| Approach | Corrupted numbers caught | Correct numbers flagged |
-|---|---|---|
-| Match by value alone | 1% | 0 |
-| Match by surrounding words | 20% (88% where anchored) | 44 |
-| Model proposes, code verifies (Claude Sonnet) | 134 of 134 anchored | 0 |
+**Catching errors.** Each of the 307 decimal numbers in the section's prose was changed by three
+units in its last digit (46.3 became 46.6):
 
-With free local models (Qwen2.5 via Ollama on one GPU), value-blind anchoring is not yet
-reliable: Qwen2.5-32B traced 68 numbers but proposed 139 wrong paths (all rejected by the value
-check, but they would surface as false warnings in an audit). In migration mode
-(`anchor --shortlist`), where the code first finds the cells whose value matches and the model
-only chooses among them, the same models work well:
+| Approach | Corruptions caught | Where it anchored a cell | Correct numbers flagged |
+|---|---|---|---|
+| Match by value alone | 10 (3.3%) | – | 4 |
+| Match by surrounding words | 57 (18.6%) | 8 of 11 | 26 |
+| Model proposes, code verifies (Claude Sonnet) | 134 (43.6%) | 134 of 134 | 0 |
 
-| Model (local, migration mode) | Numbers linked | Same cell as Claude |
-|---|---|---|
-| Qwen2.5-14B | 177 | 123 of 132 (93%) |
-| Qwen2.5-32B | 129 | 114 of 116 (98%) |
-| 14B and 32B agree | 120 | 109 of 110 (99%) |
+The tables hold so many values that a corrupted number almost always matches some unrelated cell,
+so matching by value alone catches almost nothing. With a model, every number it anchored was
+checked correctly and no correct number was flagged; for the other 173 it gave no address.
+([`2026-10-30-corruption`](examples/results/2026-10-30-corruption) also scores all 562 decimals,
+including those inside LaTeX tables.)
 
-A wrong cell with the same value would still render correctly but would update to the wrong
-number after a rerun, so migrations should be reviewed, or accepted only where two models agree.
+**Local models.** On a gold standard of 311 numbers whose correct cell is known, eight models in
+Ollama (Qwen2.5, Qwen3 and Llama, 7 to 70 billion parameters) found the right cell for 6% to 49%
+when choosing from the whole table catalogue, and for 69% to 88% when choosing only among cells
+whose value already matches (`anchor --shortlist`). Qwen3-32B was best in both
+([`2026-10-30-benchmark`](examples/results/2026-10-30-benchmark)).
 
-Migration replaced 124 numbers with `\val{}`, and the compiled PDF text was identical before and
-after. The audit also found 28 numbers that no generated table produces.
+**Fine-tuned model.** Qwen3-32B fine-tuned with QLoRA on synthetic papers from 48 fields, then
+compared with the base model on the same 311 numbers (DockPrepBench was never used in training):
+
+| Mode | Base | Fine-tuned | Gained / lost |
+|---|---|---|---|
+| Whole catalogue | 152 right (48.9%) | 210 right (67.5%) | +74 / −16 |
+| Matching cells only | 271 right (87.1%) | 288 right (92.6%) | +25 / −8 |
+
+On 40 papers from eight held-out fields it went from 64.6% to 95.3% and from 91.6% to 98.6%
+([`finetune/results/qwen3-32b-r16`](finetune/results/qwen3-32b-r16), with every answer and the
+loss curve).
+
+**Wrong cells with the right value.** When the model chooses among matching cells, a wrong choice
+holds the same value, so the check cannot catch it: it renders correctly and would follow the
+wrong cell after a rerun. That is why the web app asks the author to confirm every number with
+more than one matching cell. In a trial on the original section with Qwen3-32B
+([`2026-10-31-webapp`](examples/results/2026-10-31-webapp)), it linked 249 of 307 numbers with the
+compiled text unchanged; 8 links (3.2%) pointed to a wrong cell, and all 8 were among those the
+author was asked to confirm (on our reading of each disagreement, which the trial folder lists).
+Accepting single matches without a model was worse: 9 of 78 were
+coincidences.
+
+**Migrating the manuscript.** Two passes replaced 124 and then 188 numbers with `\val{}`; 312 of
+the 369 decimal numbers in the section now come from data, and the compiled PDF text was identical
+before and after. The audit also found 28 numbers that no generated table produces.
 
 ## Related tools
 
@@ -261,19 +285,25 @@ preventing drift by generating the numbers, and in never letting a model certify
   numbers
 - [x] First real migration: 312 of 369 decimal numbers in the DockPrepBench results now come from
   data, with identical PDF text
+- [x] `diff` and `check`: what a rerun changed in the text, and guards on the claims a number
+  supports
+- [x] `init`: a starting spec guessed from your tables
+- [x] Web app (`provenum serve`) for Overleaf projects, with a review step before anything changes
+- [x] GitHub Action that fails a build when the values file is out of date with the tables
+- [x] Fine-tuned anchoring model: Qwen3-32B trained on synthetic papers from 48 fields; right
+  cell for 67.5% of the gold numbers against 48.9% for the base model
+- [x] Demo GIF of the web app
 
 **In progress**
 
-- [ ] Fine-tuned anchoring model: Qwen3-32B trained on synthetic papers from 48 fields, tested on
-  held-out fields and on DockPrepBench
-- [ ] GitHub Action that fails a build when the values file is out of date with the tables
 - [ ] Release on PyPI (`pip install provenum`)
 - [ ] Methods paper (arXiv preprint)
+- [ ] Fine-tuned adapter in Ollama, so `provenum anchor` and the web app can use it
 
 **Next**
 
 - [ ] Publish the fine-tuned adapter and its training data on Hugging Face, and make it the
-  default model for `provenum anchor`
+  default model
 - [ ] Two-model agreement for migrations: accept a cell only when two models choose it
 - [ ] Validation on manuscripts by other authors, in other fields
 - [ ] A smaller fine-tuned model that runs on a laptop GPU
@@ -281,8 +311,8 @@ preventing drift by generating the numbers, and in never letting a model certify
 
 **Later**
 
-- [ ] Editor support: VS Code extension and an Overleaf workflow
-- [ ] Short demo (GIF) of migrating a paper
+- [ ] VS Code extension
+- [ ] Connect directly to an Overleaf project through its Git integration
 
 Suggestions and issues are welcome on the
 [issue tracker](https://github.com/David-Alobo/provenum/issues).
