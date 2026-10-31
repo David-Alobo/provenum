@@ -16,5 +16,9 @@ among cells whose value already matched. Across two migrations, 312 of the 369 d
 that Results section now come from data, and the compiled text of the paper did not change.
 On a gold standard of 311 numbers from the migrated text, the best of eight local models
 (Qwen3-32B) found the right cell for 48.9\% in the blind setting and 88.1\% when choosing among
-matching cells, where wrong choices cannot be caught by value and still need review. \pv{} is open source under the MIT licence.
+matching cells, where wrong choices cannot be caught by value and still need review. In a
+review application that asks the author to confirm every number with more than one matching
+cell, Qwen3-32B linked 249 of the 307 original numbers without changing the compiled text, and
+all of the 8 links it got wrong were among those the author was asked to confirm. \pv{} is open
+source under the MIT licence.
 \end{abstract}

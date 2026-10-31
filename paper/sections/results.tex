@@ -127,3 +127,63 @@ anchored in shortlist mode only by Qwen3-8B and Llama3.1-8B (three each).
 Model size mattered more than model family: within each family the 32 billion parameter models
 were best in both modes, and Llama3.3-70B, at twice that size, was below both 32B models. Time per
 number ranged from 0.5 to 2.0~s, so one pass over the 311 numbers took at most about 10 minutes.
+
+\subsection{Review trial}
+\label{sec:res-review}
+
+Table~\ref{tab:review} summarises the four trials. In all of them the compiled text was unchanged:
+with every \texttt{\textbackslash val\{\}} replaced by its value, none of the 504 lines
+differed from the original.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Review trial on the original DockPrepBench Results section (307 hand-typed decimals),
+scored against the hand-checked migration. ``No model'' links every number for which exactly one
+cell reproduces the text. ``To confirm'' and ``linked'' are the review lists that held the links
+differing from the migration.}
+\label{tab:review}
+\begin{tabular}{llrrrrrr}
+\toprule
+& & & \multicolumn{3}{c}{Compared with the migration} & \multicolumn{2}{c}{Differing, by list} \\
+\cmidrule(lr){4-6}\cmidrule(lr){7-8}
+Specification & Chooser & Linked & Same cell & Different & Left typed & To confirm & Linked \\
+\midrule
+Hand    & no model   & 78  & 68  & 0  & 10 & -- & -- \\
+Guessed & no model   & 83  & 67  & 6  & 10 & -- & -- \\
+Hand    & Qwen3-32B  & 249 & 228 & 18 & 3  & 20 & 1 \\
+Guessed & Qwen3-32B  & 224 & 207 & 16 & 1  & 17 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Without a model, a single matching cell was weak evidence. Of the 78 numbers that exactly one cell
+reproduced, 10 were linked where the hand migration had left the number typed. One, a standard
+deviation, is a correct link. The other 9 (11.5\% of the 78) are coincidences: for example, ``a
+spread of 8.9 points'' matched an interval bound, and ``odds ratio 10.5'' a share column.
+
+With Qwen3-32B and the hand specification, 249 numbers were linked and 228 of them (91.6\%) to the
+cell the migration uses. Of the 21 that differed, 20 were in the \emph{to confirm} list. The one in
+\emph{linked} was a standard deviation the migration had left typed, and the model's cell for it
+was correct. Read one by one, the 21 differences fall into three groups:
+\begin{itemize}
+\item 8 are wrong cells;
+\item 10 are the same quantity stored in another table, such as Vina's baseline rate in both the
+summary and the comparison table (8 clearly, 2 probably);
+\item 3 link numbers the migration left typed, correctly or probably correctly.
+\end{itemize}
+\todo{Author to confirm the classification in \texttt{disagreements\_classified.csv}.} On this
+reading, 8 of 249 links (3.2\%) point to the wrong cell, and all 8 were in the list the author
+is asked to confirm. None of them could have been caught by value, since every cell offered in
+shortlist mode holds the written value. They are cells of another engine, arm or interval bound,
+such as the Holm p-value of 0.37 that the 6~\AA{} and 8~\AA{} arms share.
+
+The model's choices were reproducible. Three repeats of the run gave the same choice for all 307
+numbers as the first run.
+
+With the guessed specification Qwen3-32B linked 25 fewer numbers (26 lost, 1 gained). For 17
+of the 26, the guessed specification formats the matching cells differently from the text, for
+example to three decimals where the text has two, so the application left them typed. For the
+other 9, the model chose none of the cells as the guessed specification names them. The 17
+differences from the migration were all in the \emph{to confirm} list. Checking the guessed
+formats is therefore worth the author's time before a run.

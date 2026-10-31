@@ -90,3 +90,27 @@ The model interface uses the Ollama HTTP API through the Python standard library
 runtime dependencies and the manuscript need not leave the author's machine. Requests use
 temperature 0 and a JSON schema for the reply. For Qwen3 models the reasoning phase is turned off,
 since the other models answer directly and the task is a single choice.
+
+\subsection{Review before migration}
+\label{sec:review}
+
+\texttt{provenum serve} runs the migration as a local web application for authors who would
+rather not use the command line. The author uploads the LaTeX project (for example Overleaf's
+source download) and the result tables, and checks a specification guessed from the tables. The
+program then finds, for every hand-typed number, the cells whose value matches. If a model is
+selected, it asks the model to choose among them in shortlist mode. Each number is placed in one
+of three lists:
+\begin{itemize}
+\item \emph{to confirm}: several cells hold the value, so the model's choice, if any, needs the
+author's confirmation;
+\item \emph{linked}: one cell holds the value and the model chose it;
+\item \emph{left as typed}: no cell holds the value, the model chose none, or the chosen cell
+formats differently from the text.
+\end{itemize}
+
+The lists follow from the weakness described above. A wrong choice among cells with the same
+value cannot be caught by the value check, so wherever such cells exist the choice is put in
+front of the author. Nothing is written until the author applies the review. Only cells whose
+formatted value reproduces the written text can be applied, so the compiled text cannot change.
+The application uses only the Python standard library and sends text nowhere except to the model
+server the author chooses.

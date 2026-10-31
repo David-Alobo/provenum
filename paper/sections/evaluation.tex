@@ -41,3 +41,29 @@ settings with no address, \emph{false anchor}. We ran Qwen2.5 at 7, 14 and 32 bi
 Qwen3 at 8, 14 and 32 billion, and Llama~3.1-8B and Llama~3.3-70B~\cite{grattafiori2024llama3},
 all with Ollama's Q4\_K\_M 4-bit quantisation, in Ollama 0.12.6 on one NVIDIA RTX 6000 Ada
 (48~GB). Requests used temperature 0, so each model was run once.
+
+\subsection{Review trial}
+\label{sec:eval-review}
+
+To measure what the review lists of Section~\ref{sec:review} do, the application's workflow was
+run without a browser on the original Results section (307 hand-typed decimals in 504 lines). It
+used the 28 tables listed in the manuscript's specification, which hold 3,452 values, and was run
+under two specifications:
+\begin{itemize}
+\item the manuscript's own (\emph{hand});
+\item the one \pv{} guessed from the same tables (\emph{guessed}).
+\end{itemize}
+In each case the numbers were either linked by Qwen3-32B in shortlist mode, with every suggestion
+accepted, or, with no model, linked wherever exactly one cell reproduced the text.
+
+Each link was compared with the hand-checked migration of the same section, matching lines by
+their text and comparing links as cells (table, row and column) rather than as addresses, since
+the two specifications name some cells differently. A link is counted as:
+\begin{itemize}
+\item the \emph{same cell} as the migration;
+\item a \emph{different cell};
+\item a number the migration \emph{left typed}.
+\end{itemize}
+To test whether the model's choices vary between runs, the Qwen3-32B run with the hand
+specification was repeated three times. Inputs, answers, scripts and the classification of every
+disagreement are in the repository (\texttt{examples/results/2026-10-31-webapp/}).
