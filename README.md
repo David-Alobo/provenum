@@ -49,6 +49,7 @@ proposal only if the value at that address matches what is written.
 | `provenum migrate` | Replace hand-typed numbers with `\val{}`, but only where the value from the data reproduces exactly what is written. |
 | `provenum audit` | Check numbers against the tables by their surrounding words, without changing the manuscript. |
 | `provenum diff` | After a rerun, list the sentences whose numbers changed and flag the changes that can break a claim. |
+| `provenum init` | Write a starting spec from a folder of tables, with each guess explained. |
 | `provenum check` | Check that the words around each number still match it: guards you write, such as `\val[>0]{...}`, and common phrasings such as "rose from X to Y" or "significant". |
 
 An undefined `\val{}` path prints a bold **??** in the PDF and a LaTeX warning, so a broken
@@ -96,6 +97,36 @@ to Y" with X above Y (or "fell" with X below Y), a direction word followed by a 
 opposite sign, and "significant" or "not significant" contradicted by the p-value cited after it.
 These are heuristics. On the DockPrepBench manuscript they raise no warnings on its real values;
 with every sign flipped they flag 5 sentences, and with every p-value moved across 0.05 another 5.
+
+### Getting started on your own tables
+
+`provenum init` writes a starting spec from a folder of CSV tables, with every guess explained in a
+comment: text columns name the row (labels they determine and True/False columns are left out), p
+and `p_*` columns are p-values, values between 0 and 1 are proportions shown as percentages,
+differences show their sign, and AUROC-like scores stay decimals.
+
+```bash
+provenum init paper/tables --out numbers.toml
+```
+
+On the 28 tables behind the DockPrepBench results, the guessed keys matched the hand-written spec
+for 26 tables and the guessed formats for 223 of 237 columns (94%); 11 of the 14 differences were
+only whether a difference shows its "+" sign.
+
+### Numbers computed in code
+
+A number computed in a script or notebook, such as a ratio, often never reaches a results table,
+so nothing can trace it. Record it where it is computed:
+
+```python
+import provenum
+
+provenum.record("vina_vs_gnina/ratio", gnina_rate / vina_rate, fmt="f1")
+```
+
+This writes `recorded.csv` (or `$PROVENUM_RECORD`) with the name, value, format and the file that
+recorded it; recording a name again replaces it, so rerunning a cell adds no duplicates. The text
+writes `\val{recorded/vina_vs_gnina/ratio}`, and `provenum init` adds the table to the spec.
 
 ## Quick start
 

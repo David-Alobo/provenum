@@ -12,7 +12,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from provenum.latex import SCI, _clean
-from provenum.macros import TableSpec, fmt
+from provenum.macros import TableSpec, cells, fmt
 
 
 def catalogue(specs: list[TableSpec], root: str | Path) -> str:
@@ -32,6 +32,12 @@ def catalogue(specs: list[TableSpec], root: str | Path) -> str:
             rows = list(csv.DictReader(handle))
         prefix = spec.file.removesuffix(".csv")
         values = {k: sorted({r[k] for r in rows}) for k in spec.keys}
+        if spec.value_column:  # one value per row: the path ends at the keys
+            parts.append(
+                f"{prefix}/" + "/".join(f"<{k}>" for k in spec.keys) + "\n"
+                + "".join(f"  {k}: {', '.join(v)}\n" for k, v in values.items())
+            )  # fmt: skip
+            continue
         columns = [c for c in rows[0] if c not in spec.keys] if rows else []
         parts.append(
             f"{prefix}/"
@@ -56,21 +62,8 @@ def values(specs: list[TableSpec], root: str | Path) -> dict[str, tuple[float, s
     """
     out = {}
     for spec in specs:
-        prefix = spec.file.removesuffix(".csv")
-        with open(Path(root) / spec.file, newline="", encoding="utf-8") as handle:
-            for row in csv.DictReader(handle):
-                key = "/".join([prefix] + [row[k] for k in spec.keys])
-                for column, cell in row.items():
-                    if column in spec.keys:
-                        continue
-                    try:
-                        v = float(cell)
-                    except (TypeError, ValueError):
-                        continue
-                    out[f"{key}/{column}"] = (
-                        v,
-                        fmt(v, spec.formats.get(column, spec.default), column),
-                    )
+        for path, v, how in cells(spec, root):
+            out[path] = (v, fmt(v, how, spec.value_column or path.rpartition("/")[2]))
     return out
 
 
