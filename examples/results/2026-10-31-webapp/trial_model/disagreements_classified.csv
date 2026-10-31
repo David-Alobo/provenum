@@ -1,0 +1,22 @@
+n,list,app_cell,paper_cell,value,sentence_context,reading,note
+1,traced,noise/vina/top1_sd,(left as typed),0.4,"Vina seeds ... (mean 46.8%, standard deviation 0.4 points, range 0.9 points)",correct; paper left typed,the sentence reports the SD of Vina top-1 over seeds
+2,check,noise/vina/top1_range,(left as typed),0.9,"... standard deviation 0.4 points, range 0.9 points",correct; paper left typed,the sentence reports the range of Vina top-1 over seeds
+3,check,comparisons/vina/top1/box_padding_2/baseline,summary/vina/baseline/top1,46.3,"2 Å raised top-1 success from 46.3% [41.6, 51.0] to 53.0%",same quantity in another table,Vina baseline top-1 rate; both cells come from the same run
+4,check,comparisons/vina/top1/box_padding_2/arm_rate,summary/vina/box_padding_2/top1,53.0,"... from 46.3% [41.6, 51.0] to 53.0% [48.3, 57.7]",same quantity in another table,Vina 2 Å top-1 rate
+5,check,comparisons/vina/pb_valid/box_padding_2/baseline,summary/vina/baseline/pb_valid,41.8,"... success from 41.8% to 47.9% (+6.1 points; 41 gained, 15 lost",same quantity in another table,Vina baseline PB-valid rate
+6,check,comparisons/smina/pb_valid/box_padding_6/delta_pts,comparisons/vina/top1/box_padding_6/delta_pts,−1.9,"larger boxes lowered success slightly: 6 Å padding to 44.4% (−1.9 points",wrong,sentence is about Vina top-1; app chose Smina PB-valid with the same value
+7,check,comparisons/vina/top1/box_padding_8/arm_rate,summary/vina/box_padding_8/top1,44.2,"... and 8 Å to 44.2% (−2.1 points",same quantity in another table,Vina 8 Å top-1 rate
+8,check,comparisons/vina/top1/box_padding_6/p_holm,comparisons/vina/top1/box_padding_8/p_holm,0.37,"8 Å to 44.2% (−2.1 points; 19 gained, 28 lost; Holm p = 0.37)",wrong,the 6 Å and 8 Å Holm p-values are both 0.37; app chose the 6 Å one for the 8 Å clause
+9,check,engines/smina/vina/shared/rate_b,engines/gnina/vina/shared/rate_b,48.1,"48.1% for Vina and 63.1% for Gnina (p = 3.8 × 10^-...)",wrong,Vina rate on the Gnina-Vina shared set; app chose the Smina-Vina shared set
+10,check,summary/rdock/box_padding_6/pb_valid,summary/rdock/box_padding_8/top1,17.3,"... and 23.8 points for rDock (17.3–41.1%)",wrong,range of rDock top-1 over protocols; app chose a PB-valid cell
+11,check,agreement_consensus/top1/rdock/p_holm,(left as typed),0.12,"no engine's association survived correction (Holm p ≥ 0.12)",probably correct; paper left typed,the bound is the smallest Holm p over engines; correct if rDock's is the smallest
+12,check,comparisons/vina/top1/ligand_dimorphite/delta_pts,followup_interaction/4/diff_pts,+2.8,"(separate from the five primary arms) to +2.8, +1.4 and ...",wrong,sentence reports the interaction follow-up; app chose a primary-arm difference
+13,check,summary/smina/ligand_rdkit_conformer/top1_low,followup_gyration/vs_baseline/low_b,45.5,"Success was 50.2% [45.5, 54.9], above the baseline",wrong,interval of the gyration-box arm; app chose a Smina interval bound
+14,check,summary/vina/box_padding_2/top1,followup_gyration/vs_box_padding_2/rate_a,53.0,"... the 2 Å box (53.0%; p = 0.21)",same quantity in another table,Vina 2 Å top-1 rate
+15,check,agreement_subsets/rdock/5/auroc_mean,agreement_signals/rdock/prep_agree/auroc,0.897,"against 0.857, 0.830, 0.863 and 0.897 with all five arms",probably same quantity,with all five arms there is one subset, so its mean AUROC should equal the full-agreement AUROC; to confirm
+16,check,agreement_subsets/gnina/2/auroc_max,agreement_subsets/vina/2/auroc_max,0.828,"for all four engines (0.828, 0.810, 0.828 and 0.894)",wrong,Vina and Gnina both have 0.828; the first value is Vina's
+17,check,agreement_validation/gnina/best_pair/brier_hi,agreement_validation/smina/prep_agree/brier,0.162,"Brier scores (0.118 to 0.162 against 0.201 to 0.234)",wrong,range of Brier scores; app chose an interval bound
+18,check,agreement_missing/vina/prep_auroc_all,agreement_signals/vina/prep_agree/auroc,0.857,"... 0.857. All of this remains within one dataset",probably same quantity,preparation-agreement AUROC for Vina on all complexes; to confirm
+19,check,agreement_consensus/top1/vina/baseline,summary/vina/baseline/top1,46.3,"for every engine: Vina from 46.3% to 48.1%",same quantity in another table,Vina baseline top-1 rate
+20,check,agreement_consensus/top1/smina/baseline,summary/smina/baseline/top1,47.0,"Smina from 47.0% to ...",same quantity in another table,Smina baseline top-1 rate
+21,check,agreement_consensus/top1/gnina/baseline,summary/gnina/baseline/top1,62.6,"Gnina from 62.6% to 65.7%",same quantity in another table,Gnina baseline top-1 rate

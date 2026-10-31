@@ -1,0 +1,126 @@
+{
+ "trial_guess": {
+  "numbers": 307,
+  "lists": {
+   "check": 278,
+   "untraced": 29
+  },
+  "with_matching_cell": 278,
+  "single_matching_cell": 83,
+  "linked": 83,
+  "vs_paper": {
+   "same cell": 67,
+   "different cell": 6,
+   "no \\val in paper there": 10
+  },
+  "differing_links_by_list": {
+   "check": 16
+  },
+  "pdf_lines_changed": "lines differing after substitution: 0 of 504"
+ },
+ "trial_hand": {
+  "numbers": 307,
+  "lists": {
+   "check": 286,
+   "untraced": 21
+  },
+  "with_matching_cell": 286,
+  "single_matching_cell": 78,
+  "linked": 78,
+  "vs_paper": {
+   "same cell": 68,
+   "no \\val in paper there": 10
+  },
+  "differing_links_by_list": {
+   "check": 10
+  },
+  "pdf_lines_changed": "lines differing after substitution: 0 of 504"
+ },
+ "trial_model": {
+  "numbers": 307,
+  "lists": {
+   "check": 182,
+   "traced": 67,
+   "untraced": 58
+  },
+  "with_matching_cell": 286,
+  "single_matching_cell": 78,
+  "linked": 249,
+  "vs_paper": {
+   "same cell": 228,
+   "no \\val in paper there": 3,
+   "different cell": 18
+  },
+  "differing_links_by_list": {
+   "traced": 1,
+   "check": 20
+  },
+  "pdf_lines_changed": "lines differing after substitution: 0 of 504"
+ },
+ "trial_model_guess": {
+  "numbers": 307,
+  "lists": {
+   "check": 161,
+   "traced": 63,
+   "untraced": 83
+  },
+  "with_matching_cell": 278,
+  "single_matching_cell": 83,
+  "linked": 224,
+  "vs_paper": {
+   "same cell": 207,
+   "different cell": 16,
+   "no \\val in paper there": 1
+  },
+  "differing_links_by_list": {
+   "check": 17
+  },
+  "pdf_lines_changed": "lines differing after substitution: 0 of 504"
+ },
+ "repeat_hand": {
+  "runs": {
+   "run1": {
+    "picks": 272,
+    "lists": {
+     "check": 182,
+     "traced": 67,
+     "untraced": 58
+    }
+   },
+   "run2": {
+    "picks": 272,
+    "lists": {
+     "check": 182,
+     "traced": 67,
+     "untraced": 58
+    }
+   },
+   "run3": {
+    "picks": 272,
+    "lists": {
+     "check": 182,
+     "traced": 67,
+     "untraced": 58
+    }
+   }
+  },
+  "pairs": {
+   "run1-run2": {
+    "numbers": 307,
+    "picks_differ": 0,
+    "keys": []
+   },
+   "run1-run3": {
+    "numbers": 307,
+    "picks_differ": 0,
+    "keys": []
+   },
+   "run2-run3": {
+    "numbers": 307,
+    "picks_differ": 0,
+    "keys": []
+   }
+  },
+  "numbers_with_any_change": 0
+ }
+}

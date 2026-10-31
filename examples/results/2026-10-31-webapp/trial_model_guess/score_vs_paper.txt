@@ -1,0 +1,35 @@
+different cell: app comparisons/vina/top1/box_padding_2/arm_rate = 53.0; paper summary/vina/box_padding_2/top1
+    \SI2\angstrom-paddingarmreached53.0\%,notsignificantlydifferentfromthei
+different cell: app comparisons/vina/top1/box_padding_2/baseline = 46.3; paper summary/vina/baseline/top1
+    \SI2\angstromraisedtop-1successfrom46.3\%[41.6,51.0]to53.0\%[48.3,57.7]
+different cell: app comparisons/vina/pb_valid/box_padding_2/baseline = 41.8; paper summary/vina/baseline/pb_valid
+    successfrom41.8\%to47.9\%(+6.1points;41gained,15los
+different cell: app comparisons/vina/pb_valid/box_padding_2/arm_rate = 47.9; paper summary/vina/box_padding_2/pb_valid
+    successfrom41.8\%to47.9\%(+6.1points;41gained,15lost;Holmp=
+different cell: app comparisons/vina/top1/box_padding_6/p_holm = 0.37; paper comparisons/vina/top1/box_padding_8/p_holm
+    gained,28lost;Holmp=0.37).
+different cell: app comparisons/rdock/top1/box_padding_2/arm_rate = 41.1; paper summary/rdock/box_padding_2/top1
+    thesearchspace.The\SI2\angstromboxraiseditssuccessto41.1\%[36.6,45.8]
+different cell: app comparisons/rdock/top1/box_padding_6/arm_rate = 19.9; paper summary/rdock/box_padding_6/top1
+    itto19.9\%at\SI6\angstrom(-9.6points;7gained
+different cell: app comparisons/rdock/top1/box_padding_8/arm_rate = 17.3; paper summary/rdock/box_padding_8/top1
+    p=3.9x10^-8)and17.3\%at\SI8\angstrom(-12.1points;7gaine
+different cell: app comparisons/vina/top1/ligand_dimorphite/delta_pts = +2.8; paper followup_interaction/4/diff_pts
+    separatefromthefiveprimaryarms)to+2.8,+1.4and
+different cell: app followup_gyration/vs_box_padding_2/high_b = 54.9; paper followup_gyration/vs_baseline/high_b
+    ligandlayoutsidethebox.Successwas50.2\%[45.5,54.9],abovethebaseline(+4.0
+no \val in paper there: app followup_gyration/vs_baseline/diff_pts = +4.0; paper None
+    ligandlayoutsidethebox.Successwas50.2\%[45.5,54.9],abovethebaseline(+4.0
+different cell: app comparisons/vina/top1/box_padding_2/arm_rate = 53.0; paper followup_gyration/vs_box_padding_2/rate_a
+    \SI2\angstrombox(53.0\%;p=0.21).Theresultsplitcleanlyonwh
+different cell: app agreement_signals/prep_plus_engine/gnina/low = 0.857; paper agreement_signals/vina/prep_agree/auroc
+    against0.857,0.830,0.863and0.897withallfivearms
+different cell: app agreement_subsets/smina/box_padding_2+box_padding_6+box_padding_8+ligand_dimorphite+ligand_rdkit_conformer/auroc_mean = 0.830; paper agreement_signals/smina/prep_agree/auroc
+    against0.857,0.830,0.863and0.897withallfivearms;asing
+different cell: app agreement_subsets/rdock/box_padding_2+box_padding_6+box_padding_8+ligand_dimorphite+ligand_rdkit_conformer/auroc_mean = 0.897; paper agreement_signals/rdock/prep_agree/auroc
+    against0.857,0.830,0.863and0.897withallfivearms;asinglearmgave0.67t
+different cell: app agreement_subsets/vina/box_padding_2+ligand_rdkit_conformer/auroc_max = 0.828; paper agreement_subsets/gnina/2/auroc_max
+    tenforallfourengines(0.828,0.810,0.828and0.894),within0.03to0.05ofallfive
+different cell: app agreement_validation/gnina/best_pair/brier_hi = 0.162; paper agreement_validation/smina/prep_agree/brier
+    Brierscores(0.118to0.162against0.201to0.234).Agreementadded
+{'same cell': 207, 'different cell': 16, 'no \\val in paper there': 1}
