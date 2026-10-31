@@ -2,6 +2,7 @@
 
 Usage: repeat_runs.py EXAMPLES TABLES OUT MODEL HOST N
 """
+
 import io
 import json
 import sys
@@ -23,8 +24,10 @@ main = r"""\documentclass{article}
 buf = io.BytesIO()
 with zipfile.ZipFile(buf, "w") as z:
     z.writestr("main.tex", main)
-    z.writestr("sections/results.tex",
-               (ex / "results/2026-10-30-anchoring/results_original.tex").read_text("utf-8"))
+    z.writestr(
+        "sections/results.tex",
+        (ex / "results/2026-10-30-anchoring/results_original.tex").read_text("utf-8"),
+    )
 tbuf = io.BytesIO()
 spec_path = tables.parent / "numbers.toml"
 with zipfile.ZipFile(tbuf, "w") as z:
@@ -40,5 +43,7 @@ for r in range(1, n + 1):
     s.anchor(lambda it, c: choose(it, c, notes, model, host))
     picks = {it["key"]: {"pick": it["pick"], "category": it["category"]} for it in s.items}
     (out / "runs" / f"run{r}.json").write_text(json.dumps(picks, indent=1), "utf-8")
-    print(f"run {r}: {time.time() - t:.0f} s, linked {sum(1 for it in s.items if it['selected'])}",
-          flush=True)
+    print(
+        f"run {r}: {time.time() - t:.0f} s, linked {sum(1 for it in s.items if it['selected'])}",
+        flush=True,
+    )

@@ -1,0 +1,4 @@
+trial_model {'check': 182, 'traced': 67, 'all matching cells print differently': 20, 'model chose none': 27, 'model chose a cell that prints differently': 10, 'no matching value': 1}
+trial_model_guess {'check': 161, 'traced': 63, 'model chose a cell that prints differently': 19, 'all matching cells print differently': 28, 'model chose none': 35, 'no matching value': 1}
+linked with hand, not with guess: 26 {'model chose a cell that prints differently': 10, 'all matching cells print differently': 7, 'model chose none': 9}
+linked with guess, not with hand: 1 {'model chose none': 1}

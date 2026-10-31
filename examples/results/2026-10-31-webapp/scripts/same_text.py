@@ -14,5 +14,6 @@ bad = 0
 for a, b in zip(old, new):
     filled = re.sub(r"\\val\{([^{}]*)\}", lambda m: vals[m.group(1)], b)
     if _plain(filled) != _plain(a):
-        bad += 1; print("DIFF\n ", a[:200], "\n ", filled[:200])
+        bad += 1
+        print("DIFF\n ", a[:200], "\n ", filled[:200])
 print("lines differing after substitution:", bad, "of", len(old))

@@ -49,11 +49,15 @@ recomputed from the files in this folder with `python scripts/summarise.py`, whi
 | `trial_model_guess` | guess | the same | 307 | 224 | 207 | 16 | 1 | 0 of 504 |
 
 **Why the guessed spec links fewer numbers.** In `trial_model_guess` the review lists were 161
-to confirm, 63 linked and 83 left as typed. For 19 of the numbers left as typed, the model chose a
-cell that the guessed spec prints differently from the text (for example with another number of
-decimals), so the app refused to link it. Correcting formats at the spec step, step 3 of the app,
-is therefore what turns those into links. All 17 disagreements in this trial were in the
-"to confirm" list; none were in "linked".
+to confirm, 63 linked and 83 left as typed. Compared number by number with `trial_model`, 26
+numbers were linked with the hand spec but not the guessed one, and 1 the other way round, a net
+25. Of the 26:
+- **17 are formatting.** Either the model chose a cell that the guessed spec prints differently
+  from the text (10; for example another number of decimals), or every matching cell does (7).
+  Correcting formats at the spec step, step 3 of the app, would let the app link these.
+- **9 are the model choosing "none"** among the guessed spec's differently named cells.
+
+All 17 disagreements in this trial were in the "to confirm" list; none were in "linked".
 
 **Review lists in `trial_model`.** The app put the 307 numbers into three lists:
 
@@ -80,12 +84,19 @@ the list the app asks the researcher to confirm.
 
 **Without a model, a single matching cell is not enough evidence.** In `trial_hand`, 10 of the
 78 numbers with exactly one matching cell were linked where the paper left the number typed. In
-`trial_guess` that was 16 of 83. Inspection (see `trial_hand/score_vs_paper.txt`) shows the 10
-are coincidences, for example:
+`trial_guess` that was 16 of 83.
+
+`trial_hand/disagreements_classified.csv` reads the 10 one by one: 9 are coincidences, for
+example:
 - "a spread of 8.9 points" linked to an interval bound;
 - "odds ratio 10.5" linked to a share column.
 
-This is why the app no longer offers "accept every number with one matching cell".
+The tenth, a standard deviation of 0.4 points, is a correct link that the paper left typed. This
+is Claude's reading, to be checked by the author. An earlier note (commit `6cf86f3`) said all 10
+were coincidences, which was wrong.
+
+So 9 of 78 single-match links (11.5%) point to a cell holding the same value by chance. This is
+why the app no longer offers "accept every number with one matching cell".
 
 ## Repeat runs
 

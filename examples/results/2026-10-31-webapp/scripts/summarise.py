@@ -92,7 +92,8 @@ def repeats(d: Path) -> dict:
     if runs:
         keys = next(iter(runs.values())).keys()
         out["numbers_with_any_change"] = sum(
-            1 for k in keys if len({r[k]["pick"] for r in runs.values()}) > 1)
+            1 for k in keys if len({r[k]["pick"] for r in runs.values()}) > 1
+        )
     return out
 
 
