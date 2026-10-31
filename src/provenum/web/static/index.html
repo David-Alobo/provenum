@@ -55,6 +55,9 @@
       <label>Ollama server <input id="host" value="http://127.0.0.1:11434"></label>
       <label>Model <select id="model"><option value="">No model: I will choose</option></select></label>
     </div>
+    <p id="host-warning" class="warning" role="status" hidden>This server is not on this
+      computer: every sentence with a number will be sent to it. Use it only if you trust it,
+      for example your own server reached through an SSH tunnel.</p>
     <label>Notes for the model (optional): your project's terms, e.g. "arm = preparation
       protocol; top1 = success rate"
       <textarea id="notes" rows="3"></textarea></label>
@@ -90,6 +93,8 @@
       <a id="dl-report" class="button secondary" download>Report</a>
       <a id="dl-spec" class="button secondary" download>numbers.toml</a>
     </div>
+    <p class="help">Files stay on this computer and are deleted after a few idle hours, or now:
+      <button id="delete" class="secondary">Delete my files now</button></p>
     <p class="help">In Overleaf: <em>New Project → Upload Project</em> with project.zip opens the
     linked version as a new project, so the original stays untouched. Keep
     <code>numbers.toml</code> with your analysis: after a rerun, <code>provenum values</code>

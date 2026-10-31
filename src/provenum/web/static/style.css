@@ -44,6 +44,7 @@ code { background: var(--code); border-radius: 4px; padding: 0 .25rem; font-size
   word-break: break-all; }
 mark { background: var(--mark); color: inherit; padding: 0 .15rem; border-radius: 3px; }
 .error { color: var(--bad); font-weight: 600; }
+.warning { color: var(--warn); border-left: 3px solid var(--warn); padding-left: .6rem; }
 .summary { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: .25rem 0 .5rem; }
 .summary b { font-size: 1.3rem; display: block; }
 .tabs { display: flex; gap: .25rem; border-bottom: 1px solid var(--line); margin-top: .75rem;

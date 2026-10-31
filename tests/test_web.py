@@ -1,3 +1,4 @@
+import http.client
 import io
 import json
 import threading
@@ -7,8 +8,8 @@ from http.server import ThreadingHTTPServer
 
 import pytest
 
-from provenum.web.server import App, handler
-from provenum.web.session import Session, SessionError, _readable, categorise, unpack
+from provenum.web.server import App, handler, model_host, remove_stale
+from provenum.web.session import MARKER, Session, SessionError, _readable, categorise, unpack
 
 
 def test_readable_sentence_drops_latex_markup_but_keeps_the_mark():
@@ -161,3 +162,131 @@ def test_http_workflow_end_to_end(tmp_path):
             call("/../pyproject.toml")
     finally:
         server.shutdown()
+
+
+@pytest.fixture
+def live(tmp_path):
+    """A running server: yields (app, request function returning (status, headers, body))."""
+    app = App(tmp_path)
+    server = ThreadingHTTPServer(("127.0.0.1", 0), handler(app))
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    port = server.server_address[1]
+
+    def request(method, path, body=None, headers=None):
+        conn = http.client.HTTPConnection("127.0.0.1", port, timeout=10)
+        h = {"Host": f"127.0.0.1:{port}", **(headers or {})}
+        conn.request(method, path, body=body, headers=h)
+        r = conn.getresponse()
+        out = (r.status, dict(r.getheaders()), r.read())
+        conn.close()
+        return out
+
+    def new_session():
+        status, _, body = request("POST", "/api/session", _zip({"main.tex": MAIN}),
+                                  {"Content-Type": "application/zip"})  # fmt: skip
+        assert status == 200
+        return json.loads(body)["id"]
+
+    request.new_session = new_session
+    request.port = port
+    yield app, request
+    server.shutdown()
+
+
+def test_session_ids_are_long_random_tokens(live):
+    _, request = live
+    ids = {request.new_session() for _ in range(3)}
+    assert len(ids) == 3 and all(len(i) >= 32 for i in ids)
+
+
+def test_foreign_host_header_is_refused(live):
+    # DNS rebinding: a page on evil.example resolved to 127.0.0.1 sends Host: evil.example
+    _, request = live
+    status, _, _ = request("GET", "/", headers={"Host": "evil.example:80"})
+    assert status == 403
+
+
+def test_cross_site_requests_are_refused(live):
+    _, request = live
+    sid = request.new_session()
+    body = json.dumps({"model": "m", "host": "http://evil.example"}).encode()
+    # a form on another site can only send text/plain (no preflight)
+    status, _, _ = request("POST", f"/api/session/{sid}/run", body, {"Content-Type": "text/plain"})
+    assert status == 415
+    status, _, _ = request(
+        "POST", f"/api/session/{sid}/run", body,
+        {"Content-Type": "application/json", "Origin": "https://evil.example"},
+    )  # fmt: skip
+    assert status == 403
+    status, _, _ = request("PUT", f"/api/session/{sid}/spec", b"x", {"Content-Type": "text/plain"})
+    assert status == 415
+
+
+def test_model_host_must_be_http(live):
+    _, request = live
+    sid = request.new_session()
+    request("POST", f"/api/session/{sid}/tables", _zip({"summary.csv": SUMMARY}),
+            {"Content-Type": "application/zip"})  # fmt: skip
+    body = json.dumps({"model": "m", "host": "file:///C:/Windows/win.ini"}).encode()
+    status, _, out = request("POST", f"/api/session/{sid}/run", body,
+                             {"Content-Type": "application/json"})  # fmt: skip
+    assert status == 400 and b"http" in out
+
+
+def test_security_headers_on_every_response(live):
+    _, request = live
+    for path in ("/", "/app.js", "/api/session/" + "x" * 32):
+        _, headers, _ = request("GET", path)
+        assert "default-src 'self'" in headers["Content-Security-Policy"]
+        assert headers["X-Content-Type-Options"] == "nosniff"
+
+
+def test_delete_removes_the_files(live):
+    app, request = live
+    sid = request.new_session()
+    root = app.sessions[sid].root
+    assert root.exists()
+    status, _, _ = request("DELETE", f"/api/session/{sid}")
+    assert status == 200 and not root.exists()
+    assert request("GET", f"/api/session/{sid}")[0] == 404
+
+
+def test_idle_sessions_are_swept(live):
+    app, request = live
+    sid = request.new_session()
+    root = app.sessions[sid].root
+    app.ttl = -1  # every session is idle
+    request("GET", "/")
+    assert sid not in app.sessions and not root.exists()
+
+
+def test_stale_directories_from_an_earlier_run_are_removed(tmp_path):
+    old = tmp_path / "provenum-old"
+    old.mkdir()
+    (old / MARKER).write_text("x")
+    other = tmp_path / "provenum-not-ours"
+    other.mkdir()
+    assert remove_stale(tmp_path, ttl=-1) == 1
+    assert not old.exists() and other.exists()
+
+
+def test_spec_cannot_read_outside_the_tables_folder(session, tmp_path):
+    (tmp_path / "secret.csv").write_text("k,v\na,1.5\n")
+    good = session.spec_text
+    with pytest.raises(SessionError, match="outside the tables folder"):
+        session.set_spec('[[table]]\nfile = "../../secret.csv"\nkeys = ["k"]\n')
+    assert session.spec_text == good
+    assert "secret" not in (session.root / "numbers.toml").read_text()
+
+
+@pytest.mark.parametrize("name", ["C:evil.tex", "a.tex:stream", "a\x01.tex", "/etc/x.tex"])
+def test_unpack_refuses_drive_stream_and_control_names(tmp_path, name):
+    with pytest.raises(SessionError, match="unsafe"):
+        unpack(_zip({name: "x"}), tmp_path)
+
+
+def test_model_host_check():
+    assert model_host(" http://127.0.0.1:11434/ ") == "http://127.0.0.1:11434"
+    for bad in ("file:///etc/passwd", "ftp://x", "http://", "127.0.0.1:11434"):
+        with pytest.raises(SessionError):
+            model_host(bad)

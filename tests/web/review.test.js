@@ -1,8 +1,19 @@
 import { describe, expect, it } from "vitest";
 import {
-  escapeHtml, filterItems, fitting, groupItems, initialDecisions, markSentence,
+  escapeHtml, filterItems, fitting, groupItems, initialDecisions, isLocalHost, markSentence,
   progressText, summary,
 } from "../../src/provenum/web/static/review.js";
+
+describe("model server warning", () => {
+  it("treats only this computer as local", () => {
+    for (const url of ["http://127.0.0.1:11434", "http://localhost:11500", " http://127.1.2.3/ ",
+      "http://[::1]:11434"]) expect(isLocalHost(url)).toBe(true);
+    for (const url of ["http://10.0.0.5:11434", "https://ollama.example.org",
+      "http://127.0.0.1.evil.com", "http://localhost.evil.com", "not a url", ""]) {
+      expect(isLocalHost(url)).toBe(false);
+    }
+  });
+});
 
 const cell = (path, fits = true) => ({ path, text: "53.0", fits });
 const ITEMS = [

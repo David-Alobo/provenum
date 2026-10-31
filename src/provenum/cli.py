@@ -253,7 +253,7 @@ def _serve(args: argparse.Namespace) -> int:
     """
     from provenum.web.server import serve
 
-    serve(args.host, args.port, args.workdir)
+    serve(args.host, args.port, args.workdir, args.ttl * 3600, tuple(args.allow_host))
     return 0
 
 
@@ -339,6 +339,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     p.add_argument("--host", default="127.0.0.1", help="interface to listen on")
     p.add_argument("--port", type=int, default=8765)
     p.add_argument("--workdir", type=Path, help="where sessions are kept (default: temp)")
+    p.add_argument(
+        "--ttl",
+        type=float,
+        default=6.0,
+        help="hours a session may sit idle before its files are deleted (default 6)",
+    )
+    p.add_argument("--allow-host", action="append", default=[], metavar="HOST:PORT",
+                   help="extra Host header to accept, e.g. behind a reverse proxy")  # fmt: skip
     p.set_defaults(run=_serve)
 
     args = parser.parse_args(argv)

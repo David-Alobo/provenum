@@ -25,7 +25,9 @@ from provenum.migrate import find_span, migrate
 from provenum.scaffold import scaffold
 
 MAX_UNPACKED = 200 * 2**20  # bytes; a LaTeX project with figures is rarely above 50 MB
+MAX_FILES = 5000
 NUMBERS = "numbers.tex"
+MARKER = ".provenum-session"  # marks a directory the server may delete when it is stale
 
 
 class SessionError(ValueError):
@@ -50,19 +52,24 @@ def unpack(data: bytes, dest: Path) -> list[str]:
         archive = zipfile.ZipFile(io.BytesIO(data))
     except zipfile.BadZipFile as err:
         raise SessionError("this file is not a zip archive") from err
-    names, total = [], 0
-    for info in archive.infolist():
-        if info.is_dir():
-            continue
+    infos = [i for i in archive.infolist() if not i.is_dir()]
+    if len(infos) > MAX_FILES:
+        raise SessionError(f"the zip holds more than {MAX_FILES} files")
+    names, total, root = [], 0, dest.resolve()
+    for info in infos:
         name = PurePosixPath(info.filename.replace("\\", "/"))
-        if name.is_absolute() or ".." in name.parts:
-            raise SessionError(f"unsafe path in zip: {info.filename}")
+        # ':' would name a drive or an NTFS alternate data stream on Windows.
+        if (name.is_absolute() or ".." in name.parts or ":" in info.filename
+                or any(ord(ch) < 32 for ch in info.filename)):  # fmt: skip
+            raise SessionError(f"unsafe path in zip: {info.filename!r}")
         if name.parts[0] in ("__MACOSX",) or name.name == ".DS_Store":
             continue
         total += info.file_size
         if total > MAX_UNPACKED:
             raise SessionError("the zip unpacks to more than 200 MB")
         target = dest / Path(*name.parts)
+        if not target.resolve().is_relative_to(root):
+            raise SessionError(f"unsafe path in zip: {info.filename!r}")
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(archive.read(info))
         names.append(name.as_posix())
@@ -197,6 +204,7 @@ class Session:
         """
         s = cls(root)
         s.project.mkdir(parents=True)
+        (root / MARKER).write_text("provenum web session\n", encoding="utf-8")
         unpack(data, s.project)
         _strip_single_root(s.project)
         files = sorted(p.relative_to(s.project).as_posix() for p in s.project.rglob("*.tex"))
@@ -252,15 +260,25 @@ class Session:
             text (str): TOML spec.
 
         Raises:
-            SessionError: If the spec does not parse or a table cannot be read.
+            SessionError: If the spec does not parse, names a file outside the tables folder or
+                a table cannot be read. The previous spec is then kept.
         """
-        path = self.root / "numbers.toml"
-        path.write_text(text, encoding="utf-8", newline="\n")
+        draft = self.root / "numbers.toml.draft"
+        draft.write_text(text, encoding="utf-8", newline="\n")
         try:
-            specs = load_specs(path)
+            specs = load_specs(draft)
+            root = self.tables_root.resolve()
+            for spec in specs:
+                if not (root / spec.file).resolve().is_relative_to(root):
+                    raise SessionError(f"table {spec.file!r} is outside the tables folder")
             _, n = generate(specs, self.tables_root)
+        except SessionError:
+            draft.unlink()
+            raise
         except Exception as err:  # tomllib, csv and key errors all mean the spec needs fixing
+            draft.unlink()
             raise SessionError(f"spec problem: {type(err).__name__}: {err}") from err
+        draft.replace(self.root / "numbers.toml")
         self.spec_text, self.n_tables, self.n_values = text, len(specs), n
 
     def anchor(self, ask: Callable[[dict, list[str]], str | None] | None,

@@ -44,6 +44,17 @@ export function summary(items, decisions) {
 }
 
 /**
+ * Whether a model server address is on this computer, so the manuscript text never leaves it.
+ * @param {string} url Address as entered, e.g. "http://127.0.0.1:11434".
+ * @returns {boolean} True for localhost, 127.x.x.x and ::1; false otherwise or if unparsable.
+ */
+export function isLocalHost(url) {
+  let host;
+  try { host = new URL(url.trim()).hostname; } catch { return false; }
+  return host === "localhost" || host === "[::1]" || /^127(\.\d{1,3}){3}$/.test(host);
+}
+
+/**
  * Escape text for HTML.
  * @param {string} text Any text.
  * @returns {string} Safe HTML.

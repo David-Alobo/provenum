@@ -1,6 +1,6 @@
 // Page wiring for the provenum web app. The review logic lives in review.js.
 import {
-  escapeHtml, filterItems, fitting, groupItems, initialDecisions, markSentence,
+  escapeHtml, filterItems, isLocalHost, fitting, groupItems, initialDecisions, markSentence,
   progressText, summary,
 } from "./review.js";
 
@@ -155,11 +155,24 @@ $("table-dirs").addEventListener("click", (e) => guarded(async () => {
 }));
 
 $("save-spec").addEventListener("click", () => guarded(async () => {
-  state = await api(`/api/session/${sid}/spec`, { method: "PUT", body: $("spec").value });
+  state = await api(`/api/session/${sid}/spec`, { method: "PUT", body: $("spec").value,
+    headers: { "Content-Type": "application/toml" } });
   render();
 }));
 
+function showHostWarning() {
+  $("host-warning").hidden = isLocalHost($("host").value);
+}
+$("host").addEventListener("input", showHostWarning);
 $("host").addEventListener("change", () => guarded(loadModels));
+showHostWarning();
+
+$("delete").addEventListener("click", () => guarded(async () => {
+  await api(`/api/session/${sid}`, { method: "DELETE" });
+  sid = null; state = null; decisions = {};
+  history.replaceState(null, "", "/");
+  location.reload();
+}));
 
 $("run").addEventListener("click", () => guarded(async () => {
   state = await api(`/api/session/${sid}/run`, { method: "POST", headers: { "Content-Type": "application/json" },
