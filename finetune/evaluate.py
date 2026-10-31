@@ -64,6 +64,7 @@ def score(rows: list[dict]) -> dict:
         m, a = r["meta"], r["answer"]
         group = "dockprepbench" if m["paper"] == "dockprepbench" else "synthetic"
         c = out[f"{group}/{m['mode']}"]
+        c["out_of_memory"] += "error" in r  # also counted below as no answer
         if m["gold"] is None:
             c["no_cell"] += 1
             c["false_anchor"] += a is not None
@@ -144,8 +145,21 @@ def main() -> None:
             # the longest prompts can overflow the GPU as a batch; answer them one at a time
             torch.cuda.empty_cache()
             print(f"out of memory at {i}; answering this batch one by one", flush=True)
-            replies = [r for e in batch for r in _generate(model, tokenizer, [e])]
+            replies = []
+            for e in batch:
+                try:
+                    replies += _generate(model, tokenizer, [e])
+                except torch.OutOfMemoryError:
+                    # recorded, not dropped: it counts as no answer and is reported separately
+                    torch.cuda.empty_cache()
+                    print(f"out of memory on one example ({len(e['messages'][1]['content'])} "
+                          f"characters); recorded as an error", flush=True)  # fmt: skip
+                    replies.append(None)
         for e, reply in zip(batch, replies, strict=True):
+            if reply is None:
+                rows.append({"meta": e["meta"], "reply": None, "answer": None,
+                             "error": "out of memory"})  # fmt: skip
+                continue
             reply = PREFIX + reply
             rows.append({"meta": e["meta"], "reply": reply, "answer": parse(reply, e["meta"])})
         print(f"{len(rows)}/{len(examples)} ({time.time() - t0:.0f} s)", flush=True)
