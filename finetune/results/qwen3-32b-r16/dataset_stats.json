@@ -1,0 +1,38 @@
+{
+ "dockprepbench": {
+  "blind": 315,
+  "blind_gold_null": 4,
+  "shortlist_multi": 264,
+  "shortlist": 314,
+  "shortlist_gold_null": 3
+ },
+ "train": {
+  "shortlist": 5017,
+  "shortlist_gold_null": 529,
+  "shortlist_multi": 3728,
+  "blind": 5251,
+  "blind_gold_null": 761,
+  "too_long_dropped": 2
+ },
+ "val": {
+  "blind": 353,
+  "blind_gold_null": 43,
+  "shortlist_multi": 233,
+  "shortlist": 339,
+  "shortlist_gold_null": 29,
+  "too_long_dropped": 0
+ },
+ "test": {
+  "shortlist": 612,
+  "shortlist_gold_null": 53,
+  "shortlist_multi": 452,
+  "blind": 662,
+  "blind_gold_null": 103,
+  "too_long_dropped": 0
+ },
+ "papers": {
+  "train": 304,
+  "val": 16,
+  "test": 40
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "dockprepbench/blind": {
+  "base": {
+   "right": 152,
+   "out_of_memory": 0,
+   "wrong": 147,
+   "no_cell_ok": 1,
+   "passed": 11,
+   "false_anchor": 3,
+   "abstain": 1,
+   "values": 311,
+   "right_share": 0.4887459807073955,
+   "right_ci95": [
+    0.43366748393394977,
+    0.5440991036531089
+   ]
+  },
+  "tuned": {
+   "wrong": 93,
+   "out_of_memory": 0,
+   "right": 210,
+   "abstain": 7,
+   "no_cell_ok": 4,
+   "passed": 1,
+   "values": 311,
+   "right_share": 0.6752411575562701,
+   "right_ci95": [
+    0.6213324445275781,
+    0.7248735487596529
+   ]
+  },
+  "paired": {
+   "gained": 74,
+   "lost": 16,
+   "mcnemar_p": 4.3857845641773173e-10
+  }
+ },
+ "dockprepbench/shortlist": {
+  "base": {
+   "right": 271,
+   "out_of_memory": 0,
+   "no_cell_ok": 3,
+   "abstain": 21,
+   "passed": 19,
+   "values": 311,
+   "right_share": 0.8713826366559485,
+   "right_ci95": [
+    0.8295956055347236,
+    0.904107004092344
+   ]
+  },
+  "tuned": {
+   "passed": 17,
+   "out_of_memory": 1,
+   "right": 288,
+   "no_cell_ok": 3,
+   "abstain": 6,
+   "values": 311,
+   "right_share": 0.9260450160771704,
+   "right_ci95": [
+    0.891476129044347,
+    0.9502173408741504
+   ]
+  },
+  "paired": {
+   "gained": 25,
+   "lost": 8,
+   "mcnemar_p": 0.004551384132355452
+  }
+ },
+ "synthetic/blind": {
+  "base": {
+   "false_anchor": 27,
+   "out_of_memory": 0,
+   "right": 361,
+   "no_cell_ok": 76,
+   "wrong": 182,
+   "abstain": 11,
+   "passed": 5,
+   "values": 559,
+   "right_share": 0.6457960644007156,
+   "right_ci95": [
+    0.6052764220604422,
+    0.6843255563083491
+   ]
+  },
+  "tuned": {
+   "no_cell_ok": 100,
+   "out_of_memory": 1,
+   "right": 533,
+   "wrong": 20,
+   "passed": 4,
+   "false_anchor": 3,
+   "abstain": 2,
+   "values": 559,
+   "right_share": 0.9534883720930233,
+   "right_ci95": [
+    0.9327223233727955,
+    0.9680641983019111
+   ]
+  },
+  "paired": {
+   "gained": 177,
+   "lost": 5,
+   "mcnemar_p": 5.284278197915279e-46
+  }
+ },
+ "synthetic/shortlist": {
+  "base": {
+   "right": 512,
+   "out_of_memory": 0,
+   "abstain": 35,
+   "no_cell_ok": 48,
+   "passed": 12,
+   "false_anchor": 5,
+   "values": 559,
+   "right_share": 0.9159212880143113,
+   "right_ci95": [
+    0.8899815588064383,
+    0.9361835942088251
+   ]
+  },
+  "tuned": {
+   "right": 551,
+   "out_of_memory": 1,
+   "no_cell_ok": 53,
+   "passed": 6,
+   "abstain": 2,
+   "values": 559,
+   "right_share": 0.9856887298747764,
+   "right_ci95": [
+    0.9720168849330715,
+    0.9927308098783008
+   ]
+  },
+  "paired": {
+   "gained": 41,
+   "lost": 2,
+   "mcnemar_p": 2.1532287064474076e-10
+  }
+ }
+}

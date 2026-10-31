@@ -47,9 +47,21 @@ four times in all, test whether a model abstains rather than guesses.
 Each answer is scored as \emph{right} (the gold address), \emph{wrong} (another address),
 \emph{caught wrong} (a wrong address rejected by the value check), \emph{abstain}, or, for the
 settings with no address, \emph{false anchor}. We ran Qwen2.5 at 7, 14 and 32 billion parameters,
-Qwen3 at 8, 14 and 32 billion, and Llama~3.1-8B and Llama~3.3-70B~\cite{grattafiori2024llama3},
+Qwen3 at 8, 14 and 32 billion~\cite{yang2025qwen3}, and Llama~3.1-8B and Llama~3.3-70B~\cite{grattafiori2024llama3},
 all with Ollama's Q4\_K\_M 4-bit quantisation, in Ollama 0.12.6 on one NVIDIA RTX 6000 Ada
 (48~GB). Requests used temperature 0, so each model was run once.
+
+\subsection{Fine-tuned model}
+\label{sec:eval-finetune}
+
+Qwen3-32B, the best local model in the benchmark, was fine-tuned with QLoRA~\cite{dettmers2023qlora}
+on 10,268 examples from 304 synthetic papers. In each paper a language model wrote results
+paragraphs around placeholders and code generated the tables and filled them in, so the correct
+cell of every number is known; the examples use \pv{}'s own prompts in both modes. Papers from
+eight fields were held out for testing, and DockPrepBench was not used for training. The base and
+the fine-tuned model were compared example by example, with the same evaluation code, on the 311
+gold numbers and on 40 held-out synthetic papers. Supplementary Section~S7 gives the data, the
+training setup and the loss curve.
 
 \subsection{Review trial}
 \label{sec:eval-review}

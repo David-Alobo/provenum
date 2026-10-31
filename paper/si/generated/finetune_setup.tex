@@ -1,0 +1,10 @@
+Base model & Qwen3-32B, 4-bit (bitsandbytes, \texttt{unsloth/Qwen3-32B-unsloth-bnb-4bit}), frozen \\
+Adapters & LoRA rank 16, $\alpha = 32$, dropout 0, on the q, k, v, o, gate, up and down projections of all 64 layers; 134,217,728 trainable parameters (0.41\%) \\
+Loss & on the reply only (the JSON path); prompts masked \\
+Training data & 10,268 examples (5,251 blind, 5,017 shortlist) from 304 synthetic papers \\
+Validation data & 692 examples from 16 papers \\
+Batch & 2 per device $\times$ 8 accumulation = 16 examples per update \\
+Length & 1 epoch, 642 updates; at most 8,192 tokens per example \\
+Optimiser & 8-bit AdamW, learning rate 0.0001, cosine schedule, 3\% warm-up, bf16 \\
+Hardware and time & one RTX 6000 Ada Generation (48~GB), 8.4~h \\
+Software & Python 3.11.11, torch 2.11.0+cu128, transformers 5.17.0, TRL 1.15.0, unsloth; seed 0 \\

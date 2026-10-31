@@ -1,0 +1,52 @@
+{
+ "name": "tuned",
+ "adapter": "/mnt/STORAGE3/alobo/provenum-finetune/runs/qwen3-32b-r16/adapter",
+ "base": "/mnt/STORAGE3/alobo/provenum-finetune/hf/hub/models--unsloth--Qwen3-32B-unsloth-bnb-4bit/snapshots/cdb28d2153262472939f8aa93e8576feecbc3e75",
+ "data": [
+  "data/test.jsonl",
+  "data/dockprepbench.jsonl"
+ ],
+ "seconds": 3101,
+ "scores": {
+  "dockprepbench/blind": {
+   "out_of_memory": 0,
+   "values": 311,
+   "wrong": 94,
+   "passed": 1,
+   "right": 210,
+   "abstain": 7,
+   "no_cell": 4,
+   "false_anchor": 0
+  },
+  "dockprepbench/shortlist": {
+   "out_of_memory": 1,
+   "values": 311,
+   "wrong": 17,
+   "passed": 17,
+   "right": 288,
+   "no_cell": 3,
+   "false_anchor": 0,
+   "abstain": 6
+  },
+  "synthetic/blind": {
+   "out_of_memory": 1,
+   "no_cell": 103,
+   "false_anchor": 3,
+   "values": 559,
+   "right": 533,
+   "wrong": 24,
+   "passed": 4,
+   "abstain": 2
+  },
+  "synthetic/shortlist": {
+   "out_of_memory": 1,
+   "values": 559,
+   "right": 551,
+   "no_cell": 53,
+   "false_anchor": 0,
+   "wrong": 6,
+   "passed": 6,
+   "abstain": 2
+  }
+ }
+}

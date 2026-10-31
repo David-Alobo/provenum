@@ -1,7 +1,8 @@
 """Write the generated parts of the supplementary information from the saved results.
 
 Every table and listing in si.tex that holds a number or a prompt comes from this script, which
-reads only files in examples/results/ and provenum's own source. Outputs go to si/generated/.
+reads only files in examples/results/, finetune/results/ and provenum's own source. Outputs go to
+si/generated/.
 
 Usage (from the repository root): uv run python paper/si/make_si.py
 """
@@ -16,6 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "examples" / "results"
+FT = ROOT / "finetune" / "results"
 OUT = Path(__file__).resolve().parent / "generated"
 sys.path.insert(0, str(ROOT / "src"))
 
@@ -313,6 +315,88 @@ def review() -> None:
     write("spec_effect.tex", "\n".join(out) + "\n")
 
 
+def finetune() -> None:
+    """Write the fine-tuning tables and the loss summary from finetune/results/."""
+    run = FT / "qwen3-32b-r16"
+    cfg = json.loads((run / "config.json").read_text(encoding="utf-8"))
+    stats = json.loads((run / "dataset_stats.json").read_text(encoding="utf-8"))
+    result = json.loads((run / "train_result.json").read_text(encoding="utf-8"))
+    log = json.loads((run / "log_history.json").read_text(encoding="utf-8"))
+    step0 = json.loads((run / "eval_step0.json").read_text(encoding="utf-8"))["eval_loss"]
+    tr, va, papers = stats["train"], stats["val"], stats["papers"]
+    updates = max(e["step"] for e in log)
+    v = cfg["versions"]
+    rows = [
+        ("Base model", r"Qwen3-32B, 4-bit (bitsandbytes, \texttt{unsloth/Qwen3-32B-unsloth-bnb-4bit}), frozen"),
+        ("Adapters", (f"LoRA rank {cfg['rank']}, $\\alpha = {cfg['alpha']}$, dropout 0, on the q, k, v, "
+                     "o, gate, up and down projections of all 64 layers; 134,217,728 trainable "
+                     "parameters (0.41\\%)")),
+        ("Loss", "on the reply only (the JSON path); prompts masked"),
+        ("Training data", (f"{tr['blind'] + tr['shortlist']:,} examples ({tr['blind']:,} blind, "
+                          f"{tr['shortlist']:,} shortlist) from {papers['train']} synthetic papers")),
+        ("Validation data", f"{va['blind'] + va['shortlist']} examples from {papers['val']} papers"),
+        ("Batch", (f"{cfg['batch']} per device $\\times$ {cfg['accum']} accumulation = "
+                  f"{cfg['batch'] * cfg['accum']} examples per update")),
+        ("Length", f"{cfg['epochs']:g} epoch, {updates} updates; at most {cfg['max_len']:,} tokens per example"),
+        ("Optimiser", f"8-bit AdamW, learning rate {cfg['lr']:g}, cosine schedule, 3\\% warm-up, bf16"),
+        ("Hardware and time", (f"one {tex(v['gpu'].removeprefix('NVIDIA '))} (48~GB), "
+                              f"{result['train_runtime'] / 3600:.1f}~h")),
+        ("Software", (f"Python {v['python']}, torch {tex(v['torch'])}, transformers {v['transformers']}, "
+                     f"TRL {v['trl']}, unsloth; seed {cfg['seed']}")),
+    ]  # fmt: skip
+    write("finetune_setup.tex", "\n".join(f"{a} & {b} \\\\" for a, b in rows) + "\n")
+
+    evals = [e for e in log if "eval_loss" in e]
+    best = min(evals, key=lambda e: e["eval_loss"])
+    write("finetune_loss.tex",
+          f"Validation loss fell from {step0:.2f} before training to {evals[0]['eval_loss']:.4f} "
+          f"after {evals[0]['step']} updates and reached its lowest value, "
+          f"{best['eval_loss']:.4f}, after {best['step']}; from then on it stayed between "
+          f"{min(e['eval_loss'] for e in evals[1:]):.4f} and "
+          f"{max(e['eval_loss'] for e in evals[1:]):.4f}, ending at {evals[-1]['eval_loss']:.4f}. "
+          f"The mean training loss over the run was {result['train_loss']:.3f}.\n")  # fmt: skip
+
+    comp = json.loads((run / "comparison.json").read_text(encoding="utf-8"))
+    out = []
+    for group, label in (("dockprepbench", "DockPrepBench"), ("synthetic", "Synthetic")):
+        for mode in ("blind", "shortlist"):
+            c = comp[f"{group}/{mode}"]
+            cells = []
+            for name in ("base", "tuned"):
+                m = c[name]
+                lo, hi = m["right_ci95"]
+                cells.append(f"{m['right']} ({100 * m['right_share']:.1f}\\%)\\newline "
+                             f"[{100 * lo:.1f}, {100 * hi:.1f}]")  # fmt: skip
+            wrong = [c[n].get("wrong", 0) + c[n].get("passed", 0) for n in ("base", "tuned")]
+            passed = [c[n].get("passed", 0) for n in ("base", "tuned")]
+            false = [c[n].get("false_anchor", 0) for n in ("base", "tuned")]
+            p = c["paired"]
+            pv = p["mcnemar_p"]
+            if pv >= 1e-3:
+                ptex = f"{pv:.2g}"
+            else:
+                mant, exp = _sci(pv)
+                ptex = f"${mant:.1f} \\times 10^{{{exp}}}$"
+            out.append(f"{label} & {mode} & {c['base']['values']} & {cells[0]} & {cells[1]} & "
+                       f"{wrong[0]} $\\to$ {wrong[1]} & {passed[0]} $\\to$ {passed[1]} & "
+                       f"{false[0]} $\\to$ {false[1]} & +{p['gained']}/$-${p['lost']} & {ptex} \\\\")  # fmt: skip
+    write("finetune_compare.tex", "\n".join(out) + "\n")
+
+
+def _sci(x: float) -> tuple[float, int]:
+    """
+    Split a positive number into mantissa and exponent.
+
+    Args:
+        x (float): The number.
+
+    Returns:
+        tuple[float, int]: Mantissa in [1, 10) and the power of ten.
+    """
+    exp = int(f"{x:e}".split("e")[1])
+    return x / 10**exp, exp
+
+
 def main() -> None:
     """Write every generated file."""
     prompts()
@@ -321,6 +405,7 @@ def main() -> None:
     anchoring()
     benchmark()
     review()
+    finetune()
 
 
 if __name__ == "__main__":

@@ -317,7 +317,97 @@ has no login and is not suitable for hosting for other people. The full statemen
 \section{Fine-tuning Qwen3-32B for anchoring}
 \label{si:finetune}
 
-\todo{Fill from finetune/results once the tuned evaluation has finished; decide with the author
-whether this belongs in the paper.}
+Qwen3-32B was the best local model in the benchmark (Section~\ref{si:benchmark}), so it was
+fine-tuned for the anchoring task. All files are in \texttt{finetune/results/qwen3-32b-r16/} of
+the repository, including every answer of both models and three superseded evaluation runs.
+
+\paragraph{Training data.} No real manuscript was used for training. A language model (Qwen3-32B)
+invented a study in a given field and wrote results paragraphs with placeholders in place of
+numbers; code generated consistent result tables (rates with Wilson intervals, paired differences
+with intervals, gained and lost counts, adjusted $p$-values, continuous measures and regression
+effects) and filled the placeholders, so the correct cell of every number is known by
+construction. Some numbers have no cell: a secondary-analysis table is never in the
+specification, some sentences state protocol settings, and one more table was removed from the
+specification of about a third of the papers. Each number became one example in each mode, built
+with the same prompt functions \pv{} uses (Section~\ref{si:prompts}). Papers from eight fields
+were kept for testing only, and DockPrepBench was never used in training.
+
+\paragraph{Training.} Table~\ref{tab:si-ft-setup} gives the setup. The loss was computed on the
+reply only. Figure~\ref{fig:si-loss} shows the training loss, logged every 10 updates as the mean
+over those updates, and the validation loss, measured every 100 updates on 692 examples from 16
+papers held out from training. The run did not evaluate before its first update, so the
+validation loss of the untuned model (update 0) was measured afterwards with the same code and
+data (\texttt{train.py --eval-only}). \input{si/generated/finetune_loss.tex}Nearly all of the fall
+happened in the first 100 updates; later updates did not lower the validation loss further, and
+it did not rise.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Fine-tuning setup (run \texttt{qwen3-32b-r16}), from the run's \texttt{config.json},
+dataset statistics and trainer output.}
+\label{tab:si-ft-setup}
+\begin{tabular}{lP{11.5cm}}
+\toprule
+\rows si/generated/finetune_setup.tex
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{../finetune/results/qwen3-32b-r16/loss.pdf}
+\caption{Training and validation loss on the reply, log scale, over the single epoch (642 updates
+of 16 examples). Training loss (blue) is the mean over each block of 10 updates, so its first
+point, 1.89, averages updates 1--10. Validation loss (orange) was measured at update 0 (the
+untuned model, 2.18) and every 100 updates; the line between measurements is drawn straight and
+does not show the loss in between. Drawn by \texttt{plot\_loss.py} from
+\texttt{log\_history.json} and \texttt{eval\_step0.json}.}
+\label{fig:si-loss}
+\end{figure}
+
+\paragraph{Evaluation.} The base and the fine-tuned model were run through the same evaluation
+code (\texttt{evaluate.py}): greedy decoding, at most 96 new tokens, and each reply started with
+\texttt{\{"path":} to stand in for the JSON schema \pv{} gives Ollama. The test sets were the
+DockPrepBench Results section (311 numbers with a known cell, and four mentions of two settings
+with none) and 40 synthetic papers from the eight held-out fields (559 numbers with a cell; 103
+examples without one in blind mode and 53 in shortlist mode). Table~\ref{tab:si-ft} compares the
+two models example by example. The base model's DockPrepBench scores agree with the Ollama
+benchmark of the same model (152 right in blind mode in both; 271 here against 274 there in
+shortlist mode).
+
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Base and fine-tuned Qwen3-32B on the same examples. \emph{Right}: count (\%, Wilson 95\%
+interval) of numbers with a cell. \emph{Wrong}: other cells, of which \emph{passed} hold a value
+that rounds to the text, so the value check accepts them (in shortlist mode every wrong choice
+does). \emph{False}: cells given for numbers that have none. \emph{Gained/lost}: numbers right
+only with the fine-tuned or only with the base model; $p$: exact McNemar test on these pairs,
+not corrected for the four comparisons.}
+\label{tab:si-ft}
+\begin{tabular}{llrP{1.9cm}P{1.9cm}lllll}
+\toprule
+Test set & Mode & $n$ & Base right & Fine-tuned right & Wrong & Passed & False & Gained/lost & $p$ \\
+\midrule
+\rows si/generated/finetune_compare.tex
+\bottomrule
+\end{tabular}
+\end{table}
+
+The fine-tuned model was right more often in every set and mode. On DockPrepBench the gain was
+18.6 points in blind mode and 5.5 points in shortlist mode; on the synthetic test papers, which
+come from the same generator as the training data, it was larger (30.7 and 7.0 points). In blind
+mode it also proposed fewer wrong cells (158 to 94 on DockPrepBench) and, among them, fewer that
+the value check would pass (11 to 1). In shortlist mode 17 of its choices on DockPrepBench were
+still wrong cells holding the written value, so the review step remains necessary.
+
+The fine-tuned model could not answer the three longest prompts (13,122 to 21,531 characters),
+one each in three of the four groups, even one at a time on a 48~GB GPU; these count as no
+answer, and the base model answered all three. An earlier evaluation started each reply with
+\texttt{\{"path":} followed by a space. Qwen's tokenizer writes a space and a quotation mark as
+one token, so the fine-tuned model, which had never seen the space alone, often answered
+\texttt{\{"path": 0\}}; that run, superseded by the one reported here, is kept with the results.
 
 \end{document}

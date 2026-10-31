@@ -131,6 +131,41 @@ Model size mattered more than model family: within each family the 32 billion pa
 were best in both modes, and Llama3.3-70B, at twice that size, was below both 32B models. Time per
 number ranged from 0.5 to 2.0~s, so one pass over the 311 numbers took at most about 10 minutes.
 
+\subsection{Fine-tuned model}
+\label{sec:res-finetune}
+
+Fine-tuning raised the share of gold numbers for which Qwen3-32B chose the right cell
+(Table~\ref{tab:finetune}). In blind mode it went from 152 to 210 of the 311 (48.9\% to 67.5\%;
+74 gained, 16 lost; exact McNemar $p = 4.4 \times 10^{-10}$), and the wrong cells fell from 158 to
+94, of which those the value check would pass fell from 11 to 1. In shortlist mode it went from
+271 to 288 (87.1\% to 92.6\%; 25 gained, 8 lost; $p = 0.0046$), but 17 of its choices were still
+wrong cells holding the written value, so migrations still need review. The base model's scores
+match the benchmark run of the same model in Ollama (152 right in blind mode in both). On the 40
+held-out synthetic papers the gains were larger, 64.6\% to 95.3\% in blind mode, as expected for
+text from the generator the model was trained on. The validation loss fell from 2.18 to 0.005
+within the first third of the single epoch and did not improve after that (Supplementary
+Figure~S1). The fine-tuned model could not answer the three longest prompts, one of them in
+DockPrepBench's shortlist set, on a 48~GB GPU; they are counted as no answer.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Base and fine-tuned Qwen3-32B on the 311 gold numbers, compared example by example with
+the same code. Intervals are Wilson 95\%; \emph{passed}: wrong cells whose value rounds to the
+text. Supplementary Table~S11 adds the synthetic test papers and false anchors.}
+\label{tab:finetune}
+\begin{tabular}{llll}
+\toprule
+& & Base & Fine-tuned \\
+\midrule
+Blind & Right & 152 (48.9\% [43.4, 54.4]) & 210 (67.5\% [62.1, 72.5]) \\
+ & Wrong (passed) & 158 (11) & 94 (1) \\
+Shortlist & Right & 271 (87.1\% [83.0, 90.4]) & 288 (92.6\% [89.1, 95.0]) \\
+ & Wrong (all pass) & 19 & 17 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Review trial}
 \label{sec:res-review}
 
