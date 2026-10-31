@@ -29,6 +29,8 @@ def main() -> None:
     parser.add_argument("--accum", type=int, default=8)
     parser.add_argument("--max-train", type=int, help="use only the first N training examples")
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--eval-only", action="store_true",
+                        help="only measure validation loss before any training (update 0)")  # fmt: skip
     args = parser.parse_args()
 
     # unsloth must be imported before transformers/trl so its patches apply.
@@ -122,6 +124,13 @@ def main() -> None:
         instruction_part="<|im_start|>user\n",
         response_part="<|im_start|>assistant\n",
     )
+    if args.eval_only:
+        # A new LoRA adapter has B = 0, so the model is still the base model: this is the
+        # validation loss at update 0, computed exactly as during training.
+        metrics = trainer.evaluate()
+        (args.out / "eval_step0.json").write_text(json.dumps(metrics, indent=1), encoding="utf-8")
+        print(json.dumps(metrics, indent=1))
+        return
     result = trainer.train()
     model.save_pretrained(str(args.out / "adapter"))
     tokenizer.save_pretrained(str(args.out / "adapter"))
