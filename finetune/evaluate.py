@@ -79,6 +79,32 @@ def score(rows: list[dict]) -> dict:
     return {k: dict(v) for k, v in sorted(out.items())}
 
 
+def _generate(model, tokenizer, batch: list[dict]) -> list[str]:
+    """
+    Greedy replies for a batch of examples.
+
+    provenum asks Ollama for JSON matching a schema, which forces the reply to start as
+    {"path": ...}. Starting the reply that way here does the same for every model; without it an
+    untuned model answers in prose and never gives a path.
+
+    Args:
+        model: The loaded model, in inference mode.
+        tokenizer: Its tokenizer, padding on the left.
+        batch (list[dict]): Examples with chat `messages` (system, user, ...).
+
+    Returns:
+        list[str]: The generated text after the prefix, one per example.
+    """
+    prompts = [tokenizer.apply_chat_template(e["messages"][:2], tokenize=False,
+                                             add_generation_prompt=True,
+                                             enable_thinking=False) + PREFIX
+               for e in batch]  # fmt: skip
+    enc = tokenizer(prompts, return_tensors="pt", padding=True).to("cuda")
+    gen = model.generate(**enc, max_new_tokens=96, do_sample=False,
+                         pad_token_id=tokenizer.pad_token_id)  # fmt: skip
+    return tokenizer.batch_decode(gen[:, enc["input_ids"].shape[1] :], skip_special_tokens=True)
+
+
 def main() -> None:
     """Generate answers for every example and write answers and scores."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -92,7 +118,9 @@ def main() -> None:
     parser.add_argument("--limit", type=int, help="first N examples per file (a quick check)")
     args = parser.parse_args()
 
-    from unsloth import FastLanguageModel
+    from unsloth import FastLanguageModel  # noqa: I001  (before torch, so unsloth can patch it)
+
+    import torch
 
     examples = []
     for f in args.data:
@@ -110,18 +138,13 @@ def main() -> None:
     examples.sort(key=lambda e: len(e["messages"][1]["content"]))  # similar lengths per batch
     for i in range(0, len(examples), args.batch):
         batch = examples[i : i + args.batch]
-        # provenum asks Ollama for JSON matching a schema, which forces the reply to start as
-        # {"path": ...}. Starting the reply that way here does the same for every model;
-        # without it an untuned model answers in prose and never gives a path.
-        prompts = [tokenizer.apply_chat_template(e["messages"][:2], tokenize=False,
-                                                 add_generation_prompt=True,
-                                                 enable_thinking=False) + PREFIX
-                   for e in batch]  # fmt: skip
-        enc = tokenizer(prompts, return_tensors="pt", padding=True).to("cuda")
-        gen = model.generate(**enc, max_new_tokens=96, do_sample=False,
-                             pad_token_id=tokenizer.pad_token_id)  # fmt: skip
-        replies = tokenizer.batch_decode(gen[:, enc["input_ids"].shape[1] :],
-                                         skip_special_tokens=True)  # fmt: skip
+        try:
+            replies = _generate(model, tokenizer, batch)
+        except torch.OutOfMemoryError:
+            # the longest prompts can overflow the GPU as a batch; answer them one at a time
+            torch.cuda.empty_cache()
+            print(f"out of memory at {i}; answering this batch one by one", flush=True)
+            replies = [r for e in batch for r in _generate(model, tokenizer, [e])]
         for e, reply in zip(batch, replies, strict=True):
             reply = PREFIX + reply
             rows.append({"meta": e["meta"], "reply": reply, "answer": parse(reply, e["meta"])})
