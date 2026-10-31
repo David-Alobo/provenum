@@ -13,6 +13,7 @@ Usage:
 
 import argparse
 import csv
+import json
 import re
 import time
 from collections import Counter
@@ -149,6 +150,7 @@ def main() -> None:
     parser.add_argument("--none", nargs="*", default=[], dest="none_markers")
     parser.add_argument("--limit", type=int, help="only the first N items (a quick check)")
     parser.add_argument("--out", type=Path, default=Path("bench_results.csv"))
+    parser.add_argument("--answers", type=Path, help="directory for per-item answers (JSON)")
     args = parser.parse_args()
 
     specs = load_specs(args.spec)
@@ -178,6 +180,12 @@ def main() -> None:
             row = {"model": model, "mode": mode, **s, "seconds_per_item": seconds / len(items)}
             rows.append(row)
             print(row, flush=True)
+            if args.answers:
+                args.answers.mkdir(parents=True, exist_ok=True)
+                name = re.sub(r"[^\w.-]+", "_", f"{model}_{mode}") + ".json"
+                per_item = [{"id": it["id"], "number": it["number"], "gold": it["gold"],
+                             "answer": answers.get(it["id"])} for it in items]  # fmt: skip
+                (args.answers / name).write_text(json.dumps(per_item, indent=1), encoding="utf-8")
     with open(args.out, "w", newline="", encoding="utf-8") as handle:
         keys = sorted({k for r in rows for k in r}, key=lambda k: (k not in ("model", "mode"), k))
         writer = csv.DictWriter(handle, fieldnames=keys)

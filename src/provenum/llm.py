@@ -24,6 +24,27 @@ SCHEMA = {
 }
 
 
+def ask_prompt(item: dict, catalogue: str, notes: str) -> tuple[str, str, dict]:
+    """
+    The blind-mode prompt for one number, shared by `ask` and the fine-tuning data.
+
+    Args:
+        item (dict): From `anchor.items`: number, sentence (target marked [[...]]) and paragraph.
+        catalogue (str): Output of `anchor.catalogue`.
+        notes (str): Project notes on vocabulary (may be empty).
+
+    Returns:
+        tuple[str, str, dict]: System prompt, user message and reply schema.
+    """
+    user = (
+        f"Catalogue:\n{catalogue}\n\n"
+        + (f"Notes:\n{notes}\n\n" if notes else "")
+        + f"Paragraph: {item['paragraph']}\n\nSentence: {item['sentence']}\n\n"
+        + f"Which path does [[{item.get('written', item['number'])}]] report?"
+    )
+    return SYSTEM, user, SCHEMA
+
+
 def ask(
     item: dict, catalogue: str, notes: str, model: str, host: str, timeout: float = 120
 ) -> str | None:
@@ -41,13 +62,7 @@ def ask(
     Returns:
         str | None: The proposed path, or None.
     """
-    user = (
-        f"Catalogue:\n{catalogue}\n\n"
-        + (f"Notes:\n{notes}\n\n" if notes else "")
-        + f"Paragraph: {item['paragraph']}\n\nSentence: {item['sentence']}\n\n"
-        + f"Which path does [[{item.get('written', item['number'])}]] report?"
-    )
-    content = _chat(SYSTEM, user, SCHEMA, model, host, timeout)
+    content = _chat(*ask_prompt(item, catalogue, notes), model, host, timeout)
     try:
         path = json.loads(content).get("path")
     except (json.JSONDecodeError, AttributeError):
@@ -59,6 +74,30 @@ CHOOSE = """You map numbers in a scientific manuscript to the table value they r
 A program has already found the table values equal to the marked number [[like this]]; most of
 these are coincidences. Choose the one path whose quantity the sentence actually reports (same
 engine, arm, metric and statistic), or "none" if none of them is what the sentence means."""
+
+
+def choose_prompt(item: dict, candidates: list[str], notes: str) -> tuple[str, str, dict]:
+    """
+    The shortlist-mode prompt for one number, shared by `choose` and the fine-tuning data.
+
+    Args:
+        item (dict): From `anchor.items`.
+        candidates (list[str]): Paths whose value rounds to the number.
+        notes (str): Project notes (may be empty).
+
+    Returns:
+        tuple[str, str, dict]: System prompt, user message and reply schema.
+    """
+    schema = {"type": "object", "properties": {"path": {"enum": [*candidates, "none"]}},
+              "required": ["path"]}  # fmt: skip
+    user = (
+        (f"Notes:\n{notes}\n\n" if notes else "")
+        + f"Paragraph: {item['paragraph']}\n\nSentence: {item['sentence']}\n\n"
+        + "Candidate paths:\n"
+        + "\n".join(candidates)
+        + f"\n\nWhich path does [[{item.get('written', item['number'])}]] report?"
+    )
+    return CHOOSE, user, schema
 
 
 def choose(item: dict, candidates: list[str], notes: str, model: str, host: str,
@@ -80,16 +119,7 @@ def choose(item: dict, candidates: list[str], notes: str, model: str, host: str,
     Returns:
         str | None: The chosen path, or None.
     """
-    schema = {"type": "object", "properties": {"path": {"enum": [*candidates, "none"]}},
-              "required": ["path"]}  # fmt: skip
-    user = (
-        (f"Notes:\n{notes}\n\n" if notes else "")
-        + f"Paragraph: {item['paragraph']}\n\nSentence: {item['sentence']}\n\n"
-        + "Candidate paths:\n"
-        + "\n".join(candidates)
-        + f"\n\nWhich path does [[{item.get('written', item['number'])}]] report?"
-    )
-    content = _chat(CHOOSE, user, schema, model, host, timeout)
+    content = _chat(*choose_prompt(item, candidates, notes), model, host, timeout)
     try:
         path = json.loads(content).get("path")
     except (json.JSONDecodeError, AttributeError):
