@@ -1,0 +1,4 @@
+dockprepbench/blind      right 152 -> 210 of 311 (48.9% -> 67.5%); wrong 158 -> 94 (passed 11 -> 1); no answer 1 -> 7; false anchors 3 -> 0; +74 -16, p = 4.4e-10
+dockprepbench/shortlist  right 271 -> 288 of 311 (87.1% -> 92.6%); wrong 19 -> 17 (passed 19 -> 17); no answer 21 -> 6; false anchors 0 -> 0; +25 -8, p = 0.0046
+synthetic/blind          right 361 -> 533 of 559 (64.6% -> 95.3%); wrong 187 -> 24 (passed 5 -> 4); no answer 11 -> 2; false anchors 27 -> 3; +177 -5, p = 5.3e-46
+synthetic/shortlist      right 512 -> 551 of 559 (91.6% -> 98.6%); wrong 12 -> 6 (passed 12 -> 6); no answer 35 -> 2; false anchors 5 -> 0; +41 -2, p = 2.2e-10

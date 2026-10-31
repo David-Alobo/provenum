@@ -1,0 +1,13 @@
+2026-10-30T22:13:16+00:00 pipeline started
+2026-10-30T22:13:41+00:00 pipeline started
+2026-10-30T22:57:41+00:00 generation finished: 360 papers, 0 failed
+2026-10-30T22:57:42+00:00 provenum at 5eb6e8a
+2026-10-30T22:57:56+00:00 dataset built: {"dockprepbench":{"blind":315,"blind_gold_null":4,"shortlist_multi":264,"shortlist":314,"shortlist_gold_null":3},"train":{"shortlist":5017,"shortlist_gold_null":529,"shortlist_multi":3728,"blind":5251,"blind_gold_null":761,"too_long_dropped":2},"val":{"blind":353,"blind_gold_null":43,"shortlist_multi":233,"shortlist":339,"shortlist_gold_null":29,"too_long_dropped":0},"test":{"shortlist":612,"short
+2026-10-30T23:20:56+00:00 base eval on test.jsonl started (tmux provenum-eval-base-test, GPU 1)
+2026-10-30T23:20:56+00:00 training qwen3-32b-r16 started on GPU 3
+2026-10-31T07:48:55+00:00 training finished (exit 0): {"train_runtime":30393.8176,"train_samples_per_second":0.338,"train_steps_per_second":0.021,"total_flos":2.4601331416107663e+18,"train_loss":0.040553843081751806,"epoch":1.0}
+2026-10-31T08:36:27+00:00 fine-tuned eval finished
+2026-10-31T08:36:27+00:00 finished
+2026-10-31T11:53:17+00:00 fine-tuned eval restarted after OOM (tmux provenum-eval-tuned, GPU 3, provenum fa9ba4a); first attempt in eval_tuned.oom.log
+2026-10-31T12:42:50+00:00 fine-tuned eval restarted again (provenum 731854c): the longest prompt ran out of memory even alone; now recorded as an error. Second attempt in eval_tuned.oom2.log
+2026-10-31T13:32:33+00:00 base (GPU 1) and tuned (GPU 3) evals rerun at provenum 05d1523 with the reply prefix ending at the colon; earlier runs moved to evals/prefix_space/ and *.prefix_space.log
