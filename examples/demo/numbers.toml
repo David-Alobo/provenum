@@ -1,0 +1,6 @@
+# Demo spec: which tables become \val{} entries and how each column is formatted.
+[[table]]
+file = "results.csv"
+keys = ["method"]
+default = "pct1"
+formats = { n = "int" }

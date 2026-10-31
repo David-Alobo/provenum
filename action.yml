@@ -1,0 +1,56 @@
+name: provenum
+description: Fail a paper build when manuscript numbers drift from the data that produced them.
+author: David Obeh Alobo
+branding:
+  icon: check-circle
+  color: blue
+
+inputs:
+  spec:
+    description: Spec (TOML) naming the tables and formats, e.g. paper/numbers.toml.
+    required: true
+  tables:
+    description: Directory holding the result tables (CSV).
+    required: true
+  values:
+    description: The committed values file, e.g. paper/tables/numbers.tex.
+    required: true
+  manuscript:
+    description: Manuscript files to lint, space-separated (globs allowed). Empty skips lint.
+    required: false
+    default: ""
+  fail-on-hardcoded:
+    description: Also fail if the manuscript has hand-typed decimal numbers.
+    required: false
+    default: "false"
+  python-version:
+    description: Python version to run provenum with.
+    required: false
+    default: "3.12"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Install provenum
+      shell: bash
+      run: python -m pip install --quiet "${{ github.action_path }}"
+    - name: Check the values file is up to date with the tables
+      shell: bash
+      run: |
+        fresh="$RUNNER_TEMP/numbers.tex"
+        provenum values "${{ inputs.spec }}" --tables "${{ inputs.tables }}" --out "$fresh"
+        if ! diff -u "${{ inputs.values }}" "$fresh"; then
+          echo "::error file=${{ inputs.values }}::Values are stale: the tables changed. Regenerate with: provenum values ${{ inputs.spec }} --tables ${{ inputs.tables }} --out ${{ inputs.values }}"
+          exit 1
+        fi
+        echo "Values match the tables."
+    - name: Lint hand-typed numbers
+      if: inputs.manuscript != ''
+      shell: bash
+      run: |
+        strict=""
+        [ "${{ inputs.fail-on-hardcoded }}" = "true" ] && strict="--strict"
+        provenum lint ${{ inputs.manuscript }} $strict

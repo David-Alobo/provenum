@@ -57,7 +57,7 @@ reference cannot slip through.
 ```bash
 pip install git+https://github.com/David-Alobo/provenum
 
-# 1. Describe which tables to expose and how to format them (see examples/dockprepbench_values.toml)
+# 1. Describe which tables to expose and how to format them (see examples/demo/ for a minimal paper)
 # 2. Generate the values and load them in the preamble with \input{tables/numbers}
 provenum values numbers.toml --tables paper/tables --out paper/tables/numbers.tex
 # 3. Write numbers as \val{<table>/<key>/.../<column>} and keep the build honest
@@ -76,6 +76,23 @@ formats = { delta_pts = "+f1", p_holm = "p", gained = "int" }
 
 Formats: `pct0` to `pct2`, `f0` to `f4`, `sig2`, `sig3`, `int`, `p` (two significant figures,
 scientific below 0.001), and a `+` prefix to always show the sign.
+
+## In GitHub Actions
+
+Add one step to the workflow that builds your paper. It fails when the result tables have
+changed but `numbers.tex` was not regenerated, and, if you ask, when the text still has
+hand-typed numbers. Overleaf projects synced to GitHub get the same check on every sync.
+
+```yaml
+- uses: actions/checkout@v4
+- uses: David-Alobo/provenum@v0
+  with:
+    spec: paper/numbers.toml
+    tables: paper/tables
+    values: paper/tables/numbers.tex
+    manuscript: paper/sections/*.tex     # optional: lint hand-typed numbers
+    fail-on-hardcoded: "false"           # set to "true" once the paper is fully migrated
+```
 
 ## How the AI step is kept honest
 

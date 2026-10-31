@@ -21,3 +21,33 @@ jobs:
           uv run ruff format --check src tests
       - name: Test
         run: uv run pytest -q
+
+  action:
+    # Runs the GitHub Action on the demo paper: it must pass as committed, and fail once the
+    # data changes without the values being regenerated.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Up-to-date values pass
+        uses: ./
+        with:
+          spec: examples/demo/numbers.toml
+          tables: examples/demo/tables
+          values: examples/demo/tables/numbers.tex
+          manuscript: examples/demo/paper.tex
+          fail-on-hardcoded: "true"
+      - name: Change the data without regenerating
+        run: sed -i 's/0.5450/0.5600/' examples/demo/tables/results.csv
+      - name: Stale values fail
+        id: stale
+        continue-on-error: true
+        uses: ./
+        with:
+          spec: examples/demo/numbers.toml
+          tables: examples/demo/tables
+          values: examples/demo/tables/numbers.tex
+      - name: Require the failure
+        if: steps.stale.outcome != 'failure'
+        run: |
+          echo "The action should have failed on stale values" >&2
+          exit 1
