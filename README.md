@@ -170,7 +170,22 @@ corrupted by three units in its last digit to measure how many errors each appro
 |---|---|---|
 | Match by value alone | 1% | 0 |
 | Match by surrounding words | 20% (88% where anchored) | 44 |
-| Model proposes, code verifies | 134 of 134 anchored | 0 |
+| Model proposes, code verifies (Claude Sonnet) | 134 of 134 anchored | 0 |
+
+With free local models (Qwen2.5 via Ollama on one GPU), value-blind anchoring is not yet
+reliable: Qwen2.5-32B traced 68 numbers but proposed 139 wrong paths (all rejected by the value
+check, but they would surface as false warnings in an audit). In migration mode
+(`anchor --shortlist`), where the code first finds the cells whose value matches and the model
+only chooses among them, the same models work well:
+
+| Model (local, migration mode) | Numbers linked | Same cell as Claude |
+|---|---|---|
+| Qwen2.5-14B | 177 | 123 of 132 (93%) |
+| Qwen2.5-32B | 129 | 114 of 116 (98%) |
+| 14B and 32B agree | 120 | 109 of 110 (99%) |
+
+A wrong cell with the same value would still render correctly but would update to the wrong
+number after a rerun, so migrations should be reviewed, or accepted only where two models agree.
 
 Migration replaced 124 numbers with `\val{}`, and the compiled PDF text was identical before and
 after. The audit also found 28 numbers that no generated table produces.

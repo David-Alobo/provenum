@@ -202,6 +202,44 @@ def _init(args: argparse.Namespace) -> int:
     return 0
 
 
+def _anchor(args: argparse.Namespace) -> int:
+    """
+    Ask a local model (Ollama) which value each hand-typed number reports; write [{id, path}].
+
+    Args:
+        args (argparse.Namespace): Parsed arguments.
+
+    Returns:
+        int: Exit code.
+    """
+    from provenum.anchor import catalogue, items, judge, values
+    from provenum.llm import anchor_all
+    from provenum.macros import load_specs
+
+    specs = load_specs(args.spec)
+    notes = args.notes.read_text(encoding="utf-8") if args.notes else ""
+    found = items(args.manuscript)
+    shortlists = None
+    if args.shortlist:  # migration mode: the model only picks among value-matching cells
+        table = values(specs, args.tables)
+        shortlists = {
+            i["id"]: [p for p in table if judge(i["number"], p, table) == "traced"] for i in found
+        }
+
+    def progress(done: int, total: int) -> None:
+        if done % 25 == 0 or done == total:
+            print(f"  {done}/{total}", flush=True)
+
+    answers = anchor_all(
+        found, catalogue(specs, args.tables), notes, args.model, args.host, progress, shortlists
+    )
+    args.out.write_text(json.dumps(answers, indent=1), encoding="utf-8", newline="\n")
+    print(
+        f"{sum(1 for a in answers if a['path'])} of {len(answers)} anchored; written to {args.out}"
+    )
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """
     Dispatch a provenum command.
@@ -220,6 +258,21 @@ def main(argv: Sequence[str] | None = None) -> int:
     p.add_argument("--tables", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
     p.set_defaults(run=_values)
+
+    p = sub.add_parser("anchor", help="ask a local model which value each number reports")
+    p.add_argument("manuscript", type=Path)
+    p.add_argument("--spec", type=Path, required=True)
+    p.add_argument("--tables", type=Path, required=True)
+    p.add_argument("--model", default="qwen2.5:14b-instruct")
+    p.add_argument("--host", default="http://127.0.0.1:11434", help="Ollama server URL")
+    p.add_argument("--notes", type=Path, help="text file of project vocabulary for the model")
+    p.add_argument(
+        "--shortlist",
+        action="store_true",
+        help="migration mode: the model picks among cells whose value matches (not for audits)",
+    )
+    p.add_argument("--out", type=Path, required=True, help="answers JSON for migrate")
+    p.set_defaults(run=_anchor)
 
     p = sub.add_parser("lint", help="list hard-coded decimals in prose")
     p.add_argument("manuscript", nargs="+", type=Path)

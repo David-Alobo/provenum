@@ -47,7 +47,8 @@ def fmt(value: float, how: str, column: str = "") -> str:
 
     Formats: pct0/pct1/pct2 (proportion as percent), f0..f4 (fixed decimals), sig2/sig3
     (significant figures), p (two significant figures; scientific below 0.001), int, and a
-    leading "+" (e.g. "+f1") to always show the sign. "auto" uses p for columns named p or
+    leading "+" (e.g. "+f1") to always show the sign, or "~" (e.g. "~f1") for the magnitude,
+    for text that states a size ("16.4 points above"). "auto" uses p for columns named p or
     p_*, pct1 for proportions in [0, 1], int for whole numbers, and sig3 otherwise.
 
     Args:
@@ -69,6 +70,8 @@ def fmt(value: float, how: str, column: str = "") -> str:
             how = "pct1"
         else:
             how = "sig3"
+    if how.startswith("~"):
+        value, how = abs(value), how[1:]
     signed = how.startswith("+")
     how = how.lstrip("+")
     if how.startswith("pct"):
