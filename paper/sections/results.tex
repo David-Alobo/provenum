@@ -203,19 +203,20 @@ spread of 8.9 points'' matched an interval bound, and ``odds ratio 10.5'' a shar
 With Qwen3-32B and the hand specification, 249 numbers were linked and 228 of them (91.6\%) to the
 cell the migration uses. Of the 21 that differed, 20 were in the \emph{to confirm} list. The one in
 \emph{linked} was a standard deviation the migration had left typed, and the model's cell for it
-was correct. Read one by one, the 21 differences fall into three groups:
+was correct. Read one by one and checked against the tables by the author, the 21 differences
+fall into three groups:
 \begin{itemize}
-\item 8 are wrong cells;
+\item 9 are wrong cells;
 \item 10 are the same quantity stored in another table, such as Vina's baseline rate in both the
-summary and the comparison table (8 clearly, 2 probably);
-\item 3 link numbers the migration left typed, correctly or probably correctly.
+summary and the comparison table;
+\item 2 link numbers the migration left typed, both correctly.
 \end{itemize}
-\todo{Author to confirm the classification in \texttt{disagreements\_classified.csv}.}
-Supplementary Tables~S7 and~S8 list every disagreement and every single match. On this
-reading, 8 of 249 links (3.2\%) point to the wrong cell, and all 8 were in the list the author
-is asked to confirm. None of them could have been caught by value, since every cell offered in
-shortlist mode holds the written value. They are cells of another engine, arm or interval bound,
-such as the Holm p-value of 0.37 that the 6~\AA{} and 8~\AA{} arms share.
+Supplementary Tables~S7 and~S8 list every disagreement and every single match. So 9 of 249 links
+(3.6\%) point to the wrong cell, and all 9 were in the list the author is asked to confirm. None
+of them could have been caught by value, since every cell offered in shortlist mode holds the
+written value. They are cells of another engine, arm, test or interval bound, such as the Holm
+p-value of 0.37 that the 6~\AA{} and 8~\AA{} arms share, or a Holm p-value of 0.12 taken from a
+different test than the one the sentence reports.
 
 The model's choices were reproducible. Three repeats of the run gave the same choice for all 307
 numbers as the first run.
