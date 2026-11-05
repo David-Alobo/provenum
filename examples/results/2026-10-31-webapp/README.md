@@ -68,19 +68,21 @@ All 17 disagreements in this trial were in the "to confirm" list; none were in "
 | Left as typed | 58 | – |
 
 **The 21 disagreements, one by one.** The file `trial_model/disagreements_classified.csv` gives
-the sentence, both cells and a reading of each disagreement. This is Claude's reading, to be
-checked by the author.
+the sentence, both cells and a reading of each disagreement. Claude drafted the readings; the
+author checked every row on 2026-11-05 (column `confirmed`). The three drafted as uncertain were
+settled from the tables: rows 15 and 18 are the same quantity (identical values in both tables),
+and row 11 is a wrong cell (the sentence's Holm p of 0.12 comes from the protonation-flip test in
+`sensitivity`, not from the consensus test the model chose).
 
 | Reading | Count | In "to confirm" | In "linked" |
 |---|---|---|---|
-| Wrong cell | 8 | 8 | 0 |
-| Same quantity, stored in another table (e.g. Vina's baseline rate in `summary` and in `comparisons`) | 8 | 8 | 0 |
-| Probably the same quantity | 2 | 2 | 0 |
+| Wrong cell | 9 | 9 | 0 |
+| Same quantity, stored in another table (e.g. Vina's baseline rate in `summary` and in `comparisons`) | 10 | 10 | 0 |
 | Correct, where the paper left the number typed | 2 | 1 | 1 |
-| Probably correct, where the paper left the number typed | 1 | 1 | 0 |
 
-So, on this reading, 8 of the 249 suggested links (3.2%) point to the wrong cell. All 8 were in
-the list the app asks the researcher to confirm.
+So 9 of the 249 suggested links (3.6%) point to the wrong cell. All 9 were in the list the app
+asks the researcher to confirm. The single matches in `trial_hand` (1 correct, 9 coincidences)
+were checked by the author on the same day.
 
 **Without a model, a single matching cell is not enough evidence.** In `trial_hand`, 10 of the
 78 numbers with exactly one matching cell were linked where the paper left the number typed. In

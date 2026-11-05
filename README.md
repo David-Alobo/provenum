@@ -253,8 +253,8 @@ holds the same value, so the check cannot catch it: it renders correctly and wou
 wrong cell after a rerun. That is why the web app asks the author to confirm every number with
 more than one matching cell. In a trial on the original section with Qwen3-32B
 ([`2026-10-31-webapp`](examples/results/2026-10-31-webapp)), it linked 249 of 307 numbers with the
-compiled text unchanged; 8 links (3.2%) pointed to a wrong cell, and all 8 were among those the
-author was asked to confirm (on our reading of each disagreement, which the trial folder lists).
+compiled text unchanged; 9 links (3.6%) pointed to a wrong cell, and all 9 were among those the
+author was asked to confirm (each disagreement, checked by the author, is listed in the trial folder).
 Accepting single matches without a model was worse: 9 of 78 were
 coincidences.
 
